@@ -2,11 +2,15 @@ package tests.java.util;
 
 import java.util.OptionalDouble;
 
-public final class OptionalDoubleTests {
-    public static void main(String[] args) {
+public final class OptionalDouble_Tests {
+
+    public static int test_of_0(final int execution) {
         final var o = OptionalDouble.of(5.d);
 
         if (o.orElse(2.d) != 5.d)
-            throw new RuntimeException();
+            return 0;
+
+        return -1;
     }
+
 }
