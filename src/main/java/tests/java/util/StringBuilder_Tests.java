@@ -19,6 +19,13 @@ public final class StringBuilder_Tests {
         System.out.println("\ntest_StringBuilder_3");
         System.out.println(test_StringBuilder_3(0));
 
+        System.out.println("\ntest_append_10");
+        System.out.println(test_append_10(0));
+        System.out.println(test_append_10(1));
+        System.out.println(test_append_10(2));
+        System.out.println(test_append_10(3));
+
+
         System.out.println("\ntest_append_11");
         System.out.println(test_append_11(0));
         System.out.println(test_append_11(1));
@@ -187,6 +194,39 @@ public final class StringBuilder_Tests {
 
     // StringBuilderAutomaton::append (float)
     public static int test_append_10(final int execution) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(1.0F);
+        if (execution == 0) {
+            if (stringBuilder.length() == 3 && stringBuilder.charAt(0) == '1' && stringBuilder.charAt(1) == '.')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(23.34F);
+        if (execution == 1) {
+            if (stringBuilder.length() == 8 && stringBuilder.charAt(5) == '.' && stringBuilder.charAt(7) == '4')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(Float.MAX_VALUE);
+        if (execution == 2) {
+            if (stringBuilder.length() == 20 && stringBuilder.charAt(17) == 'E' && stringBuilder.charAt(19) == '8')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(12e-1F);
+        if (execution == 3) {
+            if (stringBuilder.length() == 23 && stringBuilder.charAt(21) == '.' && stringBuilder.charAt(22) == '2')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
