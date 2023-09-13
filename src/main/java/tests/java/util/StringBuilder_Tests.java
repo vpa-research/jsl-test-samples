@@ -2,6 +2,8 @@ package tests.java.util;
 
 //import generated.java.lang.StringBuilder;
 
+//import generated.java.lang.StringBuilder;
+
 public final class StringBuilder_Tests {
 
     public static void main(String[] args) {
@@ -38,6 +40,14 @@ public final class StringBuilder_Tests {
         System.out.println(test_append_12(1));
         System.out.println(test_append_12(2));
         System.out.println(test_append_12(3));
+
+
+        System.out.println("\ntest_append_0");
+        System.out.println(test_append_0(0));
+        System.out.println(test_append_0(1));
+        System.out.println(test_append_0(2));
+        System.out.println(test_append_0(3));
+
     }
 
 
@@ -134,6 +144,43 @@ public final class StringBuilder_Tests {
 
     // StringBuilderAutomaton::append (CharSequence)
     public static int test_append_0(final int execution) {
+        StringBuilder stringBuilder = new StringBuilder();
+        CharSequence sequence_1 = null;
+        stringBuilder.append(sequence_1);
+        if (execution == 0) {
+            if (stringBuilder.length() == 4 && stringBuilder.charAt(0) == 'n' && stringBuilder.charAt(3) == 'l')
+                return 0;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_2 = "anystring1";
+        stringBuilder.append(sequence_2);
+        if (execution == 1) {
+            if (stringBuilder.length() == 14 && stringBuilder.charAt(12) == 'g')
+                return 1;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_3 = "слово";
+        stringBuilder.append(sequence_3);
+        if (execution == 2) {
+            if (stringBuilder.length() == 19 && stringBuilder.charAt(17) == 'в')
+                return 2;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_4 = new String(new int[]{80_000}, 0, 1);
+        stringBuilder.append(sequence_4);
+        if (execution == 3) {
+            if (stringBuilder.length() == 21 && stringBuilder.charAt(12) == 'g')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
