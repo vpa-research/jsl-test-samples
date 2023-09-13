@@ -1,6 +1,6 @@
 package tests.java.util;
 
-import generated.java.lang.StringBuilder;
+//import generated.java.lang.StringBuilder;
 
 public final class StringBuilder_Tests {
 
@@ -18,6 +18,12 @@ public final class StringBuilder_Tests {
 
         System.out.println("\ntest_StringBuilder_3");
         System.out.println(test_StringBuilder_3(0));
+
+        System.out.println("\ntest_append_0");
+        System.out.println(test_append_0(0));
+        System.out.println(test_append_0(1));
+        System.out.println(test_append_0(2));
+        System.out.println(test_append_0(3));
     }
 
 
@@ -30,7 +36,7 @@ public final class StringBuilder_Tests {
 
         StringBuilder stringBuilder = new StringBuilder();
         if (execution == 0) {
-            if (stringBuilder != null && stringBuilder.length() == 0)
+            if (stringBuilder.length() == 0)
                 return 0;
             else
                 return -1;
@@ -54,11 +60,12 @@ public final class StringBuilder_Tests {
 
         if (execution == 1) {
             sequence = null;
-            StringBuilder stringBuilder = new StringBuilder(sequence);
-            if (stringBuilder.length() == 4 && stringBuilder.charAt(0) == 'n' && stringBuilder.charAt(3) == 'l')
+            try {
+                StringBuilder stringBuilder = new StringBuilder(sequence);
+            } catch (NullPointerException e) {
                 return 1;
-            else
-                return -1;
+            }
+            return -1;
         }
         return -1;
     }
@@ -79,11 +86,12 @@ public final class StringBuilder_Tests {
 
         if (execution == 1) {
             sequence = null;
-            StringBuilder stringBuilder = new StringBuilder(sequence);
-            if (stringBuilder.length() == 4 && stringBuilder.charAt(0) == 'n' && stringBuilder.charAt(3) == 'l')
+            try {
+                StringBuilder stringBuilder = new StringBuilder(sequence);
+            } catch (NullPointerException e) {
                 return 1;
-            else
-                return -1;
+            }
+            return -1;
         }
         return -1;
     }
@@ -93,10 +101,10 @@ public final class StringBuilder_Tests {
     public static int test_StringBuilder_3(final int execution) {
 
         int capacity = 3;
+        StringBuilder stringBuilder = new StringBuilder(capacity);
 
         if (execution == 0) {
-            StringBuilder stringBuilder = new StringBuilder(capacity);
-            if (stringBuilder != null && stringBuilder.length() == 0)
+            if (stringBuilder.length() == 0)
                 return 0;
             else
                 return -1;
@@ -112,6 +120,42 @@ public final class StringBuilder_Tests {
 
     // StringBuilderAutomaton::append (CharSequence)
     public static int test_append_0(final int execution) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(1);
+
+        if (execution == 0) {
+            if (stringBuilder.length() == 1 && stringBuilder.charAt(0) == '1')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(23);
+        if (execution == 1) {
+            if (stringBuilder.length() == 3 && stringBuilder.charAt(0) == '1' && stringBuilder.charAt(2) == '3')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(Integer.MAX_VALUE);
+        if (execution == 2) {
+            if (stringBuilder.length() == 13 && stringBuilder.charAt(10) == '6' && stringBuilder.charAt(12) == '7')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(-10);
+        System.out.println(stringBuilder);
+
+        if (execution == 3) {
+            if (stringBuilder.length() == 16 && stringBuilder.charAt(13) == '-' && stringBuilder.charAt(15) == '0')
+                return 0;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
