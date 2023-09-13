@@ -19,11 +19,18 @@ public final class StringBuilder_Tests {
         System.out.println("\ntest_StringBuilder_3");
         System.out.println(test_StringBuilder_3(0));
 
-        System.out.println("\ntest_append_0");
-        System.out.println(test_append_0(0));
-        System.out.println(test_append_0(1));
-        System.out.println(test_append_0(2));
-        System.out.println(test_append_0(3));
+        System.out.println("\ntest_append_11");
+        System.out.println(test_append_11(0));
+        System.out.println(test_append_11(1));
+        System.out.println(test_append_11(2));
+        System.out.println(test_append_11(3));
+
+
+        System.out.println("\ntest_append_12");
+        System.out.println(test_append_12(0));
+        System.out.println(test_append_12(1));
+        System.out.println(test_append_12(2));
+        System.out.println(test_append_12(3));
     }
 
 
@@ -120,42 +127,6 @@ public final class StringBuilder_Tests {
 
     // StringBuilderAutomaton::append (CharSequence)
     public static int test_append_0(final int execution) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(1);
-
-        if (execution == 0) {
-            if (stringBuilder.length() == 1 && stringBuilder.charAt(0) == '1')
-                return 0;
-            else
-                return -1;
-        }
-
-        stringBuilder.append(23);
-        if (execution == 1) {
-            if (stringBuilder.length() == 3 && stringBuilder.charAt(0) == '1' && stringBuilder.charAt(2) == '3')
-                return 0;
-            else
-                return -1;
-        }
-
-        stringBuilder.append(Integer.MAX_VALUE);
-        if (execution == 2) {
-            if (stringBuilder.length() == 13 && stringBuilder.charAt(10) == '6' && stringBuilder.charAt(12) == '7')
-                return 0;
-            else
-                return -1;
-        }
-
-        stringBuilder.append(-10);
-        System.out.println(stringBuilder);
-
-        if (execution == 3) {
-            if (stringBuilder.length() == 16 && stringBuilder.charAt(13) == '-' && stringBuilder.charAt(15) == '0')
-                return 0;
-            else
-                return -1;
-        }
-
         return -1;
     }
 
@@ -222,12 +193,81 @@ public final class StringBuilder_Tests {
 
     // StringBuilderAutomaton::append (int)
     public static int test_append_11(final int execution) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(1);
+
+        if (execution == 0) {
+            if (stringBuilder.length() == 1 && stringBuilder.charAt(0) == '1')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(23);
+        if (execution == 1) {
+            if (stringBuilder.length() == 3 && stringBuilder.charAt(0) == '1' && stringBuilder.charAt(2) == '3')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(Integer.MAX_VALUE);
+        if (execution == 2) {
+            if (stringBuilder.length() == 13 && stringBuilder.charAt(10) == '6' && stringBuilder.charAt(12) == '7')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(-10);
+
+        if (execution == 3) {
+            if (stringBuilder.length() == 16 && stringBuilder.charAt(13) == '-' && stringBuilder.charAt(15) == '0')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
 
     // StringBuilderAutomaton::append (long)
     public static int test_append_12(final int execution) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(1L);
+
+        if (execution == 0) {
+            if (stringBuilder.length() == 1 && stringBuilder.charAt(0) == '1')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(23L);
+        if (execution == 1) {
+            if (stringBuilder.length() == 3 && stringBuilder.charAt(0) == '1' && stringBuilder.charAt(2) == '3')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(Long.MAX_VALUE);
+        if (execution == 2) {
+            if (stringBuilder.length() == 22 && stringBuilder.charAt(18) == '5' && stringBuilder.charAt(21) == '7')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuilder.append(-10L);
+
+        if (execution == 3) {
+            if (stringBuilder.length() == 25 && stringBuilder.charAt(22) == '-' && stringBuilder.charAt(23) == '1')
+                return 3;
+            else
+                return -1;
+        }
         return -1;
     }
 
