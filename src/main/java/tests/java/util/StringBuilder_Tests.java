@@ -1,6 +1,24 @@
 package tests.java.util;
 
+import generated.java.lang.StringBuilder;
+
 public final class StringBuilder_Tests {
+
+    public static void main(String[] args) {
+        System.out.println("test_StringBuilder_0");
+        System.out.println(test_StringBuilder_0(0));
+
+        System.out.println("\ntest_StringBuilder_1");
+        System.out.println(test_StringBuilder_1(0));
+        System.out.println(test_StringBuilder_1(1));
+
+        System.out.println("\ntest_StringBuilder_2");
+        System.out.println(test_StringBuilder_2(0));
+        System.out.println(test_StringBuilder_2(1));
+
+        System.out.println("\ntest_StringBuilder_3");
+        System.out.println(test_StringBuilder_3(0));
+    }
 
 
     // internal variables
@@ -9,9 +27,10 @@ public final class StringBuilder_Tests {
 
     // StringBuilderAutomaton::StringBuilder
     public static int test_StringBuilder_0(final int execution) {
-        if (execution == 0){
-            StringBuilder stringBuilder = new StringBuilder();
-            if (stringBuilder != null)
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if (execution == 0) {
+            if (stringBuilder != null && stringBuilder.length() == 0)
                 return 0;
             else
                 return -1;
@@ -22,18 +41,67 @@ public final class StringBuilder_Tests {
 
     // StringBuilderAutomaton::StringBuilder (CharSequence)
     public static int test_StringBuilder_1(final int execution) {
+
+        CharSequence sequence = "12";
+
+        if (execution == 0) {
+            StringBuilder stringBuilder = new StringBuilder(sequence);
+            if (stringBuilder != null && stringBuilder.length() == 2 && stringBuilder.charAt(0) == '1' && stringBuilder.charAt(1) == '2')
+                return 0;
+            else
+                return -1;
+        }
+
+        if (execution == 1) {
+            sequence = null;
+            StringBuilder stringBuilder = new StringBuilder(sequence);
+            if (stringBuilder.length() == 4 && stringBuilder.charAt(0) == 'n' && stringBuilder.charAt(3) == 'l')
+                return 1;
+            else
+                return -1;
+        }
         return -1;
     }
 
 
     // StringBuilderAutomaton::StringBuilder (String)
     public static int test_StringBuilder_2(final int execution) {
+
+        String sequence = "12";
+
+        if (execution == 0) {
+            StringBuilder stringBuilder = new StringBuilder(sequence);
+            if (stringBuilder != null && stringBuilder.length() == 2 && stringBuilder.charAt(0) == '1' && stringBuilder.charAt(1) == '2')
+                return 0;
+            else
+                return -1;
+        }
+
+        if (execution == 1) {
+            sequence = null;
+            StringBuilder stringBuilder = new StringBuilder(sequence);
+            if (stringBuilder.length() == 4 && stringBuilder.charAt(0) == 'n' && stringBuilder.charAt(3) == 'l')
+                return 1;
+            else
+                return -1;
+        }
         return -1;
     }
 
 
     // StringBuilderAutomaton::StringBuilder (int)
     public static int test_StringBuilder_3(final int execution) {
+
+        int capacity = 3;
+
+        if (execution == 0) {
+            StringBuilder stringBuilder = new StringBuilder(capacity);
+            if (stringBuilder != null && stringBuilder.length() == 0)
+                return 0;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
