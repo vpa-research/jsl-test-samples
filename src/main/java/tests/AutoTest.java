@@ -30,6 +30,42 @@ public final class AutoTest {
         Class[] exceptions() default {};
     }
 
+    private static final class StatCounter {
+        private int executed = 0;
+        private int failed = 0;
+        private int unique = 0;
+
+        public void add(final StatCounter other) {
+            executed += other.executed;
+            failed += other.failed;
+            unique += other.unique;
+        }
+
+        public int getExecuted() {
+            return executed;
+        }
+
+        public int getFailed() {
+            return failed;
+        }
+
+        public int getUniqueMethods() {
+            return unique;
+        }
+
+        public void countUniqueMethod() {
+            ++unique;
+        }
+
+        public void countExecution() {
+            ++executed;
+        }
+
+        public void countFailure() {
+            ++failed;
+        }
+    }
+
     private AutoTest() {
         suppressIllegalAccessWarning();
     }
@@ -48,10 +84,22 @@ public final class AutoTest {
     }
 
     private void run() {
+        final var stats = new StatCounter();
+
         for (var clazz : TEST_CLASSES)
-            runTestClass(clazz);
+            stats.add(runTestClass(clazz));
 
         System.out.println("[i] Done.");
+        renderStatistics(stats);
+    }
+
+    private void renderStatistics(final StatCounter stats) {
+        System.out.printf("[i] Final stats: %d failed out of %d executed in %d unique methods in %d classes.%n",
+                stats.getFailed(),
+                stats.getExecuted(),
+                stats.getUniqueMethods(),
+                TEST_CLASSES.size()
+        );
     }
 
     private static boolean isSuitableTestMethod(final Method method) {
@@ -65,27 +113,26 @@ public final class AutoTest {
                 Modifier.isPublic(mods);
     }
 
-    private void runTestClass(final Class<?> clazz) {
+    private StatCounter runTestClass(final Class<?> clazz) {
         System.out.printf("[c] Executing tests from '%s'%n", clazz.getCanonicalName());
 
         final var methods = clazz.getDeclaredMethods();
         Arrays.sort(methods, Comparator.comparing(Method::getName));
 
-        var executed = 0;
-        var failed = 0;
+        final var result = new StatCounter();
         for (var tm : methods)
-            if (isSuitableTestMethod(tm)) {
-                if (!runTestMethod(tm))
-                    ++failed;
-                ++executed;
-            }
+            if (isSuitableTestMethod(tm))
+                result.add(runTestMethod(tm));
 
-        System.out.printf("[c] Results: %d failing out of %d in '%s'%n",
-                failed, executed, clazz.getCanonicalName());
+        System.out.printf("[c] Results: %d/%d failing in '%s'%n",
+                result.getFailed(), result.getExecuted(), clazz.getCanonicalName());
+        return result;
     }
 
-    private boolean runTestMethod(final Method testMethod) {
+    private StatCounter runTestMethod(final Method testMethod) {
         final var testMethodName = testMethod.getName();
+        final var result = new StatCounter();
+        result.countUniqueMethod();
 
         final var allowedExceptions = getAllowedExceptions(testMethod);
 
@@ -96,8 +143,9 @@ public final class AutoTest {
                 throw new AssertionError("Invalid execution value: " + maxExecution);
 
             for (int exe = 0; exe < maxExecution; exe++) {
-                System.out.printf("[~] (%d/%d) %s...", exe + 1, maxExecution, testMethodName);
+                System.out.printf("[~] (%d\\%d) %s...", exe + 1, maxExecution, testMethodName);
 
+                result.countExecution();
                 final var res = (int) testMethod.invoke(null, exe);
                 if (res != exe) {
                     final var msg = "Expected " + exe + " but got " + res;
@@ -113,6 +161,7 @@ public final class AutoTest {
         }
 
         if (exception != null) {
+            result.countFailure();
             System.out.println("FAILED.");
 
             final var newTraceSize = patchException(exception, testMethod);
@@ -123,10 +172,9 @@ public final class AutoTest {
 
             if (QUIT_ON_FAIL)
                 System.exit(-1);
-            else
-                return false;
         }
-        return true;
+
+        return result;
     }
 
     private int getExecutionLimit(final Method testMethod) {
