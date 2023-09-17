@@ -3,17 +3,12 @@ package tests;
 import sun.misc.Unsafe;
 import tests.java.util.*;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-import static java.lang.annotation.ElementType.*;
-
-public final class AutoTest {
+public final class SelfTestMain {
     private static final Set<Class<?>> TEST_CLASSES = new LinkedHashSet<>(Arrays.<Class<?>>asList(new Class[]{
             ArrayList_Tests.class,
             ArrayListSpliterator_Tests.class,
@@ -21,14 +16,6 @@ public final class AutoTest {
             OptionalInt_Tests.class,
     }));
     private static final boolean QUIT_ON_FAIL = false;
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(value = {METHOD})
-    public @interface Test {
-        int maxExecution() default 0;
-
-        Class[] exceptions() default {};
-    }
 
     private static final class StatCounter {
         private int executed = 0;
@@ -66,7 +53,7 @@ public final class AutoTest {
         }
     }
 
-    private AutoTest() {
+    private SelfTestMain() {
         suppressIllegalAccessWarning();
     }
 
@@ -180,7 +167,7 @@ public final class AutoTest {
     private int getExecutionLimit(final Method testMethod) {
         final var test = testMethod.getAnnotation(Test.class);
         return test != null
-                ? test.maxExecution()
+                ? test.executionMax()
                 : 0;
     }
 
@@ -228,6 +215,6 @@ public final class AutoTest {
     }
 
     public static void main(String[] args) {
-        new AutoTest().run();
+        new SelfTestMain().run();
     }
 }

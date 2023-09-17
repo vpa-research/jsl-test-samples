@@ -1,6 +1,6 @@
 package tests.java.util;
 
-import tests.AutoTest;
+import tests.Test;
 
 import java.util.ArrayList;
 import java.util.Spliterator;
@@ -33,7 +33,7 @@ public final class ArrayListSpliterator_Tests {
 
 
     // ArrayListSpliteratorAutomaton::estimateSize
-    @AutoTest.Test(maxExecution = 1)
+    @Test(executionMax = 1)
     public static int test_estimateSize_0(final int execution) {
         switch (execution) {
             case 0: {
@@ -63,7 +63,7 @@ public final class ArrayListSpliterator_Tests {
 
 
     // ArrayListSpliteratorAutomaton::forEachRemaining (Consumer)
-    @AutoTest.Test(maxExecution = 1)
+    @Test(executionMax = 1)
     public static int test_forEachRemaining_0(final int execution) {
         switch (execution) {
             case 0: {
@@ -105,7 +105,7 @@ public final class ArrayListSpliterator_Tests {
 
 
     // ArrayListSpliteratorAutomaton::getExactSizeIfKnown
-    @AutoTest.Test(maxExecution = 1)
+    @Test(executionMax = 1)
     public static int test_getExactSizeIfKnown_0(final int execution) {
         switch (execution) {
             case 0: {
@@ -152,7 +152,7 @@ public final class ArrayListSpliterator_Tests {
 
 
     // ArrayListSpliteratorAutomaton::tryAdvance (Consumer)
-    @AutoTest.Test(maxExecution = 2, exceptions = {NullPointerException.class})
+    @Test(executionMax = 2, exceptions = {NullPointerException.class})
     public static int test_tryAdvance_0(final int execution) {
         switch (execution) {
             case 0: {
@@ -204,7 +204,7 @@ public final class ArrayListSpliterator_Tests {
 
 
     // ArrayListSpliteratorAutomaton::trySplit
-    @AutoTest.Test(maxExecution = 1)
+    @Test(executionMax = 1)
     public static int test_trySplit_0(final int execution) {
         switch (execution) {
             case 0: {
