@@ -17,10 +17,16 @@ public final class SelfTestMain {
     }));
     private static final boolean QUIT_ON_FAIL = false;
     private static final boolean SUPPRESS_ILLEGAL_REFLECTION_ACCESS = false;
+    private static final Class<?> TEST_METHOD_RETURN_TYPE = int.class;
+    private static final Class<?>[] TEST_METHOD_PARAMETER_TYPES = new Class[]{
+            int.class
+    };
 
-    private static class TestInfrastructureException extends Error {
-        TestInfrastructureException(final String msg) {
-            super(msg);
+    private static class TestInfrastructureException extends Throwable {
+        TestInfrastructureException(final String format, final Object... objects) {
+            super(objects.length != 0
+                    ? String.format(format, objects)
+                    : format);
         }
 
         @Override
@@ -134,39 +140,93 @@ public final class SelfTestMain {
         final var testMethodName = testMethod.getName();
         final var stats = new StatCounter();
 
-        // reading configuration
-        final var allowedExceptions = getAllowedExceptions(testMethod);
-        final var maxExecution = getExecutionLimit(testMethod) + 1;
-        if (maxExecution <= 0)
-            throw new AssertionError("Invalid execution value: " + maxExecution);
+        try {
+            // sanity checks
+            checkTestMethod(testMethod);
 
-        // running individual cases
-        stats.countUniqueMethod();
-        for (int exe = 0; exe < maxExecution; exe++) {
-            System.out.printf("[~] (%d\\%d) %s...", exe + 1, maxExecution, testMethodName);
-
-            final var exception = runTestCase(testMethod, exe);
-            stats.countExecution();
-
-            if (exception == null || allowedExceptions.contains(exception.getClass())) {
-                System.out.println("ok");
-            } else {
-                stats.countFailure();
-                System.out.println("FAILED.");
-
-                final var newTraceSize = patchException(exception, testMethod);
-                if (newTraceSize > 0)
-                    exception.printStackTrace(System.out);
-                else
-                    System.out.println(exception.getMessage());
-
-                if (QUIT_ON_FAIL)
-                    System.exit(-1);
+            // reading test configuration
+            final var metadata = getTestMetadata(testMethod);
+            final var shouldIgnore = getTestDisabled(metadata);
+            if (shouldIgnore) {
+                System.out.printf("[-] (?\\?) #%s - DISABLED", testMethodName);
+                return stats;
             }
+            final var maxExecution = getTestExecutionLimit(metadata) + 1;
+            if (maxExecution <= 0)
+                throw new TestInfrastructureException("Invalid max execution value: %s", maxExecution - 1);
+            final var allowedExceptions = getTestAllowedExceptions(metadata);
+
+            // running individual cases
+            stats.countUniqueMethod();
+            for (int exe = 0; exe < maxExecution; exe++) {
+                System.out.printf("[~] (%d\\%d) #%s...", exe + 1, maxExecution, testMethodName);
+
+                final var exception = runTestCase(testMethod, exe);
+                stats.countExecution();
+
+                if (exception == null || isExceptionAllowed(exception, allowedExceptions)) {
+                    System.out.println("ok");
+                } else {
+                    stats.countFailure();
+                    System.out.println("FAILED.");
+
+                    final var newTraceSize = patchException(exception, testMethod);
+                    if (newTraceSize > 0)
+                        exception.printStackTrace(System.out);
+                    else
+                        System.out.println(exception.getMessage());
+
+                    if (QUIT_ON_FAIL)
+                        System.exit(-1);
+                }
+            }
+        } catch (TestInfrastructureException e) {
+            System.out.printf("[~] (?\\?) #%s - INVALID", testMethodName);
+            System.out.printf("[x] %s%n", e.getMessage());
+            return stats;
         }
 
         // reply with statistics
         return stats;
+    }
+
+    private static void checkTestMethod(Method testMethod) throws TestInfrastructureException {
+        // return value
+        final var returnType = testMethod.getReturnType();
+        if (returnType != TEST_METHOD_RETURN_TYPE)
+            throw new TestInfrastructureException(
+                    "Unexpected return type: expecting '%s' but got '%s'%n",
+                    int.class.getCanonicalName(),
+                    returnType.getCanonicalName()
+            );
+
+        // parameters
+        final var parameters = testMethod.getParameters();
+        if (parameters.length != TEST_METHOD_PARAMETER_TYPES.length)
+            throw new TestInfrastructureException(
+                    "Invalid test parameter count: expecting %d but got %d",
+                    TEST_METHOD_PARAMETER_TYPES.length,
+                    parameters.length
+            );
+        for (int i = 0; i < parameters.length; i++) {
+            final var expected = TEST_METHOD_PARAMETER_TYPES[i];
+            final var actual = parameters[i].getType();
+            if (actual != expected)
+                throw new TestInfrastructureException(
+                        "Invalid type for parameter #%d: expecting '%s' but got '%s'",
+                        expected.getCanonicalName(),
+                        actual.getCanonicalName()
+                );
+        }
+    }
+
+    private static boolean isExceptionAllowed(final Throwable exception,
+                                              final Collection<Class<?>> allowedExceptions) {
+        final var caught = exception.getClass();
+        for (var e : allowedExceptions)
+            if (e == caught || e.isAssignableFrom(caught))
+                return true;
+        return false;
     }
 
     private Throwable runTestCase(final Method testMethod, final int execution) {
@@ -184,18 +244,24 @@ public final class SelfTestMain {
         }
     }
 
-    private int getExecutionLimit(final Method testMethod) {
-        final var test = testMethod.getAnnotation(Test.class);
-        return test != null
-                ? test.executionMax()
+    private static Test getTestMetadata(final Method testMethod) {
+        return testMethod.getAnnotation(Test.class);
+    }
+
+    private static int getTestExecutionLimit(final Test metadata) {
+        return metadata != null
+                ? metadata.executionMax()
                 : 0;
     }
 
-    private Collection<Class<?>> getAllowedExceptions(final Method testMethod) {
-        final var test = testMethod.getAnnotation(Test.class);
-        return test != null
-                ? Arrays.<Class<?>>asList(test.exceptions())
+    private static Collection<Class<?>> getTestAllowedExceptions(final Test metadata) {
+        return metadata != null
+                ? Arrays.asList(metadata.exceptions())
                 : List.of();
+    }
+
+    private static boolean getTestDisabled(final Test metadata) {
+        return metadata != null && metadata.disabled();
     }
 
     private int patchException(final Throwable exception, final Method testMethod) {

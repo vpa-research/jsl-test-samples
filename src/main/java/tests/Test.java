@@ -11,7 +11,7 @@ import static java.lang.annotation.ElementType.METHOD;
 public @interface Test {
     int executionMax() default 0;
 
-    Class[] exceptions() default {};
+    Class<?>[] exceptions() default {};
 
-    boolean ignore() default false;
+    boolean disabled() default false;
 }
