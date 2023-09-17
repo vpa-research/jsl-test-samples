@@ -16,6 +16,18 @@ public final class SelfTestMain {
             OptionalInt_Tests.class,
     }));
     private static final boolean QUIT_ON_FAIL = false;
+    private static final boolean SUPPRESS_ILLEGAL_REFLECTION_ACCESS = false;
+
+    private static class TestInfrastructureException extends Error {
+        TestInfrastructureException(final String msg) {
+            super(msg);
+        }
+
+        @Override
+        public synchronized Throwable fillInStackTrace() {
+            return this;
+        }
+    }
 
     private static final class StatCounter {
         private int executed = 0;
@@ -54,7 +66,8 @@ public final class SelfTestMain {
     }
 
     private SelfTestMain() {
-        suppressIllegalAccessWarning();
+        if (SUPPRESS_ILLEGAL_REFLECTION_ACCESS)
+            suppressIllegalAccessWarning();
     }
 
     private static void suppressIllegalAccessWarning() {
@@ -111,57 +124,64 @@ public final class SelfTestMain {
             if (isSuitableTestMethod(tm))
                 result.add(runTestMethod(tm));
 
-        System.out.printf("[c] Results: %d/%d failing in '%s'%n",
+        System.out.printf("[c] Results: %d/%d failing in '%s'%n%n",
                 result.getFailed(), result.getExecuted(), clazz.getCanonicalName());
         return result;
     }
 
     private StatCounter runTestMethod(final Method testMethod) {
+        // preparations
         final var testMethodName = testMethod.getName();
-        final var result = new StatCounter();
-        result.countUniqueMethod();
+        final var stats = new StatCounter();
 
+        // reading configuration
         final var allowedExceptions = getAllowedExceptions(testMethod);
+        final var maxExecution = getExecutionLimit(testMethod) + 1;
+        if (maxExecution <= 0)
+            throw new AssertionError("Invalid execution value: " + maxExecution);
 
-        Throwable exception = null;
-        try {
-            final var maxExecution = getExecutionLimit(testMethod) + 1;
-            if (maxExecution <= 0)
-                throw new AssertionError("Invalid execution value: " + maxExecution);
+        // running individual cases
+        stats.countUniqueMethod();
+        for (int exe = 0; exe < maxExecution; exe++) {
+            System.out.printf("[~] (%d\\%d) %s...", exe + 1, maxExecution, testMethodName);
 
-            for (int exe = 0; exe < maxExecution; exe++) {
-                System.out.printf("[~] (%d\\%d) %s...", exe + 1, maxExecution, testMethodName);
+            final var exception = runTestCase(testMethod, exe);
+            stats.countExecution();
 
-                result.countExecution();
-                final var res = (int) testMethod.invoke(null, exe);
-                if (res != exe) {
-                    final var msg = "Expected " + exe + " but got " + res;
-                    throw new AssertionError(msg);
-                }
-
+            if (exception == null || allowedExceptions.contains(exception.getClass())) {
                 System.out.println("ok");
+            } else {
+                stats.countFailure();
+                System.out.println("FAILED.");
+
+                final var newTraceSize = patchException(exception, testMethod);
+                if (newTraceSize > 0)
+                    exception.printStackTrace(System.out);
+                else
+                    System.out.println(exception.getMessage());
+
+                if (QUIT_ON_FAIL)
+                    System.exit(-1);
             }
+        }
+
+        // reply with statistics
+        return stats;
+    }
+
+    private Throwable runTestCase(final Method testMethod, final int execution) {
+        try {
+            final var res = (int) testMethod.invoke(null, execution);
+            if (res != execution) {
+                final var msg = "Expected " + execution + " but got " + res;
+                throw new AssertionError(msg);
+            }
+            return null;
         } catch (InvocationTargetException e) {
-            exception = e.getCause();
+            return e.getCause();
         } catch (Throwable e) {
-            exception = e;
+            return e;
         }
-
-        if (exception != null) {
-            result.countFailure();
-            System.out.println("FAILED.");
-
-            final var newTraceSize = patchException(exception, testMethod);
-            if (newTraceSize > 0)
-                exception.printStackTrace(System.out);
-            else
-                System.out.println(exception.getMessage());
-
-            if (QUIT_ON_FAIL)
-                System.exit(-1);
-        }
-
-        return result;
     }
 
     private int getExecutionLimit(final Method testMethod) {
@@ -204,13 +224,10 @@ public final class SelfTestMain {
         }
         final var newTrace = newTraceList.toArray(StackTraceElement[]::new);
 
-        try {
-            final var f = Throwable.class.getDeclaredField("stackTrace");
-            f.setAccessible(true);
-            f.set(exception, newTrace);
-        } catch (Exception ignore) {
-        }
+        // overwrite the stack trace
+        exception.setStackTrace(newTrace);
 
+        // reply with the size of the trace
         return newTrace.length;
     }
 
