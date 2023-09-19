@@ -1,9 +1,70 @@
 package tests.java.lang;
 
 
-import java.lang.StringBuffer;
-
 public final class StringBuffer_Tests {
+
+    public static void main(String[] args) {
+        System.out.println("test_StringBuffer_0");
+        System.out.println(test_StringBuffer_0(0));
+
+        System.out.println("\ntest_StringBuffer_1");
+        System.out.println(test_StringBuffer_1(0));
+        System.out.println(test_StringBuffer_1(1));
+
+        System.out.println("\ntest_StringBuffer_2");
+        System.out.println(test_StringBuffer_2(0));
+        System.out.println(test_StringBuffer_2(1));
+
+        System.out.println("\ntest_StringBuffer_3");
+        System.out.println(test_StringBuffer_3(0));
+
+        System.out.println("\ntest_append_10");
+        System.out.println(test_append_10(0));
+        System.out.println(test_append_10(1));
+        System.out.println(test_append_10(2));
+        System.out.println(test_append_10(3));
+
+
+        System.out.println("\ntest_append_11");
+        System.out.println(test_append_11(0));
+        System.out.println(test_append_11(1));
+        System.out.println(test_append_11(2));
+        System.out.println(test_append_11(3));
+
+
+        System.out.println("\ntest_append_12");
+        System.out.println(test_append_12(0));
+        System.out.println(test_append_12(1));
+        System.out.println(test_append_12(2));
+        System.out.println(test_append_12(3));
+
+
+        System.out.println("\ntest_append_0");
+        System.out.println(test_append_0(0));
+        System.out.println(test_append_0(1));
+        System.out.println(test_append_0(2));
+        System.out.println(test_append_0(3));
+
+        System.out.println("\ntest_append_1");
+        System.out.println(test_append_1(0));
+        System.out.println(test_append_1(1));
+        System.out.println(test_append_1(2));
+        System.out.println(test_append_1(3));
+
+
+        System.out.println("\ntest_append_3");
+        System.out.println(test_append_3(0));
+        System.out.println(test_append_3(1));
+        System.out.println(test_append_3(2));
+        System.out.println(test_append_3(3));
+
+
+        System.out.println("\ntest_append_4");
+        System.out.println(test_append_4(0));
+        System.out.println(test_append_4(1));
+        System.out.println(test_append_4(2));
+        System.out.println(test_append_4(3));
+    }
 
     // internal variables
 
@@ -11,24 +72,80 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::StringBuffer
     public static int test_StringBuffer_0(final int execution) {
+        if (execution == 0) {
+            StringBuffer stringBuffer = new StringBuffer();
+            if (stringBuffer.length() == 0)
+                return 0;
+            else
+                return -1;
+        }
         return -1;
     }
 
 
     // StringBufferAutomaton::StringBuffer (CharSequence)
     public static int test_StringBuffer_1(final int execution) {
+
+        CharSequence sequence = "12";
+
+        if (execution == 0) {
+            StringBuffer stringBuffer = new StringBuffer(sequence);
+            if (stringBuffer != null && stringBuffer.length() == 2 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(1) == '2')
+                return 0;
+            else
+                return -1;
+        }
+
+        if (execution == 1) {
+            sequence = null;
+            try {
+                StringBuffer stringBuffer = new StringBuffer(sequence);
+            } catch (NullPointerException e) {
+                return 1;
+            }
+            return -1;
+        }
         return -1;
     }
 
 
     // StringBufferAutomaton::StringBuffer (String)
     public static int test_StringBuffer_2(final int execution) {
+        String sequence = "12";
+
+        if (execution == 0) {
+            StringBuffer stringBuffer = new StringBuffer(sequence);
+            if (stringBuffer != null && stringBuffer.length() == 2 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(1) == '2')
+                return 0;
+            else
+                return -1;
+        }
+
+        if (execution == 1) {
+            sequence = null;
+            try {
+                StringBuffer stringBuffer = new StringBuffer(sequence);
+            } catch (NullPointerException e) {
+                return 1;
+            }
+            return -1;
+        }
         return -1;
     }
 
 
     // StringBufferAutomaton::StringBuffer (int)
     public static int test_StringBuffer_3(final int execution) {
+        int capacity = 4;
+        StringBuffer stringBuffer = new StringBuffer(capacity);
+
+        if (execution == 0) {
+            if (stringBuffer.length() == 0)
+                return 0;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
@@ -39,12 +156,87 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::append (CharSequence)
     public static int test_append_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        CharSequence sequence_1 = null;
+        stringBuffer.append(sequence_1);
+        if (execution == 0) {
+            if (stringBuffer.length() == 4 && stringBuffer.toString().equals("null"))
+                return 0;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_2 = "anystring1";
+        stringBuffer.append(sequence_2);
+        if (execution == 1) {
+            if (stringBuffer.length() == 14 && stringBuffer.charAt(12) == 'g')
+                return 1;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_3 = "слово";
+        stringBuffer.append(sequence_3);
+        if (execution == 2) {
+            if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
+                return 2;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_4 = new String(new int[]{80_000}, 0, 1);
+        stringBuffer.append(sequence_4);
+        if (execution == 3) {
+            if (stringBuffer.length() == 21 && stringBuffer.charAt(12) == 'g')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
 
     // StringBufferAutomaton::append (CharSequence, int, int)
     public static int test_append_1(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("test");
+        CharSequence sequence_1 = null;
+        stringBuffer.append(sequence_1, 1, 3);
+        if (execution == 0) {
+            if (stringBuffer.length() == 6 && stringBuffer.charAt(5) == 'l')
+                return 0;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_2 = "anystring1";
+        stringBuffer.append(sequence_2, 0, 0);
+        if (execution == 1) {
+            if (stringBuffer.length() == 6 && stringBuffer.charAt(5) == 'l')
+                return 1;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_3 = "anystring1";
+        if (execution == 2) {
+            try {
+                stringBuffer.append(sequence_3, 0, 1000);
+            } catch (IndexOutOfBoundsException e) {
+                return 2;
+            }
+            return -1;
+        }
+
+        CharSequence sequence_4 = new String(new int[]{80_000}, 0, 1);
+        stringBuffer.append(sequence_4, 0, 1);
+        if (execution == 3) {
+            if (stringBuffer.length() == 7)
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
@@ -57,12 +249,87 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::append (String)
     public static int test_append_3(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        String sequence_1 = null;
+        stringBuffer.append(sequence_1);
+        if (execution == 0) {
+            if (stringBuffer.length() == 4 && stringBuffer.toString().equals("null"))
+                return 0;
+            else
+                return -1;
+        }
+
+        String sequence_2 = "anystring1";
+        stringBuffer.append(sequence_2);
+        if (execution == 1) {
+            if (stringBuffer.length() == 14 && stringBuffer.charAt(12) == 'g')
+                return 1;
+            else
+                return -1;
+        }
+
+        String sequence_3 = "слово";
+        stringBuffer.append(sequence_3);
+        if (execution == 2) {
+            if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
+                return 2;
+            else
+                return -1;
+        }
+
+        String sequence_4 = new String(new int[]{80_000}, 0, 1);
+        stringBuffer.append(sequence_4);
+        if (execution == 3) {
+            if (stringBuffer.length() == 21 && stringBuffer.charAt(12) == 'g')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
 
     // StringBufferAutomaton::append (StringBuffer)
     public static int test_append_4(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        StringBuffer sequence_1 = null;
+        stringBuffer.append(sequence_1);
+        if (execution == 0) {
+            if (stringBuffer.length() == 4 && stringBuffer.toString().equals("null"))
+                return 0;
+            else
+                return -1;
+        }
+
+        StringBuffer sequence_2 = new StringBuffer("anystring1");
+        stringBuffer.append(sequence_2);
+        if (execution == 1) {
+            if (stringBuffer.length() == 14 && stringBuffer.charAt(12) == 'g')
+                return 1;
+            else
+                return -1;
+        }
+
+        StringBuffer sequence_3 = new StringBuffer("слово");
+        stringBuffer.append(sequence_3);
+        System.out.println(stringBuffer.length());
+        if (execution == 2) {
+            if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
+                return 2;
+            else
+                return -1;
+        }
+
+        StringBuffer sequence_4 = new StringBuffer(new String(new int[]{80_000}, 0, 1));
+        stringBuffer.append(sequence_4);
+        if (execution == 3) {
+            if (stringBuffer.length() == 21 && stringBuffer.charAt(12) == 'g')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
@@ -99,18 +366,120 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::append (float)
     public static int test_append_10(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(1.0F);
+        if (execution == 0) {
+            if (stringBuffer.length() == 3 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(1) == '.')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(23.34F);
+        if (execution == 1) {
+            if (stringBuffer.length() == 8 && stringBuffer.charAt(5) == '.' && stringBuffer.charAt(7) == '4')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(Float.MAX_VALUE);
+        if (execution == 2) {
+            if (stringBuffer.length() == 20 && stringBuffer.charAt(17) == 'E' && stringBuffer.charAt(19) == '8')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(12e-1F);
+        if (execution == 3) {
+            if (stringBuffer.length() == 23 && stringBuffer.charAt(21) == '.' && stringBuffer.charAt(22) == '2')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
 
     // StringBufferAutomaton::append (int)
     public static int test_append_11(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(1);
+
+        if (execution == 0) {
+            if (stringBuffer.length() == 1 && stringBuffer.charAt(0) == '1')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(23);
+        if (execution == 1) {
+            if (stringBuffer.length() == 3 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(2) == '3')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(Integer.MAX_VALUE);
+        if (execution == 2) {
+            if (stringBuffer.length() == 13 && stringBuffer.charAt(10) == '6' && stringBuffer.charAt(12) == '7')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(-10);
+
+        if (execution == 3) {
+            if (stringBuffer.length() == 16 && stringBuffer.charAt(13) == '-' && stringBuffer.charAt(15) == '0')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
 
     // StringBufferAutomaton::append (long)
     public static int test_append_12(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(1L);
+
+        if (execution == 0) {
+            if (stringBuffer.length() == 1 && stringBuffer.charAt(0) == '1')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(23L);
+        if (execution == 1) {
+            if (stringBuffer.length() == 3 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(2) == '3')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(Long.MAX_VALUE);
+        if (execution == 2) {
+            if (stringBuffer.length() == 22 && stringBuffer.charAt(18) == '5' && stringBuffer.charAt(21) == '7')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(-10L);
+
+        if (execution == 3) {
+            if (stringBuffer.length() == 25 && stringBuffer.charAt(22) == '-' && stringBuffer.charAt(23) == '1')
+                return 3;
+            else
+                return -1;
+        }
         return -1;
     }
 
