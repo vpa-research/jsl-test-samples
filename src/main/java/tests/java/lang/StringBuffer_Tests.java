@@ -1,6 +1,9 @@
 package tests.java.lang;
 
 
+import java.util.ArrayList;
+import java.util.Date;
+
 public final class StringBuffer_Tests {
 
     public static void main(String[] args) {
@@ -243,6 +246,44 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::append (Object)
     public static int test_append_2(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        Object sequence_1 = null;
+        stringBuffer.append(sequence_1);
+        if (execution == 0) {
+            if (stringBuffer.length() == 4 && stringBuffer.toString().equals("null"))
+                return 0;
+            else
+                return -1;
+        }
+
+        Date date = new Date();
+        Object sequence_2 = date;
+        stringBuffer.append(sequence_2);
+        if (execution == 1) {
+            if (stringBuffer.toString().equals("null" + date))
+                return 1;
+            else
+                return -1;
+        }
+
+        Object sequence_3 = "слово";
+        stringBuffer.append(sequence_3);
+        if (execution == 2) {
+            if (stringBuffer.charAt(stringBuffer.length()-1) == sequence_3.toString().charAt(4))
+                return 2;
+            else
+                return -1;
+        }
+
+        Object sequence_4 = new ArrayList<Integer>().add(2);
+        stringBuffer.append(sequence_4);
+        if (execution == 3) {
+            if (stringBuffer.charAt(stringBuffer.length()-1) == '2')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
