@@ -472,6 +472,47 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::append (char[], int, int)
     public static int test_append_8(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        char[] ch1 = {'b', 'a', 'c'};
+        stringBuffer.append(ch1, 1, 2);
+        if (execution == 0) {
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == 'c')
+                return 0;
+            else
+                return -1;
+        }
+
+        char[] ch2 = {'!', 'в', '.'};
+        stringBuffer.append(ch2, 0, 3);
+        if (execution == 1) {
+            if (stringBuffer.length() == 5 && stringBuffer.charAt(4) == '.')
+                return 1;
+            else
+                return -1;
+        }
+
+        char[] ch3 = {'а', 'б', 'в', 'г'};
+        if (execution == 2) {
+            try {
+                stringBuffer.append(ch3, 1, -1);
+                return -1;
+            }catch (IndexOutOfBoundsException e) {
+                return 2;
+            }
+
+        }
+
+        char[] ch4 = {'1', '2', '3'};
+        stringBuffer.append(ch4, 1, 5);
+        if (execution == 3) {
+            try {
+                stringBuffer.append(ch4, 1, -1);
+                return -1;
+            }catch (IndexOutOfBoundsException e) {
+                return 3;
+            }
+        }
+
         return -1;
     }
 
