@@ -519,6 +519,39 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::append (double)
     public static int test_append_9(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(1.0);
+        if (execution == 0) {
+            if (stringBuffer.length() == 3 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(1) == '.')
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(23.34);
+        if (execution == 1) {
+            if (stringBuffer.length() == 8 && stringBuffer.charAt(5) == '.' && stringBuffer.charAt(7) == '4')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(Double.MAX_VALUE);
+        if (execution == 2) {
+            if (stringBuffer.length() == 30 && stringBuffer.charAt(26) == 'E' && stringBuffer.charAt(29) == '8')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(12e-1);
+        if (execution == 3) {
+            if (stringBuffer.length() == 33 && stringBuffer.charAt(31) == '.' && stringBuffer.charAt(32) == '2')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
