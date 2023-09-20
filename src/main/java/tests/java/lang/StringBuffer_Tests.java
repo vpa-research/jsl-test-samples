@@ -404,6 +404,34 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::append (char)
     public static int test_append_6(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        char ch1 = 'b';
+        stringBuffer.append(ch1);
+        if (execution == 0) {
+            if (stringBuffer.length() == 1 && stringBuffer.charAt(0) == 'b')
+                return 0;
+            else
+                return -1;
+        }
+
+        char ch2 = 'д';
+        stringBuffer.append(ch2);
+        if (execution == 1) {
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == 'д')
+                return 1;
+            else
+                return -1;
+        }
+
+        char ch3 = '\\';
+        stringBuffer.append(ch3);
+        if (execution == 2) {
+            if (stringBuffer.length() == 3 && stringBuffer.charAt(2) == '\\')
+                return 2;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
