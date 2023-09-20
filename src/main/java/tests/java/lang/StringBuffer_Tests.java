@@ -275,10 +275,13 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        Object sequence_4 = new ArrayList<Integer>().add(2);
+        ArrayList<Integer> a = new ArrayList<>();
+        a.add(2);
+        a.add(-200);
+        Object sequence_4 = a;
         stringBuffer.append(sequence_4);
         if (execution == 3) {
-            if (stringBuffer.charAt(stringBuffer.length()-1) == '2')
+            if (stringBuffer.charAt(stringBuffer.length()-1) == ']')
                 return 3;
             else
                 return -1;
@@ -377,6 +380,24 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::append (boolean)
     public static int test_append_5(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(false);
+        if (execution == 0) {
+            if (stringBuffer.length() == 5 && stringBuffer.toString().equals("false"))
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuffer.append(true);
+        if (execution == 1) {
+            if (stringBuffer.length() == 9 && stringBuffer.toString().equals("falsetrue"))
+                return 1;
+            else
+                return -1;
+        }
+
+
         return -1;
     }
 
