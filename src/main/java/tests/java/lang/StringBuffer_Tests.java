@@ -269,7 +269,7 @@ public final class StringBuffer_Tests {
         Object sequence_3 = "слово";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
-            if (stringBuffer.charAt(stringBuffer.length()-1) == sequence_3.toString().charAt(4))
+            if (stringBuffer.charAt(stringBuffer.length() - 1) == sequence_3.toString().charAt(4))
                 return 2;
             else
                 return -1;
@@ -281,7 +281,7 @@ public final class StringBuffer_Tests {
         Object sequence_4 = a;
         stringBuffer.append(sequence_4);
         if (execution == 3) {
-            if (stringBuffer.charAt(stringBuffer.length()-1) == ']')
+            if (stringBuffer.charAt(stringBuffer.length() - 1) == ']')
                 return 3;
             else
                 return -1;
@@ -496,7 +496,7 @@ public final class StringBuffer_Tests {
             try {
                 stringBuffer.append(ch3, 1, -1);
                 return -1;
-            }catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 return 2;
             }
 
@@ -508,7 +508,7 @@ public final class StringBuffer_Tests {
             try {
                 stringBuffer.append(ch4, 1, -1);
                 return -1;
-            }catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 return 3;
             }
         }
@@ -678,6 +678,41 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::appendCodePoint (int)
     public static int test_appendCodePoint_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+
+        if (execution == 0) {
+            try {
+                stringBuffer.appendCodePoint(-1);
+                return -1;
+            } catch (IllegalArgumentException e) {
+                return 0;
+            }
+        }
+
+        stringBuffer.appendCodePoint(65);
+        if (execution == 1) {
+            if (stringBuffer.length() == 1 && stringBuffer.charAt(0) == 'A')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.appendCodePoint(1074);
+        if (execution == 2) {
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == 'в')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.appendCodePoint(32);
+
+        if (execution == 3) {
+            if (stringBuffer.length() == 3 && stringBuffer.charAt(2) == ' ')
+                return 3;
+            else
+                return -1;
+        }
         return -1;
     }
 
