@@ -829,6 +829,40 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::compareTo (StringBuffer)
     public static int test_compareTo_0(final int execution) {
+        StringBuffer stringBuffer1 = new StringBuffer();
+        StringBuffer stringBuffer2 = new StringBuffer("aaaaaaaaaa");
+        StringBuffer stringBuffer3 = new StringBuffer("bbbbb");
+        StringBuffer stringBuffer4 = stringBuffer1;
+        StringBuffer stringBuffer5 = new StringBuffer();
+
+        if (execution == 0) {
+            if (stringBuffer1.compareTo(stringBuffer4) == 0)
+                return 0;
+            else
+                return -1;
+        }
+
+        if (execution == 1) {
+            if (stringBuffer2.compareTo(stringBuffer1) == 10)
+                return 1;
+            else
+                return -1;
+        }
+
+        if (execution == 2) {
+            if (stringBuffer3.compareTo(stringBuffer2) == -5)
+                return 2;
+            else
+                return -1;
+        }
+
+        if (execution == 3) {
+            if (stringBuffer1.compareTo(stringBuffer5) == 0)
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
