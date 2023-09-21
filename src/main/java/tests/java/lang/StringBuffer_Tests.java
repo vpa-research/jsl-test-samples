@@ -734,7 +734,7 @@ public final class StringBuffer_Tests {
             else
                 return -1;
         }
-        char[] space100 =new char[100];
+        char[] space100 = new char[100];
         stringBuffer.append(space100);
         if (execution == 2) {
             if (stringBuffer.length() == 105)
@@ -757,6 +757,42 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::charAt (int)
     public static int test_charAt_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("text for тест 0!");
+
+        if (execution == 0) {
+            try {
+                stringBuffer.charAt(100);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        if (execution == 1) {
+            try {
+                stringBuffer.charAt(-2);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+
+        if (execution == 2) {
+            if (stringBuffer.charAt(9) == 'т')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.append('в');
+        if (execution == 3) {
+            if (stringBuffer.charAt(0) == 't')
+                return 2;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
