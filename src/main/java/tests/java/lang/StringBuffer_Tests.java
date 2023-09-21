@@ -773,7 +773,7 @@ public final class StringBuffer_Tests {
                 stringBuffer.charAt(-2);
                 return -1;
             } catch (IndexOutOfBoundsException e) {
-                return 0;
+                return 1;
             }
         }
 
@@ -788,7 +788,7 @@ public final class StringBuffer_Tests {
         stringBuffer.append('в');
         if (execution == 3) {
             if (stringBuffer.charAt(0) == 't')
-                return 2;
+                return 3;
             else
                 return -1;
         }
@@ -869,6 +869,44 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::delete (int, int)
     public static int test_delete_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+
+        if (execution == 0) {
+            try {
+                stringBuffer.delete(-1, 2);
+                return -1;
+            } catch (StringIndexOutOfBoundsException  e) {
+                return 0;
+            }
+        }
+
+        if (execution == 1) {
+            try {
+                stringBuffer.delete(1, 12);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 1;
+            }
+        }
+
+
+        if (execution == 2) {
+            try {
+                stringBuffer.delete(2, 1);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 2;
+            }
+        }
+
+        stringBuffer.delete(3,7);
+        if (execution == 3) {
+            if (stringBuffer.length() == 6 && stringBuffer.charAt(3) == '7')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
