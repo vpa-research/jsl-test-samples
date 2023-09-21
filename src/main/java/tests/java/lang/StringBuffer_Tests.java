@@ -913,6 +913,43 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::deleteCharAt (int)
     public static int test_deleteCharAt_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+
+        if (execution == 0) {
+            try {
+                stringBuffer.deleteCharAt(-1);
+                return -1;
+            } catch (StringIndexOutOfBoundsException  e) {
+                return 0;
+            }
+        }
+
+        if (execution == 1) {
+            try {
+                stringBuffer.deleteCharAt(10);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 1;
+            }
+        }
+
+        stringBuffer.deleteCharAt(6);
+        if (execution == 2) {
+                if (stringBuffer.length() == 9 && stringBuffer.charAt(6) == 7)
+                    return 2;
+                else
+                    return -1;
+
+        }
+
+        stringBuffer.deleteCharAt(8);
+        if (execution == 3) {
+            if (stringBuffer.length() == 8 && stringBuffer.charAt(7) == '8')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
