@@ -719,6 +719,38 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::capacity
     public static int test_capacity_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (execution == 0) {
+            if (stringBuffer.length() == 0)
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuffer.append("test1");
+        if (execution == 1) {
+            if (stringBuffer.length() == 5)
+                return 1;
+            else
+                return -1;
+        }
+        char[] space100 =new char[100];
+        stringBuffer.append(space100);
+        if (execution == 2) {
+            if (stringBuffer.length() == 105)
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.append('в');
+        if (execution == 3) {
+            if (stringBuffer.length() == 106)
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
