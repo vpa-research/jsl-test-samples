@@ -1072,7 +1072,35 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::getChars (int, int, char[], int)
     public static int test_getChars_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
-        //stringBuffer.getChars();
+        char[] chars = {'a','b', 'c', 'd', 'e', 'f'};
+
+        if (execution == 0) {
+            try {
+                stringBuffer.getChars(1, 12, chars, 1);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        if (execution == 1) {
+            try {
+                stringBuffer.getChars(1, 5, chars, 4);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 1;
+            }
+        }
+
+        if (execution == 2) {
+            stringBuffer.getChars(2, 4, chars, 1);
+            if (chars[1] == stringBuffer.charAt(2) && chars[2] == stringBuffer.charAt(3))
+                return 2;
+            else
+                return -1;
+
+        }
+
         return -1;
     }
 
