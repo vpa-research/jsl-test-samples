@@ -1164,6 +1164,45 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::insert (int, CharSequence, int, int)
     public static int test_insert_1(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        CharSequence sequence_1 = null;
+
+        if (execution == 0) {
+            try {
+                stringBuffer.insert(0, sequence_1, 3, 2);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return  0;
+            }
+        }
+
+        stringBuffer.insert(0, sequence_1, 1, 3);
+        if (execution == 1) {
+            if (stringBuffer.length() == 2 && stringBuffer.toString().equals("ul"))
+                return 1;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_2 = "anystring1";
+
+        stringBuffer.insert(1, sequence_2, 9, 10);
+        if (execution == 2) {
+            if (stringBuffer.length() == 3 && stringBuffer.charAt(1) == sequence_2.charAt(9))
+                return 2;
+            else
+                return -1;
+        }
+
+        CharSequence sequence_3 = "слово";
+        stringBuffer.insert(3, sequence_3, 2, 5);
+        if (execution == 3) {
+            if (stringBuffer.length() == 6 && stringBuffer.charAt(5) == 'о')
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
