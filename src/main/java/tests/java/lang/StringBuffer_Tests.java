@@ -844,12 +844,88 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::codePointBefore (int)
     public static int test_codePointBefore_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+
+        if (execution == 0) {
+            try {
+                stringBuffer.codePointBefore(0);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+
+        if (execution == 1) {
+            try {
+                stringBuffer.codePointBefore(-1);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 1;
+            }
+        }
+
+        stringBuffer.append("test");
+        if (execution == 2) {
+            if (stringBuffer.codePointBefore(4) <= 1114111 && stringBuffer.codePointBefore(4) >= 0)
+                return 2;
+            else
+                return -1;
+        }
+
+        if (execution == 3) {
+            if (stringBuffer.codePointBefore(1) <= 1114111 && stringBuffer.codePointBefore(1) >= 0)
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
 
     // StringBufferAutomaton::codePointCount (int, int)
     public static int test_codePointCount_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+
+        if (execution == 0) {
+            try {
+                stringBuffer.codePointCount(0, 2);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        stringBuffer.append("test");
+        if (execution == 1) {
+            try {
+                stringBuffer.codePointCount(4, 2);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 1;
+            }
+        }
+
+        if (execution == 2) {
+            try {
+                stringBuffer.codePointCount(-1, 2);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 2;
+            }
+        }
+
+        if (execution == 3) {
+            int startIndex = 2;
+            int endIndex = 6;
+            if (stringBuffer.codePointCount(startIndex, endIndex) >= (endIndex - startIndex) &&
+                    stringBuffer.codePointCount(startIndex, endIndex) <= (endIndex - startIndex) * 2)
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
@@ -908,7 +984,7 @@ public final class StringBuffer_Tests {
             try {
                 stringBuffer.delete(-1, 2);
                 return -1;
-            } catch (StringIndexOutOfBoundsException  e) {
+            } catch (StringIndexOutOfBoundsException e) {
                 return 0;
             }
         }
@@ -932,7 +1008,7 @@ public final class StringBuffer_Tests {
             }
         }
 
-        stringBuffer.delete(3,7);
+        stringBuffer.delete(3, 7);
         if (execution == 3) {
             if (stringBuffer.length() == 6 && stringBuffer.charAt(3) == '7')
                 return 3;
@@ -952,7 +1028,7 @@ public final class StringBuffer_Tests {
             try {
                 stringBuffer.deleteCharAt(-1);
                 return -1;
-            } catch (StringIndexOutOfBoundsException  e) {
+            } catch (StringIndexOutOfBoundsException e) {
                 return 0;
             }
         }
@@ -968,10 +1044,10 @@ public final class StringBuffer_Tests {
 
         stringBuffer.deleteCharAt(6);
         if (execution == 2) {
-                if (stringBuffer.length() == 9 && stringBuffer.charAt(6) == 7)
-                    return 2;
-                else
-                    return -1;
+            if (stringBuffer.length() == 9 && stringBuffer.charAt(6) == 7)
+                return 2;
+            else
+                return -1;
 
         }
 
