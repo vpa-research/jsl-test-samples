@@ -6,6 +6,9 @@ import java.util.Date;
 
 public final class StringBuffer_Tests {
 
+    private static final int MAX_CODE_POINT = 1114111;
+    private static final int MIN_CODE_POINT = 0;
+
     public static void main(String[] args) {
         System.out.println("test_StringBuffer_0");
         System.out.println(test_StringBuffer_0(0));
@@ -805,6 +808,36 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::codePointAt (int)
     public static int test_codePointAt_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+
+        if (execution == 0) {
+            try {
+                stringBuffer.codePointAt(0);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        stringBuffer.append("testtesttesttest");
+        if (execution == 1) {
+            try {
+                stringBuffer.codePointAt(-1);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 1;
+            }
+        }
+
+
+        if (execution == 2) {
+            if (stringBuffer.codePointAt(2) <= 1114111 && stringBuffer.codePointAt(2) >= 0)
+                return 2;
+            else
+                return -1;
+        }
+
+
         return -1;
     }
 
@@ -962,6 +995,8 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::getChars (int, int, char[], int)
     public static int test_getChars_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+        //stringBuffer.getChars();
         return -1;
     }
 
