@@ -814,7 +814,7 @@ public final class StringBuffer_Tests {
             try {
                 stringBuffer.codePointAt(0);
                 return -1;
-            } catch (IndexOutOfBoundsException e) {
+            } catch (StringIndexOutOfBoundsException e) {
                 return 0;
             }
         }
@@ -824,7 +824,7 @@ public final class StringBuffer_Tests {
             try {
                 stringBuffer.codePointAt(-1);
                 return -1;
-            } catch (IndexOutOfBoundsException e) {
+            } catch (StringIndexOutOfBoundsException e) {
                 return 1;
             }
         }
@@ -850,7 +850,7 @@ public final class StringBuffer_Tests {
             try {
                 stringBuffer.codePointBefore(0);
                 return -1;
-            } catch (IndexOutOfBoundsException e) {
+            } catch (StringIndexOutOfBoundsException e) {
                 return 0;
             }
         }
@@ -860,7 +860,7 @@ public final class StringBuffer_Tests {
             try {
                 stringBuffer.codePointBefore(-1);
                 return -1;
-            } catch (IndexOutOfBoundsException e) {
+            } catch (StringIndexOutOfBoundsException e) {
                 return 1;
             }
         }
