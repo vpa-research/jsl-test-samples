@@ -3,6 +3,7 @@ package tests;
 import sun.misc.Unsafe;
 import tests.java.util.*;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -78,21 +79,21 @@ public final class SelfTestMain {
 
     private static void suppressIllegalAccessWarning() {
         try {
-            final var theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
+            final Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
             theUnsafe.setAccessible(true);
-            final var u = (Unsafe) theUnsafe.get(null);
+            final Unsafe u = (Unsafe) theUnsafe.get(null);
 
-            final var cls = Class.forName("jdk.internal.module.IllegalAccessLogger");
-            final var logger = cls.getDeclaredField("logger");
+            final Class<?> cls = Class.forName("jdk.internal.module.IllegalAccessLogger");
+            final Field logger = cls.getDeclaredField("logger");
             u.putObjectVolatile(cls, u.staticFieldOffset(logger), null);
         } catch (Exception ignore) {
         }
     }
 
     private void run() {
-        final var stats = new StatCounter();
+        final StatCounter stats = new StatCounter();
 
-        for (var clazz : TEST_CLASSES)
+        for (Class<?> clazz : TEST_CLASSES)
             stats.add(runTestClass(clazz));
 
         System.out.println("[i] Done.");
@@ -109,7 +110,7 @@ public final class SelfTestMain {
     }
 
     private static boolean isSuitableTestMethod(final Method method) {
-        final var mods = method.getModifiers();
+        final int mods = method.getModifiers();
 
         if (method.isSynthetic())
             return false;
@@ -122,11 +123,11 @@ public final class SelfTestMain {
     private StatCounter runTestClass(final Class<?> clazz) {
         System.out.printf("[c] Executing tests from '%s'%n", clazz.getCanonicalName());
 
-        final var methods = clazz.getDeclaredMethods();
+        final Method[] methods = clazz.getDeclaredMethods();
         Arrays.sort(methods, Comparator.comparing(Method::getName));
 
-        final var result = new StatCounter();
-        for (var tm : methods)
+        final StatCounter result = new StatCounter();
+        for (Method tm : methods)
             if (isSuitableTestMethod(tm))
                 result.add(runTestMethod(tm));
 
@@ -137,31 +138,31 @@ public final class SelfTestMain {
 
     private StatCounter runTestMethod(final Method testMethod) {
         // preparations
-        final var testMethodName = testMethod.getName();
-        final var stats = new StatCounter();
+        final String testMethodName = testMethod.getName();
+        final StatCounter stats = new StatCounter();
 
         try {
             // sanity checks
             checkTestMethod(testMethod);
 
             // reading test configuration
-            final var metadata = getTestMetadata(testMethod);
-            final var shouldIgnore = getTestDisabled(metadata);
+            final Test metadata = getTestMetadata(testMethod);
+            final boolean shouldIgnore = getTestDisabled(metadata);
             if (shouldIgnore) {
                 System.out.printf("[-] (?\\?) #%s - DISABLED", testMethodName);
                 return stats;
             }
-            final var maxExecution = getTestExecutionLimit(metadata) + 1;
+            final int maxExecution = getTestExecutionLimit(metadata) + 1;
             if (maxExecution <= 0)
                 throw new TestInfrastructureException("Invalid max execution value: %s", maxExecution - 1);
-            final var allowedExceptions = getTestAllowedExceptions(metadata);
+            final Collection<Class<?>> allowedExceptions = getTestAllowedExceptions(metadata);
 
             // running individual cases
             stats.countUniqueMethod();
             for (int exe = 0; exe < maxExecution; exe++) {
                 System.out.printf("[~] (%d\\%d) #%s...", exe + 1, maxExecution, testMethodName);
 
-                final var exception = runTestCase(testMethod, exe);
+                final Throwable exception = runTestCase(testMethod, exe);
                 stats.countExecution();
 
                 if (exception == null || isExceptionAllowed(exception, allowedExceptions)) {
@@ -170,7 +171,7 @@ public final class SelfTestMain {
                     stats.countFailure();
                     System.out.println("FAILED.");
 
-                    final var newTraceSize = patchException(exception, testMethod);
+                    final int newTraceSize = patchException(exception, testMethod);
                     if (newTraceSize > 0)
                         exception.printStackTrace(System.out);
                     else
@@ -192,7 +193,7 @@ public final class SelfTestMain {
 
     private static void checkTestMethod(Method testMethod) throws TestInfrastructureException {
         // return value
-        final var returnType = testMethod.getReturnType();
+        final Class<?> returnType = testMethod.getReturnType();
         if (returnType != TEST_METHOD_RETURN_TYPE)
             throw new TestInfrastructureException(
                     "Unexpected return type: expecting '%s' but got '%s'%n",
@@ -201,7 +202,7 @@ public final class SelfTestMain {
             );
 
         // parameters
-        final var parameters = testMethod.getParameters();
+        final java.lang.reflect.Parameter[] parameters = testMethod.getParameters();
         if (parameters.length != TEST_METHOD_PARAMETER_TYPES.length)
             throw new TestInfrastructureException(
                     "Invalid test parameter count: expecting %d but got %d",
@@ -209,8 +210,8 @@ public final class SelfTestMain {
                     parameters.length
             );
         for (int i = 0; i < parameters.length; i++) {
-            final var expected = TEST_METHOD_PARAMETER_TYPES[i];
-            final var actual = parameters[i].getType();
+            final Class<?> expected = TEST_METHOD_PARAMETER_TYPES[i];
+            final Class<?> actual = parameters[i].getType();
             if (actual != expected)
                 throw new TestInfrastructureException(
                         "Invalid type for parameter #%d: expecting '%s' but got '%s'",
@@ -222,8 +223,8 @@ public final class SelfTestMain {
 
     private static boolean isExceptionAllowed(final Throwable exception,
                                               final Collection<Class<?>> allowedExceptions) {
-        final var caught = exception.getClass();
-        for (var e : allowedExceptions)
+        final Class<?> caught = exception.getClass();
+        for (Class<?> e : allowedExceptions)
             if (e == caught || e.isAssignableFrom(caught))
                 return true;
         return false;
@@ -231,9 +232,9 @@ public final class SelfTestMain {
 
     private Throwable runTestCase(final Method testMethod, final int execution) {
         try {
-            final var res = (int) testMethod.invoke(null, execution);
+            final int res = (int) testMethod.invoke(null, execution);
             if (res != execution) {
-                final var msg = "Expected " + execution + " but got " + res;
+                final String msg = "Expected " + execution + " but got " + res;
                 throw new AssertionError(msg);
             }
             return null;
@@ -257,7 +258,7 @@ public final class SelfTestMain {
     private static Collection<Class<?>> getTestAllowedExceptions(final Test metadata) {
         return metadata != null
                 ? Arrays.asList(metadata.exceptions())
-                : List.of();
+                : Collections.emptyList();
     }
 
     private static boolean getTestDisabled(final Test metadata) {
@@ -266,17 +267,17 @@ public final class SelfTestMain {
 
     private int patchException(final Throwable exception, final Method testMethod) {
         // grab the old trace
-        final var trace = exception.getStackTrace();
+        final StackTraceElement[] trace = exception.getStackTrace();
 
-        final var boundClass = testMethod.getDeclaringClass().getCanonicalName();
-        final var boundMethod = testMethod.getName();
+        final String boundClass = testMethod.getDeclaringClass().getCanonicalName();
+        final String boundMethod = testMethod.getName();
 
-        final var thisClass = getClass().getCanonicalName();
+        final String thisClass = getClass().getCanonicalName();
 
         // construct a new one by filtering out everything below the target test method
-        final var newTraceList = new ArrayList<StackTraceElement>();
-        for (var ste : trace) {
-            final var className = ste.getClassName();
+        final ArrayList<StackTraceElement> newTraceList = new ArrayList<>();
+        for (StackTraceElement ste : trace) {
+            final String className = ste.getClassName();
 
             // hide this class
             if (thisClass.equals(className))
@@ -288,7 +289,7 @@ public final class SelfTestMain {
                 // skip the rest
                 break;
         }
-        final var newTrace = newTraceList.toArray(StackTraceElement[]::new);
+        final StackTraceElement[] newTrace = newTraceList.toArray(new StackTraceElement[0]);
 
         // overwrite the stack trace
         exception.setStackTrace(newTrace);
