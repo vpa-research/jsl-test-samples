@@ -1143,7 +1143,7 @@ public final class StringBuffer_Tests {
 
         stringBuffer.insert(1, sequence_2);
         if (execution == 2) {
-            if (stringBuffer.length() == 14 && stringBuffer.charAt(2) == sequence_2.charAt(0))
+            if (stringBuffer.length() == 14 && stringBuffer.charAt(1) == sequence_2.charAt(0))
                 return 2;
             else
                 return -1;
@@ -1209,12 +1209,100 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::insert (int, Object)
     public static int test_insert_2(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        Object sequence_1 = null;
+
+        if (execution == 0) {
+            try {
+                stringBuffer.insert(5, sequence_1);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return  0;
+            }
+        }
+
+        stringBuffer.insert(0, sequence_1);
+        if (execution == 1) {
+            if (stringBuffer.length() == 4 && stringBuffer.toString().equals("null"))
+                return 1;
+            else
+                return -1;
+        }
+
+        Date date = new Date();
+        Object sequence_2 = date;
+
+        stringBuffer.insert(1, sequence_2);
+        if (execution == 2) {
+            if (stringBuffer.length() == 4 + date.toString().length()
+                    && stringBuffer.charAt(1) == date.toString().charAt(0))
+                return 2;
+            else
+                return -1;
+        }
+
+        ArrayList<Integer> a = new ArrayList<>();
+        a.add(2);
+        a.add(-200);
+        Object sequence_3 = a;
+        stringBuffer.insert(10, sequence_3);
+        if (execution == 3) {
+            if (stringBuffer.length() == 4 + date.toString().length() + a.toString().length()
+                    && stringBuffer.charAt(10) == a.toString().charAt(0))
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
 
     // StringBufferAutomaton::insert (int, String)
     public static int test_insert_3(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        String sequence_1 = null;
+
+        if (execution == 0) {
+            try {
+                stringBuffer.insert(5, sequence_1);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return  0;
+            }
+        }
+
+        stringBuffer.insert(0, sequence_1);
+        if (execution == 1) {
+            if (stringBuffer.length() == 4 && stringBuffer.toString().equals("null"))
+                return 1;
+            else
+                return -1;
+        }
+
+        Date date = new Date();
+        String sequence_2 = date.toString();
+
+        stringBuffer.insert(1, sequence_2);
+        if (execution == 2) {
+            if (stringBuffer.length() == 4 + sequence_2.length()
+                    && stringBuffer.charAt(1) == sequence_2.charAt(0))
+                return 2;
+            else
+                return -1;
+        }
+
+
+        String sequence_3 = new String(new int[]{80_000}, 0, 1);
+        stringBuffer.insert(10, sequence_3);
+        if (execution == 3) {
+            if (stringBuffer.length() == 4 + date.toString().length() + 2
+                    && stringBuffer.charAt(10) ==sequence_3.charAt(0))
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
