@@ -1072,7 +1072,7 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::getChars (int, int, char[], int)
     public static int test_getChars_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
-        char[] chars = {'a','b', 'c', 'd', 'e', 'f'};
+        char[] chars = {'a', 'b', 'c', 'd', 'e', 'f'};
 
         if (execution == 0) {
             try {
@@ -1127,7 +1127,7 @@ public final class StringBuffer_Tests {
                 stringBuffer.insert(5, sequence_1);
                 return -1;
             } catch (StringIndexOutOfBoundsException e) {
-                return  0;
+                return 0;
             }
         }
 
@@ -1172,7 +1172,7 @@ public final class StringBuffer_Tests {
                 stringBuffer.insert(0, sequence_1, 3, 2);
                 return -1;
             } catch (IndexOutOfBoundsException e) {
-                return  0;
+                return 0;
             }
         }
 
@@ -1217,7 +1217,7 @@ public final class StringBuffer_Tests {
                 stringBuffer.insert(5, sequence_1);
                 return -1;
             } catch (StringIndexOutOfBoundsException e) {
-                return  0;
+                return 0;
             }
         }
 
@@ -1268,7 +1268,7 @@ public final class StringBuffer_Tests {
                 stringBuffer.insert(5, sequence_1);
                 return -1;
             } catch (StringIndexOutOfBoundsException e) {
-                return  0;
+                return 0;
             }
         }
 
@@ -1297,7 +1297,7 @@ public final class StringBuffer_Tests {
         stringBuffer.insert(10, sequence_3);
         if (execution == 3) {
             if (stringBuffer.length() == 4 + date.toString().length() + 2
-                    && stringBuffer.charAt(10) ==sequence_3.charAt(0))
+                    && stringBuffer.charAt(10) == sequence_3.charAt(0))
                 return 3;
             else
                 return -1;
@@ -1309,6 +1309,33 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::insert (int, boolean)
     public static int test_insert_4(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+
+        if (execution == 0) {
+            try {
+                stringBuffer.insert(5, false);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        stringBuffer.insert(0, true);
+        if (execution == 1) {
+            if (stringBuffer.length() == 4 && stringBuffer.toString().equals("true"))
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.insert(2, false);
+        if (execution == 2) {
+            if (stringBuffer.length() == 9 && stringBuffer.toString().equals("trfalseue"))
+                return 2;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
