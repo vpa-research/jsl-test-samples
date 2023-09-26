@@ -522,7 +522,7 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::append (double)
     public static int test_append_9(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(1.0);
+        stringBuffer.append(1.000);
         if (execution == 0) {
             if (stringBuffer.length() == 3 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(1) == '.')
                 return 0;
@@ -1453,7 +1453,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char[] ch3 = {'0', '1', '2','3'};
+        char[] ch3 = {'0', '1', '2', '3'};
         stringBuffer.insert(2, ch3, 1, 1);
         if (execution == 2) {
             if (stringBuffer.length() == 5 &&
@@ -1479,6 +1479,48 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::insert (int, double)
     public static int test_insert_8(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (execution == 0) {
+            try {
+                stringBuffer.insert(5, 1.0);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        stringBuffer.insert(0, 1.05);
+        if (execution == 1) {
+            if (stringBuffer.length() == 4 && stringBuffer.charAt(0) == '1')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.insert(3, 23.000);
+        if (execution == 2) {
+            if (stringBuffer.length() == 8 && stringBuffer.charAt(3) == '2')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.insert(8, Double.MAX_VALUE);
+        if (execution == 3) {
+            if (stringBuffer.length() == 30 && stringBuffer.charAt(8) == '1')
+                return 3;
+            else
+                return -1;
+        }
+
+        stringBuffer.insert(0, 12E-1);
+        if (execution == 4) {
+            if (stringBuffer.length() == 33 && stringBuffer.charAt(1) == '.' && stringBuffer.charAt(2) == '2')
+                return 4;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
