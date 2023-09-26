@@ -1342,6 +1342,43 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::insert (int, char)
     public static int test_insert_5(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        char ch1 = 'b';
+        if (execution == 0) {
+            try {
+                stringBuffer.insert(5, ch1);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        char ch2 = 'д';
+        stringBuffer.insert(0, ch2);
+        if (execution == 1) {
+            if (stringBuffer.length() == 1 && stringBuffer.charAt(0) == ch2)
+                return 1;
+            else
+                return -1;
+        }
+
+        char ch3 = '\\';
+        stringBuffer.insert(0, ch3);
+        if (execution == 2) {
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(0) == ch3)
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.insert(1, ch1);
+        if (execution == 3) {
+            if (stringBuffer.length() == 3 && stringBuffer.charAt(1) == ch1)
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
