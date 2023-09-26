@@ -1527,6 +1527,48 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::insert (int, float)
     public static int test_insert_9(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (execution == 0) {
+            try {
+                stringBuffer.insert(5, 1.0f);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        stringBuffer.insert(0, 1.05f);
+        if (execution == 1) {
+            if (stringBuffer.length() == 4 && stringBuffer.charAt(0) == '1')
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.insert(3, 23.000f);
+        if (execution == 2) {
+            if (stringBuffer.length() == 8 && stringBuffer.charAt(3) == '2')
+                return 2;
+            else
+                return -1;
+        }
+
+        stringBuffer.insert(8, Float.MAX_VALUE);
+        if (execution == 3) {
+            if (stringBuffer.length() == 20 && stringBuffer.charAt(8) == '3')
+                return 3;
+            else
+                return -1;
+        }
+
+        stringBuffer.insert(0, 12E-1);
+        if (execution == 4) {
+            if (stringBuffer.length() == 23 && stringBuffer.charAt(1) == '.' && stringBuffer.charAt(2) == '2')
+                return 4;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
