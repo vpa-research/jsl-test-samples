@@ -1,9 +1,12 @@
 package approximations.java.util;
 
 import approximations.Test;
+import approximations.util.Empty;
 
 import java.util.ArrayList;
 import java.util.Spliterator;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public final class ArrayListSpliterator_Tests {
 
@@ -27,6 +30,9 @@ public final class ArrayListSpliterator_Tests {
                     return -1;
             }
             break;
+
+            default:
+                return 0;
         }
         return execution;
     }
@@ -57,6 +63,9 @@ public final class ArrayListSpliterator_Tests {
                     return -1;
             }
             break;
+
+            default:
+                return 0;
         }
         return execution;
     }
@@ -98,6 +107,9 @@ public final class ArrayListSpliterator_Tests {
                     return -1;
             }
             break;
+
+            default:
+                return 0;
         }
         return execution;
     }
@@ -128,6 +140,9 @@ public final class ArrayListSpliterator_Tests {
                     return -1;
             }
             break;
+
+            default:
+                return 0;
         }
         return execution;
     }
@@ -145,6 +160,9 @@ public final class ArrayListSpliterator_Tests {
                     return -1;
             }
             break;
+
+            default:
+                return 0;
         }
         return execution;
     }
@@ -158,7 +176,7 @@ public final class ArrayListSpliterator_Tests {
                 ArrayList<Object> a = new ArrayList<>();
                 Spliterator<Object> s = a.spliterator();
 
-                if (s.tryAdvance(o -> {}) == true)
+                if (s.tryAdvance(Empty.CONSUMER) == true)
                     return -1;
             }
             break;
@@ -197,6 +215,9 @@ public final class ArrayListSpliterator_Tests {
                     return -1;
             }
             break;
+
+            default:
+                return 0;
         }
         return execution;
     }
@@ -229,6 +250,9 @@ public final class ArrayListSpliterator_Tests {
                     return -1;
             }
             break;
+
+            default:
+                return 0;
         }
         return execution;
     }
