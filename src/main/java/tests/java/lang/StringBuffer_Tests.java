@@ -506,7 +506,6 @@ public final class StringBuffer_Tests {
         }
 
         char[] ch4 = {'1', '2', '3'};
-        stringBuffer.append(ch4, 1, 5);
         if (execution == 3) {
             try {
                 stringBuffer.append(ch4, 1, -1);
