@@ -1,6 +1,6 @@
-package tests.java.util;
+package approximations.java.util;
 
-import tests.Test;
+import approximations.Test;
 
 import java.util.ArrayList;
 import java.util.Spliterator;

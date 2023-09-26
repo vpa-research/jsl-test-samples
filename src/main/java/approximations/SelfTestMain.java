@@ -1,7 +1,7 @@
-package tests;
+package approximations;
 
 import sun.misc.Unsafe;
-import tests.java.util.*;
+import approximations.java.util.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

@@ -1,6 +1,4 @@
-package tests.java.util;
-
-import java.util.OptionalInt;
+package approximations.java.util;
 
 public final class OptionalInt_Tests {
 
