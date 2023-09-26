@@ -1385,6 +1385,48 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::insert (int, char[])
     public static int test_insert_6(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        char[] ch1 = {'b', 'a', 'c'};
+
+        if (execution == 0) {
+            try {
+                stringBuffer.insert(2, ch1);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        stringBuffer.insert(0, ch1);
+        if (execution == 1) {
+            if (stringBuffer.length() == ch1.length &&
+                    stringBuffer.charAt(stringBuffer.length() - 1) == ch1[ch1.length - 1])
+                return 1;
+            else
+                return -1;
+        }
+
+        char[] ch3 = {'в', 'г'};
+        stringBuffer.insert(2, ch3);
+        if (execution == 2) {
+            if (stringBuffer.length() == ch1.length + ch3.length &&
+                    stringBuffer.charAt(stringBuffer.length() - 1) == ch1[ch1.length - 1] &&
+                    stringBuffer.charAt(2) == ch3[0])
+                return 2;
+            else
+                return -1;
+        }
+
+        char[] ch0 = null;
+        if (execution == 3) {
+            try {
+                stringBuffer.insert(0, ch0);
+                return -1;
+            } catch (NullPointerException e) {
+                return 3;
+            }
+        }
+
         return -1;
     }
 
