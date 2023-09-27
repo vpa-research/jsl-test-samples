@@ -1723,6 +1723,36 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::lastIndexOf (String, int)
     public static int test_lastIndexOf_1(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("0123456012341356");
+
+        if (execution == 0) {
+            if (stringBuffer.lastIndexOf("12", 20) == 8)
+                return 0;
+            else
+                return -1;
+        }
+
+        if (execution == 1) {
+            if (stringBuffer.lastIndexOf("13", 5) == -1)
+                return 1;
+            else
+                return -1;
+        }
+
+        if (execution == 2) {
+            if (stringBuffer.lastIndexOf("12", 7) == 1)
+                return 2;
+            else
+                return -1;
+        }
+
+        if (execution == 3) {
+            if (stringBuffer.lastIndexOf("12", -1) == -1)
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
