@@ -1135,6 +1135,22 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::indexOf (String, int)
     public static int test_indexOf_1(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("012345601234135612");
+
+        if (execution == 0) {
+            if (stringBuffer.indexOf("12", 4) == 8)
+                return 0;
+            else
+                return -1;
+        }
+
+        if (execution == 1) {
+            if (stringBuffer.indexOf("13", 13) == -1)
+                return 1;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
