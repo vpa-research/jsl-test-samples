@@ -1774,7 +1774,34 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::length
     public static int test_length_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("123456");
+
+        if (execution == 0) {
+            if (stringBuffer.length() == 6)
+                return 0;
+            else
+                return -1;
+        }
+
+        stringBuffer.append("aaaa");
+        if (execution == 1) {
+            if (stringBuffer.length() == 10)
+                return 1;
+            else
+                return -1;
+        }
+
+        StringBuffer stringBuffer0 = new StringBuffer();
+        if (execution == 2) {
+            if (stringBuffer0.length() == 0)
+                return 2;
+            else
+                return -1;
+        }
+
+
         return -1;
+
     }
 
 
