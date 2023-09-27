@@ -1159,7 +1159,7 @@ public final class StringBuffer_Tests {
         }
 
 
-        if (execution ==3) {
+        if (execution == 3) {
             if (stringBuffer.indexOf("3", -100) == 3)
                 return 3;
             else
@@ -1799,14 +1799,46 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-
         return -1;
-
     }
 
 
     // StringBufferAutomaton::offsetByCodePoints (int, int)
     public static int test_offsetByCodePoints_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("123456бвгдbvgd");
+
+        if (execution == 0) {
+            try {
+                stringBuffer.offsetByCodePoints(2, -3);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        if (execution == 1) {
+            try {
+                stringBuffer.offsetByCodePoints(2, 20);
+                return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 1;
+            }
+        }
+
+        if (execution == 2) {
+            if (stringBuffer.offsetByCodePoints(2, 5) == stringBuffer.codePointAt(7))
+                return 2;
+            else
+                return -1;
+        }
+
+        if (execution == 3) {
+            if (stringBuffer.offsetByCodePoints(13, -2) == stringBuffer.codePointAt(11))
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
