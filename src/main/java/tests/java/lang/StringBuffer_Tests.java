@@ -1151,6 +1151,21 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
+        if (execution == 2) {
+            if (stringBuffer.indexOf("13", 20) == -1)
+                return 2;
+            else
+                return -1;
+        }
+
+
+        if (execution ==3) {
+            if (stringBuffer.indexOf("3", -100) == 3)
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
