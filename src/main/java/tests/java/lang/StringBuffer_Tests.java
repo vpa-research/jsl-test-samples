@@ -1894,28 +1894,34 @@ public final class StringBuffer_Tests {
             else return -1;
         }
 
-        stringBuffer.reverse();
+
+        StringBuffer stringBuffer2 = new StringBuffer();
+
         if (execution == 1) {
-            if (stringBuffer.length() == 10 && stringBuffer.toString().equals(s1)) return 1;
-            else return -1;
+            try {
+                stringBuffer2.reverse();
+                return 1;
+            } catch (Exception e) {
+                return  -1;
+            }
         }
 
-        String s3 = "abcde";
-        String s4 = "edcba";
-        StringBuffer stringBuffer2 = new StringBuffer(s3);
+        String sur1 = "\uD83D\uDE00 \uD83D\uDE0B \uDC00\uD800";
+        String sur2 = "\uD800\uDC00 \uD83D\uDE0B \uD83D\uDE00";
+        String sur3 = "\uD83D\uDE00 \uD83D\uDE0B \uD800\uDC00";
 
-        stringBuffer.reverse();
+        StringBuffer surBuf = new StringBuffer(sur1);
+        surBuf.reverse();
         if (execution == 2) {
-            if (stringBuffer.length() == 5 && stringBuffer.toString().equals(s4))
+            if (surBuf.toString().equals(sur2))
                 return 2;
             else
                 return -1;
         }
 
-
-        stringBuffer.reverse();
+        surBuf.reverse();
         if (execution == 3) {
-            if (stringBuffer.length() == 5 && stringBuffer.toString().equals(s3))
+            if (surBuf.toString().equals(sur3))
                 return 3;
             else
                 return -1;
