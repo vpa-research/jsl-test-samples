@@ -1902,7 +1902,7 @@ public final class StringBuffer_Tests {
                 stringBuffer2.reverse();
                 return 1;
             } catch (Exception e) {
-                return  -1;
+                return -1;
             }
         }
 
@@ -1941,7 +1941,7 @@ public final class StringBuffer_Tests {
             else return -1;
         }
 
-        stringBuffer.setCharAt(6,'?');
+        stringBuffer.setCharAt(6, '?');
         if (execution == 1) {
             if (stringBuffer.charAt(6) == '?' && stringBuffer.length() == 10)
                 return 1;
@@ -1949,7 +1949,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        stringBuffer.setCharAt(9,'в');
+        stringBuffer.setCharAt(9, 'в');
         if (execution == 2) {
             if (stringBuffer.charAt(9) == 'в' && stringBuffer.length() == 10)
                 return 2;
@@ -1974,7 +1974,32 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::setLength (int)
     public static int test_setLength_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
+
         stringBuffer.setLength(10);
+        if (execution == 0) {
+            if (stringBuffer.length() == 10) return 0;
+            else return -1;
+        }
+
+        stringBuffer.setLength(0);
+        if (execution == 1) {
+            if (stringBuffer.length() == 0) return 1;
+            else return -1;
+        }
+
+        stringBuffer.append("aaaa");
+        stringBuffer.setLength(6);
+        if (execution == 2) {
+            if (stringBuffer.length() == 6 && stringBuffer.charAt(3) == 'a'
+                    && stringBuffer.charAt(4) != 'a') return 2;
+            else return -1;
+        }
+
+        stringBuffer.setLength(2);
+        if (execution == 3) {
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(2) == 'a') return 3;
+            else return -1;
+        }
 
         return -1;
     }
@@ -1985,13 +2010,13 @@ public final class StringBuffer_Tests {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
         if (execution == 0) {
-            if (stringBuffer.subSequence(2,3) == "2") return 0;
+            if (stringBuffer.subSequence(2, 3) == "2") return 0;
             else return -1;
         }
 
 
         if (execution == 1) {
-            if (stringBuffer.subSequence(1,10) == "123456789")
+            if (stringBuffer.subSequence(1, 10) == "123456789")
                 return 1;
             else
                 return -1;
@@ -1999,7 +2024,7 @@ public final class StringBuffer_Tests {
 
         if (execution == 2) {
             try {
-                stringBuffer.subSequence(1,11);
+                stringBuffer.subSequence(1, 11);
                 return -1;
             } catch (StringIndexOutOfBoundsException e) {
                 return 2;
