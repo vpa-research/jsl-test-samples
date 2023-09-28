@@ -1845,6 +1845,40 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::replace (int, int, String)
     public static int test_replace_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+
+        stringBuffer.replace(10, 20, "a");
+        if (execution == 0) {
+            if (stringBuffer.charAt(10) == 'a' && stringBuffer.length() == 11) return 0;
+            else return -1;
+        }
+
+        stringBuffer.replace(6, 6, "bbb");
+        if (execution == 1) {
+            if (stringBuffer.charAt(6) == 'b' && stringBuffer.charAt(9) == '6' && stringBuffer.length() == 14)
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.replace(1, 5, "v");
+        if (execution == 2) {
+            if (stringBuffer.charAt(1) == 'v' && stringBuffer.charAt(2) == '5' && stringBuffer.length() == 11)
+                return 2;
+            else
+                return -1;
+        }
+
+
+        if (execution == 3) {
+            try {
+                stringBuffer.replace(15, 5, "v");
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return  3;
+            }
+        }
+
         return -1;
     }
 
