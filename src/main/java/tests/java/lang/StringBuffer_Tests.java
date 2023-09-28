@@ -1933,6 +1933,40 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::setCharAt (int, char)
     public static int test_setCharAt_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+
+        stringBuffer.setCharAt(2, 'a');
+        if (execution == 0) {
+            if (stringBuffer.charAt(2) == 'a' && stringBuffer.length() == 10) return 0;
+            else return -1;
+        }
+
+        stringBuffer.setCharAt(6,'?');
+        if (execution == 1) {
+            if (stringBuffer.charAt(6) == '?' && stringBuffer.length() == 10)
+                return 1;
+            else
+                return -1;
+        }
+
+        stringBuffer.setCharAt(9,'в');
+        if (execution == 2) {
+            if (stringBuffer.charAt(9) == 'в' && stringBuffer.length() == 10)
+                return 2;
+            else
+                return -1;
+        }
+
+
+        if (execution == 3) {
+            try {
+                stringBuffer.setCharAt(15, 'v');
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 3;
+            }
+        }
+
         return -1;
     }
 
