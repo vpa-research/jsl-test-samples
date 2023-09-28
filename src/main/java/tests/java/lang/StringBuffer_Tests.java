@@ -1875,7 +1875,7 @@ public final class StringBuffer_Tests {
                 stringBuffer.replace(15, 5, "v");
                 return -1;
             } catch (StringIndexOutOfBoundsException e) {
-                return  3;
+                return 3;
             }
         }
 
@@ -1885,6 +1885,42 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::reverse
     public static int test_reverse_0(final int execution) {
+        String s1 = "0123456789";
+        String s2 = "9876543210";
+        StringBuffer stringBuffer = new StringBuffer(s1);
+        stringBuffer.reverse();
+        if (execution == 0) {
+            if (stringBuffer.length() == 10 && stringBuffer.toString().equals(s2)) return 0;
+            else return -1;
+        }
+
+        stringBuffer.reverse();
+        if (execution == 1) {
+            if (stringBuffer.length() == 10 && stringBuffer.toString().equals(s1)) return 1;
+            else return -1;
+        }
+
+        String s3 = "abcde";
+        String s4 = "edcba";
+        StringBuffer stringBuffer2 = new StringBuffer(s3);
+
+        stringBuffer.reverse();
+        if (execution == 2) {
+            if (stringBuffer.length() == 5 && stringBuffer.toString().equals(s4))
+                return 2;
+            else
+                return -1;
+        }
+
+
+        stringBuffer.reverse();
+        if (execution == 3) {
+            if (stringBuffer.length() == 5 && stringBuffer.toString().equals(s3))
+                return 3;
+            else
+                return -1;
+        }
+
         return -1;
     }
 
