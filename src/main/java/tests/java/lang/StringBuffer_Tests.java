@@ -1982,6 +1982,31 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::subSequence (int, int)
     public static int test_subSequence_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+
+        if (execution == 0) {
+            if (stringBuffer.subSequence(2,3) == "2") return 0;
+            else return -1;
+        }
+
+
+        if (execution == 1) {
+            if (stringBuffer.subSequence(1,10) == "123456789")
+                return 1;
+            else
+                return -1;
+        }
+
+        if (execution == 2) {
+            try {
+                stringBuffer.subSequence(1,11);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 2;
+            }
+        }
+
+
         return -1;
     }
 
