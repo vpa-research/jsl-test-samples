@@ -1973,6 +1973,9 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::setLength (int)
     public static int test_setLength_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.setLength(10);
+
         return -1;
     }
 
@@ -1997,6 +2000,22 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::toString
     public static int test_toString_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer();
+
+        if (execution == 0) {
+            if (stringBuffer.toString().equals("")) return 0;
+            else return -1;
+        }
+
+        stringBuffer.append("abcde");
+        if (execution == 1) {
+            if (stringBuffer.toString().equals("abcde"))
+                return 1;
+            else
+                return -1;
+        }
+
+
         return -1;
     }
 
