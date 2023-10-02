@@ -1,12 +1,9 @@
 package approximations.java.util;
 
 import approximations.Test;
-import approximations.util.Empty;
 
 import java.util.ArrayList;
 import java.util.Spliterator;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public final class ArrayListSpliterator_Tests {
 
@@ -176,7 +173,8 @@ public final class ArrayListSpliterator_Tests {
                 ArrayList<Object> a = new ArrayList<>();
                 Spliterator<Object> s = a.spliterator();
 
-                if (s.tryAdvance(Empty.CONSUMER) == true)
+                if (s.tryAdvance(o -> {
+                }) == true)
                     return -1;
             }
             break;

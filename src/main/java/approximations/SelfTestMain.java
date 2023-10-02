@@ -1,27 +1,26 @@
 package approximations;
 
 import sun.misc.Unsafe;
-import approximations.java.util.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class SelfTestMain {
-    private static final Set<Class<?>> TEST_CLASSES = new LinkedHashSet<>(Arrays.<Class<?>>asList(new Class[]{
-            ArrayList_Tests.class,
-            ArrayListSpliterator_Tests.class,
-            OptionalDouble_Tests.class,
-            OptionalInt_Tests.class,
-    }));
     private static final boolean QUIT_ON_FAIL = false;
     private static final boolean SUPPRESS_ILLEGAL_REFLECTION_ACCESS = false;
+
     private static final Class<?> TEST_METHOD_RETURN_TYPE = int.class;
     private static final Class<?>[] TEST_METHOD_PARAMETER_TYPES = new Class[]{
             int.class
     };
+    public static final String CLASS_FILE_EXT = ".class";
 
     private static class TestInfrastructureException extends Throwable {
         TestInfrastructureException(final String format, final Object... objects) {
@@ -90,22 +89,23 @@ public final class SelfTestMain {
         }
     }
 
-    private void run() {
+    private void run(final Collection<Class<?>> testClasses) {
         final StatCounter stats = new StatCounter();
 
-        for (Class<?> clazz : TEST_CLASSES)
+        for (Class<?> clazz : testClasses)
             stats.add(runTestClass(clazz));
 
         System.out.println("[i] Done.");
-        renderStatistics(stats);
+        renderStatistics(stats, testClasses);
     }
 
-    private void renderStatistics(final StatCounter stats) {
+    private void renderStatistics(final StatCounter stats,
+                                  final Collection<Class<?>> testClasses) {
         System.out.printf("[i] Final stats: %d failed out of %d executed in %d unique methods in %d classes.%n",
                 stats.getFailed(),
                 stats.getExecuted(),
                 stats.getUniqueMethods(),
-                TEST_CLASSES.size()
+                testClasses.size()
         );
     }
 
@@ -298,7 +298,63 @@ public final class SelfTestMain {
         return newTrace.length;
     }
 
+    private static Collection<Class<?>> findTestClasses() {
+        final Collection<Class<?>> result = new ArrayList<>();
+
+        // collect everything
+        final String packageName = SelfTestMain.class.getPackage().getName();
+        try {
+            findTestClasses(packageName, result);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        // filter-out this class
+        final String thisName = SelfTestMain.class.getCanonicalName();
+        return result.stream()
+                .filter(c -> !c.isSynthetic())
+                .filter(c -> !c.isLocalClass())
+                .filter(c -> !c.isAnnotation())
+                .filter(c -> !c.isInterface())
+                .filter(c -> !c.getCanonicalName().startsWith(thisName))
+                .collect(Collectors.toList());
+    }
+
+    private static void findTestClasses(final String packageName,
+                                        final Collection<Class<?>> out) throws IOException, ClassNotFoundException {
+        final ClassLoader loader = SelfTestMain.class.getClassLoader();
+
+        final Enumeration<URL> resources = loader.getResources(packageName.replace('.', '/'));
+        while (resources.hasMoreElements()) {
+            final File dir = new File(resources.nextElement().getFile());
+
+            if (dir.exists())
+                findTestClasses(dir, packageName, out);
+        }
+    }
+
+    private static void findTestClasses(final File dir,
+                                        final String packageName,
+                                        final Collection<Class<?>> out) throws ClassNotFoundException {
+        final File[] entries = dir.listFiles();
+        if (entries == null)
+            return;
+
+        for (File entry : entries) {
+            final String entryName = entry.getName();
+
+            if (entry.isFile() && entryName.endsWith(CLASS_FILE_EXT)) {
+                final String className = entryName.substring(0, entryName.length() - CLASS_FILE_EXT.length());
+                final String canonicalName = packageName + "." + className;
+                final Class<?> clazz = Class.forName(canonicalName);
+                out.add(clazz);
+            } else if (entry.isDirectory()) {
+                findTestClasses(entry, packageName + "." + entryName, out);
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        new SelfTestMain().run();
+        new SelfTestMain().run(findTestClasses());
     }
 }
