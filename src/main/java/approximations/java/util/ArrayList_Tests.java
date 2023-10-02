@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public final class ArrayList_Tests {
 
     public static int test_get_0(int execution) {
-        var list = new ArrayList<Object>();
+        ArrayList<Object> list = new ArrayList<>();
         if (execution == 0) {
             // IOB
             if (list.get(5) == null)
                 return -1;
         }
 
-        var stub = new Object();
+        Object stub = new Object();
         for (int i = 0; i < 3; i++)
             list.add(new Object());
 
