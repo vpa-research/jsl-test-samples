@@ -9,68 +9,7 @@ public final class StringBuffer_Tests {
     private static final int MAX_CODE_POINT = 1114111;
     private static final int MIN_CODE_POINT = 0;
 
-    public static void main(String[] args) {
-        System.out.println("test_StringBuffer_0");
-        System.out.println(test_StringBuffer_0(0));
 
-        System.out.println("\ntest_StringBuffer_1");
-        System.out.println(test_StringBuffer_1(0));
-        System.out.println(test_StringBuffer_1(1));
-
-        System.out.println("\ntest_StringBuffer_2");
-        System.out.println(test_StringBuffer_2(0));
-        System.out.println(test_StringBuffer_2(1));
-
-        System.out.println("\ntest_StringBuffer_3");
-        System.out.println(test_StringBuffer_3(0));
-
-        System.out.println("\ntest_append_10");
-        System.out.println(test_append_10(0));
-        System.out.println(test_append_10(1));
-        System.out.println(test_append_10(2));
-        System.out.println(test_append_10(3));
-
-
-        System.out.println("\ntest_append_11");
-        System.out.println(test_append_11(0));
-        System.out.println(test_append_11(1));
-        System.out.println(test_append_11(2));
-        System.out.println(test_append_11(3));
-
-
-        System.out.println("\ntest_append_12");
-        System.out.println(test_append_12(0));
-        System.out.println(test_append_12(1));
-        System.out.println(test_append_12(2));
-        System.out.println(test_append_12(3));
-
-
-        System.out.println("\ntest_append_0");
-        System.out.println(test_append_0(0));
-        System.out.println(test_append_0(1));
-        System.out.println(test_append_0(2));
-        System.out.println(test_append_0(3));
-
-        System.out.println("\ntest_append_1");
-        System.out.println(test_append_1(0));
-        System.out.println(test_append_1(1));
-        System.out.println(test_append_1(2));
-        System.out.println(test_append_1(3));
-
-
-        System.out.println("\ntest_append_3");
-        System.out.println(test_append_3(0));
-        System.out.println(test_append_3(1));
-        System.out.println(test_append_3(2));
-        System.out.println(test_append_3(3));
-
-
-        System.out.println("\ntest_append_4");
-        System.out.println(test_append_4(0));
-        System.out.println(test_append_4(1));
-        System.out.println(test_append_4(2));
-        System.out.println(test_append_4(3));
-    }
 
     // internal variables
 
@@ -181,7 +120,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        CharSequence sequence_3 = "—Å–ª–æ–≤–æ";
+        CharSequence sequence_3 = "ÒÎÓ‚Ó";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
@@ -269,7 +208,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        Object sequence_3 = "—Å–ª–æ–≤–æ";
+        Object sequence_3 = "ÒÎÓ‚Ó";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.charAt(stringBuffer.length() - 1) == sequence_3.toString().charAt(4))
@@ -315,7 +254,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        String sequence_3 = "—Å–ª–æ–≤–æ";
+        String sequence_3 = "ÒÎÓ‚Ó";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
@@ -358,7 +297,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        StringBuffer sequence_3 = new StringBuffer("—Å–ª–æ–≤–æ");
+        StringBuffer sequence_3 = new StringBuffer("ÒÎÓ‚Ó");
         stringBuffer.append(sequence_3);
         System.out.println(stringBuffer.length());
         if (execution == 2) {
@@ -417,10 +356,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char ch2 = '–¥';
+        char ch2 = '‰';
         stringBuffer.append(ch2);
         if (execution == 1) {
-            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == '–¥')
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == '‰')
                 return 1;
             else
                 return -1;
@@ -460,10 +399,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char[] ch3 = {'–≤'};
+        char[] ch3 = {'‚'};
         stringBuffer.append(ch3);
         if (execution == 2) {
-            if (stringBuffer.length() == 7 && stringBuffer.charAt(6) == '–≤')
+            if (stringBuffer.length() == 7 && stringBuffer.charAt(6) == '‚')
                 return 2;
             else
                 return -1;
@@ -485,7 +424,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char[] ch2 = {'!', '–≤', '.'};
+        char[] ch2 = {'!', '‚', '.'};
         stringBuffer.append(ch2, 0, 3);
         if (execution == 1) {
             if (stringBuffer.length() == 5 && stringBuffer.charAt(4) == '.')
@@ -494,7 +433,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char[] ch3 = {'–∞', '–±', '–≤', '–≥'};
+        char[] ch3 = {'‡', '·', '‚', '„'};
         if (execution == 2) {
             try {
                 stringBuffer.append(ch3, 1, -1);
@@ -701,7 +640,7 @@ public final class StringBuffer_Tests {
 
         stringBuffer.appendCodePoint(1074);
         if (execution == 2) {
-            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == '–≤')
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == '‚')
                 return 2;
             else
                 return -1;
@@ -745,7 +684,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        stringBuffer.append('–≤');
+        stringBuffer.append('‚');
         if (execution == 3) {
             if (stringBuffer.length() == 106)
                 return 3;
@@ -759,7 +698,7 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::charAt (int)
     public static int test_charAt_0(final int execution) {
-        StringBuffer stringBuffer = new StringBuffer("text for —Ç–µ—Å—Ç 0!");
+        StringBuffer stringBuffer = new StringBuffer("text for ÚÂÒÚ 0!");
 
         if (execution == 0) {
             try {
@@ -781,13 +720,13 @@ public final class StringBuffer_Tests {
 
 
         if (execution == 2) {
-            if (stringBuffer.charAt(9) == '—Ç')
+            if (stringBuffer.charAt(9) == 'Ú')
                 return 2;
             else
                 return -1;
         }
 
-        stringBuffer.append('–≤');
+        stringBuffer.append('‚');
         if (execution == 3) {
             if (stringBuffer.charAt(0) == 't')
                 return 3;
@@ -1202,10 +1141,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        CharSequence sequence_3 = "—Å–ª–æ–≤–æ";
+        CharSequence sequence_3 = "ÒÎÓ‚Ó";
         stringBuffer.insert(10, sequence_3);
         if (execution == 3) {
-            if (stringBuffer.length() == 19 && stringBuffer.charAt(10) == '—Å')
+            if (stringBuffer.length() == 19 && stringBuffer.charAt(10) == 'Ò')
                 return 3;
             else
                 return -1;
@@ -1247,10 +1186,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        CharSequence sequence_3 = "—Å–ª–æ–≤–æ";
+        CharSequence sequence_3 = "ÒÎÓ‚Ó";
         stringBuffer.insert(3, sequence_3, 2, 5);
         if (execution == 3) {
-            if (stringBuffer.length() == 6 && stringBuffer.charAt(5) == '–æ')
+            if (stringBuffer.length() == 6 && stringBuffer.charAt(5) == 'Ó')
                 return 3;
             else
                 return -1;
@@ -1406,7 +1345,7 @@ public final class StringBuffer_Tests {
             }
         }
 
-        char ch2 = '–¥';
+        char ch2 = '‰';
         stringBuffer.insert(0, ch2);
         if (execution == 1) {
             if (stringBuffer.length() == 1 && stringBuffer.charAt(0) == ch2)
@@ -1459,7 +1398,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char[] ch3 = {'–≤', '–≥'};
+        char[] ch3 = {'‚', '„'};
         stringBuffer.insert(2, ch3);
         if (execution == 2) {
             if (stringBuffer.length() == ch1.length + ch3.length &&
@@ -1487,7 +1426,7 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::insert (int, char[], int, int)
     public static int test_insert_7(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
-        char[] ch1 = {'b', 'a', '—Ü', '–¥', 'e', 'f'};
+        char[] ch1 = {'b', 'a', 'ˆ', '‰', 'e', 'f'};
 
         if (execution == 0) {
             try {
@@ -1805,7 +1744,7 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::offsetByCodePoints (int, int)
     public static int test_offsetByCodePoints_0(final int execution) {
-        StringBuffer stringBuffer = new StringBuffer("123456–±–≤–≥–¥bvgd");
+        StringBuffer stringBuffer = new StringBuffer("123456·‚„‰bvgd");
 
         if (execution == 0) {
             try {
@@ -1949,9 +1888,9 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        stringBuffer.setCharAt(9, '–≤');
+        stringBuffer.setCharAt(9, '‚');
         if (execution == 2) {
-            if (stringBuffer.charAt(9) == '–≤' && stringBuffer.length() == 10)
+            if (stringBuffer.charAt(9) == '‚' && stringBuffer.length() == 10)
                 return 2;
             else
                 return -1;
@@ -2010,13 +1949,13 @@ public final class StringBuffer_Tests {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
         if (execution == 0) {
-            if (stringBuffer.subSequence(2, 3) == "2") return 0;
+            if (stringBuffer.subSequence(2, 3).equals("2")) return 0;
             else return -1;
         }
 
 
         if (execution == 1) {
-            if (stringBuffer.subSequence(1, 10) == "123456789")
+            if (stringBuffer.subSequence(1, 10).equals("123456789"))
                 return 1;
             else
                 return -1;
@@ -2029,6 +1968,13 @@ public final class StringBuffer_Tests {
             } catch (StringIndexOutOfBoundsException e) {
                 return 2;
             }
+        }
+
+        if (execution == 3) {
+            if (stringBuffer.subSequence(1, 1).equals(""))
+                return 3;
+            else
+                return -1;
         }
 
 
@@ -2044,6 +1990,38 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::substring (int, int)
     public static int test_substring_1(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+
+        if (execution == 0) {
+            if (stringBuffer.substring(2, 3).equals("2")) return 0;
+            else return -1;
+        }
+
+
+        if (execution == 1) {
+            if (stringBuffer.substring(1, 10).equals("123456789"))
+                return 1;
+            else
+                return -1;
+        }
+
+        if (execution == 2) {
+            try {
+                stringBuffer.substring(1, 11);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 2;
+            }
+        }
+
+        if (execution == 3) {
+            if (stringBuffer.substring(1, 1).equals(""))
+                return 3;
+            else
+                return -1;
+        }
+
+
         return -1;
     }
 
@@ -2073,6 +2051,10 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::trimToSize
     public static int test_trimToSize_0(final int execution) {
         return -1;
+    }
+
+    public static void main(String[] args) {
+        for (int i =0; i<4; i++) System.out.println(test_substring_1(i));
     }
 
 }
