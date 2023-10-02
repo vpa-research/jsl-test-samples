@@ -1,22 +1,17 @@
 package approximations.java.lang;
 
-
-import approximations.java.Test;
+import approximations.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public final class StringBuffer_Tests {
 
-    private static final int MAX_CODE_POINT = 1114111;
-    private static final int MIN_CODE_POINT = 0;
-
     // internal variables
 
     // constructors
 
     // StringBufferAutomaton::StringBuffer
-    @Test(executionMax = 0)
     public static int test_StringBuffer_0(final int execution) {
         if (execution == 0) {
             StringBuffer stringBuffer = new StringBuffer();
@@ -83,7 +78,6 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::StringBuffer (int)
-    @Test(executionMax = 0)
     public static int test_StringBuffer_3(final int execution) {
         int capacity = 4;
         StringBuffer stringBuffer = new StringBuffer(capacity);
@@ -758,7 +752,9 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::chars
+    @Test(disabled = true)
     public static int test_chars_0(final int execution) {
+        // FIXME: STREAM NOT IMPLEMENTED
         return -1;
     }
 
@@ -892,7 +888,9 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::codePoints
+    @Test(disabled = true)
     public static int test_codePoints_0(final int execution) {
+        // FIXME: STREAM NOT IMPLEMENTED
         return -1;
     }
 
@@ -1035,7 +1033,9 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::ensureCapacity (int)
+    @Test(disabled = true)
     public static int test_ensureCapacity_0(final int execution) {
+        // FIXME: DO_NOTHING in lsl spec
         return -1;
     }
 
@@ -2140,10 +2140,11 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::trimToSize
+    @Test(disabled = true)
     public static int test_trimToSize_0(final int execution) {
+        // FIXME: DO_NOTHING in lsl spec
         return -1;
     }
-
 
 
 }
