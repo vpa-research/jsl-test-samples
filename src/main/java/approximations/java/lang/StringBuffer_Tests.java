@@ -1,5 +1,7 @@
-package tests.java.lang;
+package approximations.java.lang;
 
+
+import approximations.java.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,144 +11,12 @@ public final class StringBuffer_Tests {
     private static final int MAX_CODE_POINT = 1114111;
     private static final int MIN_CODE_POINT = 0;
 
-    public static void main(String[] args) {
-        //constructors
-        System.out.println("test_StringBuffer_0");
-        System.out.println(test_StringBuffer_0(0));
-
-        System.out.println("test_StringBuffer_1");
-        for (int i = 0; i < 2; i++) System.out.println(test_StringBuffer_1(i));
-
-        System.out.println("test_StringBuffer_2");
-        for (int i = 0; i < 2; i++) System.out.println(test_StringBuffer_2(i));
-
-        System.out.println("test_StringBuffer_3");
-        System.out.println(test_StringBuffer_3(0));
-
-        //methods
-        System.out.println("test_append_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_0(i));
-        System.out.println("test_append_1");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_1(i));
-        System.out.println("test_append_2");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_2(i));
-        System.out.println("test_append_3");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_3(i));
-        System.out.println("test_append_4");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_4(i));
-        System.out.println("test_append_5");
-        for (int i = 0; i < 2; i++) System.out.println(test_append_5(i));
-        System.out.println("test_append_6");
-        for (int i = 0; i < 3; i++) System.out.println(test_append_6(i));
-        System.out.println("test_append_7");
-        for (int i = 0; i < 3; i++) System.out.println(test_append_7(i));
-        System.out.println("test_append_8");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_8(i));
-        System.out.println("test_append_9");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_9(i));
-        System.out.println("test_append_10");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_10(i));
-        System.out.println("test_append_11");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_11(i));
-        System.out.println("test_append_12");
-        for (int i = 0; i < 4; i++) System.out.println(test_append_12(i));
-
-
-        System.out.println("test_appendCodePoint_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_appendCodePoint_0(i));
-        System.out.println("test_capacity_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_capacity_0(i));
-        System.out.println("test_charAt_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_charAt_0(i));
-        //chars skip
-        System.out.println("test_codePointAt_0");
-        for (int i = 0; i < 3; i++) System.out.println(test_codePointAt_0(i));
-        System.out.println("test_codePointBefore_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_codePointBefore_0(i));
-        System.out.println("test_codePointCount_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_codePointCount_0(i));
-        //codePoints skip
-        System.out.println("test_compareTo_0");
-        for (int i = 0; i < 5; i++) System.out.println(test_compareTo_0(i));
-
-        System.out.println("test_delete_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_delete_0(i));
-        System.out.println("test_deleteCharAt_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_deleteCharAt_0(i));
-        //ensureCapacity skip
-
-        System.out.println("test_getChars_0");
-        for (int i = 0; i < 3; i++) System.out.println(test_getChars_0(i));
-
-        System.out.println("test_indexOf_0");
-        for (int i = 0; i < 3; i++) System.out.println(test_indexOf_0(i));
-        System.out.println("test_indexOf_1");
-        for (int i = 0; i < 4; i++) System.out.println(test_indexOf_1(i));
-
-
-        System.out.println("test_insert_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_0(i));
-        System.out.println("test_insert_1");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_1(i));
-        System.out.println("test_insert_2");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_2(i));
-        System.out.println("test_insert_2");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_2(i));
-        System.out.println("test_insert_3");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_3(i));
-        System.out.println("test_insert_4");
-        for (int i = 0; i < 3; i++) System.out.println(test_insert_4(i));
-        System.out.println("test_insert_5");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_5(i));
-        System.out.println("test_insert_6");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_6(i));
-        System.out.println("test_insert_7");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_7(i));
-        System.out.println("test_insert_8");
-        for (int i = 0; i < 5; i++) System.out.println(test_insert_8(i));
-        System.out.println("test_insert_9");
-        for (int i = 0; i < 5; i++) System.out.println(test_insert_9(i));
-        System.out.println("test_insert_10");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_10(i));
-        System.out.println("test_insert_11");
-        for (int i = 0; i < 4; i++) System.out.println(test_insert_11(i));
-
-        System.out.println("test_lastIndexOf_0");
-        for (int i = 0; i < 3; i++) System.out.println(test_lastIndexOf_0(i));
-        System.out.println("test_lastIndexOf_1");
-        for (int i = 0; i < 4; i++) System.out.println(test_lastIndexOf_1(i));
-
-        System.out.println("test_length_0");
-        for (int i = 0; i < 3; i++) System.out.println(test_length_0(i));
-        System.out.println("test_offsetByCodePoints_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_offsetByCodePoints_0(i));
-        System.out.println("test_replace_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_replace_0(i));
-        System.out.println("test_reverse_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_reverse_0(i));
-        System.out.println("test_setCharAt_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_setCharAt_0(i));
-        System.out.println("test_setLength_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_setLength_0(i));
-
-        System.out.println("test_subSequence_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_subSequence_0(i));
-        System.out.println("test_substring_0");
-        for (int i = 0; i < 4; i++) System.out.println(test_substring_0(i));
-        System.out.println("test_substring_1");
-        for (int i = 0; i < 4; i++) System.out.println(test_substring_1(i));
-
-        System.out.println("test_toString_0");
-        for (int i = 0; i < 2; i++) System.out.println(test_toString_0(i));
-        //trim to size skip
-    }
-
-
     // internal variables
 
     // constructors
 
     // StringBufferAutomaton::StringBuffer
+    @Test(executionMax = 0)
     public static int test_StringBuffer_0(final int execution) {
         if (execution == 0) {
             StringBuffer stringBuffer = new StringBuffer();
@@ -160,6 +30,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::StringBuffer (CharSequence)
+    @Test(executionMax = 1)
     public static int test_StringBuffer_1(final int execution) {
 
         CharSequence sequence = "12";
@@ -186,6 +57,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::StringBuffer (String)
+    @Test(executionMax = 1)
     public static int test_StringBuffer_2(final int execution) {
         String sequence = "12";
 
@@ -211,6 +83,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::StringBuffer (int)
+    @Test(executionMax = 0)
     public static int test_StringBuffer_3(final int execution) {
         int capacity = 4;
         StringBuffer stringBuffer = new StringBuffer(capacity);
@@ -231,6 +104,7 @@ public final class StringBuffer_Tests {
     // methods
 
     // StringBufferAutomaton::append (CharSequence)
+    @Test(executionMax = 3)
     public static int test_append_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         CharSequence sequence_1 = null;
@@ -274,6 +148,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (CharSequence, int, int)
+    @Test(executionMax = 3)
     public static int test_append_1(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("test");
         CharSequence sequence_1 = null;
@@ -318,6 +193,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (Object)
+    @Test(executionMax = 3)
     public static int test_append_2(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         Object sequence_1 = null;
@@ -365,6 +241,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (String)
+    @Test(executionMax = 3)
     public static int test_append_3(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         String sequence_1 = null;
@@ -408,6 +285,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (StringBuffer)
+    @Test(executionMax = 3)
     public static int test_append_4(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         StringBuffer sequence_1 = null;
@@ -451,6 +329,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (boolean)
+    @Test(executionMax = 1)
     public static int test_append_5(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(false);
@@ -475,6 +354,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (char)
+    @Test(executionMax = 2)
     public static int test_append_6(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         char ch1 = 'b';
@@ -509,6 +389,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (char[])
+    @Test(executionMax = 2)
     public static int test_append_7(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         char[] ch1 = {'b', 'a', 'c'};
@@ -543,6 +424,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (char[], int, int)
+    @Test(executionMax = 3)
     public static int test_append_8(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         char[] ch1 = {'b', 'a', 'c'};
@@ -589,6 +471,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (double)
+    @Test(executionMax = 3)
     public static int test_append_9(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(1.000);
@@ -628,6 +511,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (float)
+    @Test(executionMax = 3)
     public static int test_append_10(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(1.0F);
@@ -667,6 +551,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (int)
+    @Test(executionMax = 3)
     public static int test_append_11(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(1);
@@ -708,6 +593,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::append (long)
+    @Test(executionMax = 3)
     public static int test_append_12(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(1L);
@@ -748,6 +634,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::appendCodePoint (int)
+    @Test(executionMax = 3)
     public static int test_appendCodePoint_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -789,6 +676,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::capacity
+    @Test(executionMax = 3)
     public static int test_capacity_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         if (execution == 0) {
@@ -827,6 +715,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::charAt (int)
+    @Test(executionMax = 3)
     public static int test_charAt_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("text for עוסע 0!");
 
@@ -875,6 +764,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::codePointAt (int)
+    @Test(executionMax = 2)
     public static int test_codePointAt_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -911,6 +801,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::codePointBefore (int)
+    @Test(executionMax = 3)
     public static int test_codePointBefore_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -953,6 +844,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::codePointCount (int, int)
+    @Test(executionMax = 3)
     public static int test_codePointCount_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -1006,6 +898,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::compareTo (StringBuffer)
+    @Test(executionMax = 4)
     public static int test_compareTo_0(final int execution) {
         StringBuffer stringBuffer1 = new StringBuffer();
         StringBuffer stringBuffer2 = new StringBuffer("aaaaaaaaaa");
@@ -1044,7 +937,7 @@ public final class StringBuffer_Tests {
         }
 
         if (execution == 4) {
-            if (stringBuffer7.compareTo(stringBuffer7) < 0)
+            if (stringBuffer7.compareTo(stringBuffer6) < 0)
                 return 4;
             else
                 return -1;
@@ -1055,6 +948,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::delete (int, int)
+    @Test(executionMax = 3)
     public static int test_delete_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
@@ -1097,6 +991,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::deleteCharAt (int)
+    @Test(executionMax = 3)
     public static int test_deleteCharAt_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
@@ -1146,6 +1041,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::getChars (int, int, char[], int)
+    @Test(executionMax = 2)
     public static int test_getChars_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
         char[] chars = {'a', 'b', 'c', 'd', 'e', 'f'};
@@ -1182,6 +1078,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::indexOf (String)
+    @Test(executionMax = 2)
     public static int test_indexOf_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456012341356");
 
@@ -1211,6 +1108,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::indexOf (String, int)
+    @Test(executionMax = 3)
     public static int test_indexOf_1(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("012345601234135612");
 
@@ -1248,6 +1146,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, CharSequence)
+    @Test(executionMax = 3)
     public static int test_insert_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         CharSequence sequence_1 = null;
@@ -1293,6 +1192,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, CharSequence, int, int)
+    @Test(executionMax = 3)
     public static int test_insert_1(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         CharSequence sequence_1 = null;
@@ -1338,6 +1238,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, Object)
+    @Test(executionMax = 3)
     public static int test_insert_2(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         Object sequence_1 = null;
@@ -1389,6 +1290,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, String)
+    @Test(executionMax = 3)
     public static int test_insert_3(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         String sequence_1 = null;
@@ -1438,6 +1340,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, boolean)
+    @Test(executionMax = 2)
     public static int test_insert_4(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -1471,6 +1374,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, char)
+    @Test(executionMax = 3)
     public static int test_insert_5(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         char ch1 = 'b';
@@ -1514,6 +1418,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, char[])
+    @Test(executionMax = 3)
     public static int test_insert_6(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         char[] ch1 = {'b', 'a', 'c'};
@@ -1562,6 +1467,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, char[], int, int)
+    @Test(executionMax = 3)
     public static int test_insert_7(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         char[] ch1 = {'b', 'a', 'צ', 'ה', 'e', 'f'};
@@ -1609,6 +1515,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, double)
+    @Test(executionMax = 4)
     public static int test_insert_8(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         if (execution == 0) {
@@ -1657,6 +1564,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, float)
+    @Test(executionMax = 4)
     public static int test_insert_9(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         if (execution == 0) {
@@ -1705,6 +1613,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, int)
+    @Test(executionMax = 3)
     public static int test_insert_10(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         if (execution == 0) {
@@ -1745,6 +1654,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::insert (int, long)
+    @Test(executionMax = 3)
     public static int test_insert_11(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
         if (execution == 0) {
@@ -1785,6 +1695,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::lastIndexOf (String)
+    @Test(executionMax = 2)
     public static int test_lastIndexOf_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456012341356");
 
@@ -1850,6 +1761,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::length
+    @Test(executionMax = 2)
     public static int test_length_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("123456");
 
@@ -1881,6 +1793,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::offsetByCodePoints (int, int)
+    @Test(executionMax = 3)
     public static int test_offsetByCodePoints_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("123456בגדהbvgd");
 
@@ -1921,6 +1834,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::replace (int, int, String)
+    @Test(executionMax = 3)
     public static int test_replace_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
@@ -1961,6 +1875,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::reverse
+    @Test(executionMax = 3)
     public static int test_reverse_0(final int execution) {
         String s1 = "0123456789";
         String s2 = "9876543210";
@@ -2009,6 +1924,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::setCharAt (int, char)
+    @Test(executionMax = 3)
     public static int test_setCharAt_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
@@ -2049,6 +1965,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::setLength (int)
+    @Test(executionMax = 3)
     public static int test_setLength_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -2083,6 +2000,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::subSequence (int, int)
+    @Test(executionMax = 3)
     public static int test_subSequence_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
@@ -2121,6 +2039,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::substring (int)
+    @Test(executionMax = 3)
     public static int test_substring_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
@@ -2159,6 +2078,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::substring (int, int)
+    @Test(executionMax = 3)
     public static int test_substring_1(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
@@ -2197,6 +2117,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::toString
+    @Test(executionMax = 1)
     public static int test_toString_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
 

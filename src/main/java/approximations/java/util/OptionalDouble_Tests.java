@@ -1,4 +1,4 @@
-package tests.java.util;
+package approximations.java.util;
 
 import java.util.OptionalDouble;
 

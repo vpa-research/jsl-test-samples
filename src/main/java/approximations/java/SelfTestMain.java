@@ -1,7 +1,8 @@
-package tests;
+package approximations.java;
 
+import approximations.java.lang.StringBuffer_Tests;
 import sun.misc.Unsafe;
-import tests.java.util.*;
+import approximations.java.util.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,6 +15,7 @@ public final class SelfTestMain {
             ArrayListSpliterator_Tests.class,
             OptionalDouble_Tests.class,
             OptionalInt_Tests.class,
+            StringBuffer_Tests.class
     }));
     private static final boolean QUIT_ON_FAIL = false;
     private static final boolean SUPPRESS_ILLEGAL_REFLECTION_ACCESS = false;
