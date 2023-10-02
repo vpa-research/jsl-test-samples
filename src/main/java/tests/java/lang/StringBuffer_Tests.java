@@ -9,6 +9,137 @@ public final class StringBuffer_Tests {
     private static final int MAX_CODE_POINT = 1114111;
     private static final int MIN_CODE_POINT = 0;
 
+    public static void main(String[] args) {
+        //constructors
+        System.out.println("test_StringBuffer_0");
+        System.out.println(test_StringBuffer_0(0));
+
+        System.out.println("test_StringBuffer_1");
+        for (int i = 0; i < 2; i++) System.out.println(test_StringBuffer_1(i));
+
+        System.out.println("test_StringBuffer_2");
+        for (int i = 0; i < 2; i++) System.out.println(test_StringBuffer_2(i));
+
+        System.out.println("test_StringBuffer_3");
+        System.out.println(test_StringBuffer_3(0));
+
+        //methods
+        System.out.println("test_append_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_0(i));
+        System.out.println("test_append_1");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_1(i));
+        System.out.println("test_append_2");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_2(i));
+        System.out.println("test_append_3");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_3(i));
+        System.out.println("test_append_4");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_4(i));
+        System.out.println("test_append_5");
+        for (int i = 0; i < 2; i++) System.out.println(test_append_5(i));
+        System.out.println("test_append_6");
+        for (int i = 0; i < 3; i++) System.out.println(test_append_6(i));
+        System.out.println("test_append_7");
+        for (int i = 0; i < 3; i++) System.out.println(test_append_7(i));
+        System.out.println("test_append_8");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_8(i));
+        System.out.println("test_append_9");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_9(i));
+        System.out.println("test_append_10");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_10(i));
+        System.out.println("test_append_11");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_11(i));
+        System.out.println("test_append_12");
+        for (int i = 0; i < 4; i++) System.out.println(test_append_12(i));
+
+
+        System.out.println("test_appendCodePoint_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_appendCodePoint_0(i));
+        System.out.println("test_capacity_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_capacity_0(i));
+        System.out.println("test_charAt_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_charAt_0(i));
+        //chars skip
+        System.out.println("test_codePointAt_0");
+        for (int i = 0; i < 3; i++) System.out.println(test_codePointAt_0(i));
+        System.out.println("test_codePointBefore_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_codePointBefore_0(i));
+        System.out.println("test_codePointCount_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_codePointCount_0(i));
+        //codePoints skip
+        System.out.println("test_compareTo_0");
+        for (int i = 0; i < 5; i++) System.out.println(test_compareTo_0(i));
+
+        System.out.println("test_delete_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_delete_0(i));
+        System.out.println("test_deleteCharAt_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_deleteCharAt_0(i));
+        //ensureCapacity skip
+
+        System.out.println("test_getChars_0");
+        for (int i = 0; i < 3; i++) System.out.println(test_getChars_0(i));
+
+        System.out.println("test_indexOf_0");
+        for (int i = 0; i < 3; i++) System.out.println(test_indexOf_0(i));
+        System.out.println("test_indexOf_1");
+        for (int i = 0; i < 4; i++) System.out.println(test_indexOf_1(i));
+
+
+        System.out.println("test_insert_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_0(i));
+        System.out.println("test_insert_1");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_1(i));
+        System.out.println("test_insert_2");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_2(i));
+        System.out.println("test_insert_2");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_2(i));
+        System.out.println("test_insert_3");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_3(i));
+        System.out.println("test_insert_4");
+        for (int i = 0; i < 3; i++) System.out.println(test_insert_4(i));
+        System.out.println("test_insert_5");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_5(i));
+        System.out.println("test_insert_6");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_6(i));
+        System.out.println("test_insert_7");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_7(i));
+        System.out.println("test_insert_8");
+        for (int i = 0; i < 5; i++) System.out.println(test_insert_8(i));
+        System.out.println("test_insert_9");
+        for (int i = 0; i < 5; i++) System.out.println(test_insert_9(i));
+        System.out.println("test_insert_10");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_10(i));
+        System.out.println("test_insert_11");
+        for (int i = 0; i < 4; i++) System.out.println(test_insert_11(i));
+
+        System.out.println("test_lastIndexOf_0");
+        for (int i = 0; i < 3; i++) System.out.println(test_lastIndexOf_0(i));
+        System.out.println("test_lastIndexOf_1");
+        for (int i = 0; i < 4; i++) System.out.println(test_lastIndexOf_1(i));
+
+        System.out.println("test_length_0");
+        for (int i = 0; i < 3; i++) System.out.println(test_length_0(i));
+        System.out.println("test_offsetByCodePoints_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_offsetByCodePoints_0(i));
+        System.out.println("test_replace_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_replace_0(i));
+        System.out.println("test_reverse_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_reverse_0(i));
+        System.out.println("test_setCharAt_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_setCharAt_0(i));
+        System.out.println("test_setLength_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_setLength_0(i));
+
+        System.out.println("test_subSequence_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_subSequence_0(i));
+        System.out.println("test_substring_0");
+        for (int i = 0; i < 4; i++) System.out.println(test_substring_0(i));
+        System.out.println("test_substring_1");
+        for (int i = 0; i < 4; i++) System.out.println(test_substring_1(i));
+
+        System.out.println("test_toString_0");
+        for (int i = 0; i < 2; i++) System.out.println(test_toString_0(i));
+        //trim to size skip
+    }
 
 
     // internal variables
@@ -299,7 +430,6 @@ public final class StringBuffer_Tests {
 
         StringBuffer sequence_3 = new StringBuffer("слово");
         stringBuffer.append(sequence_3);
-        System.out.println(stringBuffer.length());
         if (execution == 2) {
             if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
                 return 2;
@@ -854,6 +984,7 @@ public final class StringBuffer_Tests {
             }
         }
 
+        stringBuffer.append("test");
         if (execution == 3) {
             int startIndex = 2;
             int endIndex = 6;
@@ -881,6 +1012,8 @@ public final class StringBuffer_Tests {
         StringBuffer stringBuffer3 = new StringBuffer("bbbbb");
         StringBuffer stringBuffer4 = stringBuffer1;
         StringBuffer stringBuffer5 = new StringBuffer();
+        StringBuffer stringBuffer6 = new StringBuffer("bbbbc");
+        StringBuffer stringBuffer7 = new StringBuffer("bbbbb");
 
         if (execution == 0) {
             if (stringBuffer1.compareTo(stringBuffer4) == 0)
@@ -890,14 +1023,14 @@ public final class StringBuffer_Tests {
         }
 
         if (execution == 1) {
-            if (stringBuffer2.compareTo(stringBuffer1) == 10)
+            if (stringBuffer2.compareTo(stringBuffer1) > 0)
                 return 1;
             else
                 return -1;
         }
 
         if (execution == 2) {
-            if (stringBuffer3.compareTo(stringBuffer2) == -5)
+            if (stringBuffer3.compareTo(stringBuffer2) > 0)
                 return 2;
             else
                 return -1;
@@ -906,6 +1039,13 @@ public final class StringBuffer_Tests {
         if (execution == 3) {
             if (stringBuffer1.compareTo(stringBuffer5) == 0)
                 return 3;
+            else
+                return -1;
+        }
+
+        if (execution == 4) {
+            if (stringBuffer7.compareTo(stringBuffer7) < 0)
+                return 4;
             else
                 return -1;
         }
@@ -927,16 +1067,14 @@ public final class StringBuffer_Tests {
             }
         }
 
+        stringBuffer.delete(1, 12);
         if (execution == 1) {
-            try {
-                stringBuffer.delete(1, 12);
-                return -1;
-            } catch (StringIndexOutOfBoundsException e) {
+            if (stringBuffer.length() == 1 && stringBuffer.toString().equals("0"))
                 return 1;
-            }
+            else return -1;
         }
 
-
+        stringBuffer.append("123456789");
         if (execution == 2) {
             try {
                 stringBuffer.delete(2, 1);
@@ -982,7 +1120,7 @@ public final class StringBuffer_Tests {
 
         stringBuffer.deleteCharAt(6);
         if (execution == 2) {
-            if (stringBuffer.length() == 9 && stringBuffer.charAt(6) == 7)
+            if (stringBuffer.length() == 9 && stringBuffer.charAt(6) == '7')
                 return 2;
             else
                 return -1;
@@ -1765,14 +1903,14 @@ public final class StringBuffer_Tests {
         }
 
         if (execution == 2) {
-            if (stringBuffer.offsetByCodePoints(2, 5) == stringBuffer.codePointAt(7))
+            if (stringBuffer.offsetByCodePoints(2, 5) == 7)
                 return 2;
             else
                 return -1;
         }
 
         if (execution == 3) {
-            if (stringBuffer.offsetByCodePoints(13, -2) == stringBuffer.codePointAt(11))
+            if (stringBuffer.offsetByCodePoints(13, -2) == 11)
                 return 3;
             else
                 return -1;
@@ -1936,7 +2074,7 @@ public final class StringBuffer_Tests {
 
         stringBuffer.setLength(2);
         if (execution == 3) {
-            if (stringBuffer.length() == 2 && stringBuffer.charAt(2) == 'a') return 3;
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == 'a') return 3;
             else return -1;
         }
 
@@ -1984,6 +2122,38 @@ public final class StringBuffer_Tests {
 
     // StringBufferAutomaton::substring (int)
     public static int test_substring_0(final int execution) {
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+
+        if (execution == 0) {
+            if (stringBuffer.substring(2).equals("23456789")) return 0;
+            else return -1;
+        }
+
+
+        if (execution == 1) {
+            if (stringBuffer.substring(9).equals("9"))
+                return 1;
+            else
+                return -1;
+        }
+
+        if (execution == 2) {
+            try {
+                stringBuffer.substring(11);
+                return -1;
+            } catch (StringIndexOutOfBoundsException e) {
+                return 2;
+            }
+        }
+
+        if (execution == 3) {
+            if (stringBuffer.substring(10).equals(""))
+                return 3;
+            else
+                return -1;
+        }
+
+
         return -1;
     }
 
@@ -2053,9 +2223,7 @@ public final class StringBuffer_Tests {
         return -1;
     }
 
-    public static void main(String[] args) {
-        for (int i =0; i<4; i++) System.out.println(test_substring_1(i));
-    }
+
 
 }
 
