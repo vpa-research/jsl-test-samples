@@ -1035,16 +1035,14 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::ensureCapacity (int)
     public static int test_ensureCapacity_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
+
         if (execution == 0) {
-            try {
-                stringBuffer.ensureCapacity(1);
-                if (stringBuffer.length() == 10)
-                    return 0;
-                else return -1;
-            } catch (Exception e) {
-                return -1;
-            }
+            stringBuffer.ensureCapacity(1);
+            if (stringBuffer.length() == 10)
+                return 0;
+            else return -1;
         }
+
         return -1;
     }
 
@@ -2151,16 +2149,14 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::trimToSize
     public static int test_trimToSize_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
+
         if (execution == 0) {
-            try {
-                stringBuffer.trimToSize();
-                if (stringBuffer.length() == 10)
-                    return 0;
-                else return -1;
-            } catch (Exception e) {
-                return -1;
-            }
+            stringBuffer.trimToSize();
+            if (stringBuffer.length() == 10)
+                return 0;
+            else return -1;
         }
+
         return -1;
     }
 
