@@ -1,10 +1,7 @@
 package approximations;
 
-import sun.misc.Unsafe;
-
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -77,6 +74,7 @@ public final class SelfTestMain {
     }
 
     private static void suppressIllegalAccessWarning() {
+        /*
         try {
             final Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
             theUnsafe.setAccessible(true);
@@ -87,6 +85,7 @@ public final class SelfTestMain {
             u.putObjectVolatile(cls, u.staticFieldOffset(logger), null);
         } catch (Exception ignore) {
         }
+        */
     }
 
     private void run(final Collection<Class<?>> testClasses) {

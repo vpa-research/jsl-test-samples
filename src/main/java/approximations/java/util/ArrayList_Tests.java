@@ -1,9 +1,12 @@
 package approximations.java.util;
 
+import approximations.Test;
+
 import java.util.ArrayList;
 
 public final class ArrayList_Tests {
 
+    @Test(executionMax = 4, exceptions = java.lang.IndexOutOfBoundsException.class)
     public static int test_get_0(int execution) {
         ArrayList<Object> list = new ArrayList<>();
         if (execution == 0) {

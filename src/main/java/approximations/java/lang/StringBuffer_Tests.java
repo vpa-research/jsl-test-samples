@@ -119,7 +119,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        CharSequence sequence_3 = "слово";
+        CharSequence sequence_3 = "СЃР»РѕРІРѕ";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
@@ -209,7 +209,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        Object sequence_3 = "слово";
+        Object sequence_3 = "СЃР»РѕРІРѕ";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.charAt(stringBuffer.length() - 1) == sequence_3.toString().charAt(4))
@@ -256,7 +256,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        String sequence_3 = "слово";
+        String sequence_3 = "СЃР»РѕРІРѕ";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
@@ -300,7 +300,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        StringBuffer sequence_3 = new StringBuffer("слово");
+        StringBuffer sequence_3 = new StringBuffer("СЃР»РѕРІРѕ");
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
@@ -360,10 +360,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char ch2 = 'д';
+        char ch2 = '\u0434';
         stringBuffer.append(ch2);
         if (execution == 1) {
-            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == 'д')
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == '\u0434')
                 return 1;
             else
                 return -1;
@@ -404,10 +404,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char[] ch3 = {'в'};
+        char[] ch3 = {'\u0432'};
         stringBuffer.append(ch3);
         if (execution == 2) {
-            if (stringBuffer.length() == 7 && stringBuffer.charAt(6) == 'в')
+            if (stringBuffer.length() == 7 && stringBuffer.charAt(6) == '\u0432')
                 return 2;
             else
                 return -1;
@@ -430,7 +430,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char[] ch2 = {'!', 'в', '.'};
+        char[] ch2 = {'!', '\u0432', '.'};
         stringBuffer.append(ch2, 0, 3);
         if (execution == 1) {
             if (stringBuffer.length() == 5 && stringBuffer.charAt(4) == '.')
@@ -439,7 +439,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char[] ch3 = {'а', 'б', 'в', 'г'};
+        char[] ch3 = {'\u0430', '\u0431', '\u0432', '\u0433'};
         if (execution == 2) {
             try {
                 stringBuffer.append(ch3, 1, -1);
@@ -651,7 +651,7 @@ public final class StringBuffer_Tests {
 
         stringBuffer.appendCodePoint(1074);
         if (execution == 2) {
-            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == 'в')
+            if (stringBuffer.length() == 2 && stringBuffer.charAt(1) == '\u0432')
                 return 2;
             else
                 return -1;
@@ -696,7 +696,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        stringBuffer.append('в');
+        stringBuffer.append('\u0432');
         if (execution == 3) {
             if (stringBuffer.length() == 106)
                 return 3;
@@ -711,7 +711,7 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::charAt (int)
     @Test(executionMax = 3)
     public static int test_charAt_0(final int execution) {
-        StringBuffer stringBuffer = new StringBuffer("text for тест 0!");
+        StringBuffer stringBuffer = new StringBuffer("text for \u0442\u0435\u0441\u0442 0!");
 
         if (execution == 0) {
             try {
@@ -733,13 +733,13 @@ public final class StringBuffer_Tests {
 
 
         if (execution == 2) {
-            if (stringBuffer.charAt(9) == 'т')
+            if (stringBuffer.charAt(9) == '\u0442')
                 return 2;
             else
                 return -1;
         }
 
-        stringBuffer.append('в');
+        stringBuffer.append('\u0432');
         if (execution == 3) {
             if (stringBuffer.charAt(0) == 't')
                 return 3;
@@ -754,7 +754,7 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::chars
     @Test(disabled = true)
     public static int test_chars_0(final int execution) {
-        // FIXME: STREAM NOT IMPLEMENTED
+        // FIXME: stream not implemented
         return -1;
     }
 
@@ -890,14 +890,15 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::codePoints
     @Test(disabled = true)
     public static int test_codePoints_0(final int execution) {
-        // FIXME: STREAM NOT IMPLEMENTED
+        // FIXME: stream not implemented
         return -1;
     }
 
 
     // StringBufferAutomaton::compareTo (StringBuffer)
-    @Test(executionMax = 4)
+    @Test(executionMax = 4, disabled = true)
     public static int test_compareTo_0(final int execution) {
+        /*
         StringBuffer stringBuffer1 = new StringBuffer();
         StringBuffer stringBuffer2 = new StringBuffer("aaaaaaaaaa");
         StringBuffer stringBuffer3 = new StringBuffer("bbbbb");
@@ -941,6 +942,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
+        return -1;
+         */
+
+        // WARNING: this method exists only since java-11
         return -1;
     }
 
@@ -1185,10 +1190,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        CharSequence sequence_3 = "слово";
+        CharSequence sequence_3 = "\u0441\u043B\u043E\u0432\u043E";
         stringBuffer.insert(10, sequence_3);
         if (execution == 3) {
-            if (stringBuffer.length() == 19 && stringBuffer.charAt(10) == 'с')
+            if (stringBuffer.length() == 19 && stringBuffer.charAt(10) == '\u0441')
                 return 3;
             else
                 return -1;
@@ -1231,10 +1236,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        CharSequence sequence_3 = "слово";
+        CharSequence sequence_3 = "\u0441\u043B\u043E\u0432\u043E";
         stringBuffer.insert(3, sequence_3, 2, 5);
         if (execution == 3) {
-            if (stringBuffer.length() == 6 && stringBuffer.charAt(5) == 'о')
+            if (stringBuffer.length() == 6 && stringBuffer.charAt(5) == '\u043E')
                 return 3;
             else
                 return -1;
@@ -1394,7 +1399,7 @@ public final class StringBuffer_Tests {
             }
         }
 
-        char ch2 = 'д';
+        char ch2 = '\u0434';
         stringBuffer.insert(0, ch2);
         if (execution == 1) {
             if (stringBuffer.length() == 1 && stringBuffer.charAt(0) == ch2)
@@ -1448,7 +1453,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        char[] ch3 = {'в', 'г'};
+        char[] ch3 = {'\u0432', '\u0433'};
         stringBuffer.insert(2, ch3);
         if (execution == 2) {
             if (stringBuffer.length() == ch1.length + ch3.length &&
@@ -1477,7 +1482,7 @@ public final class StringBuffer_Tests {
     @Test(executionMax = 3)
     public static int test_insert_7(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
-        char[] ch1 = {'b', 'a', 'ц', 'д', 'e', 'f'};
+        char[] ch1 = {'b', 'a', '\u0446', '\u0434', 'e', 'f'};
 
         if (execution == 0) {
             try {
@@ -1802,7 +1807,7 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::offsetByCodePoints (int, int)
     @Test(executionMax = 3)
     public static int test_offsetByCodePoints_0(final int execution) {
-        StringBuffer stringBuffer = new StringBuffer("123456бвгдbvgd");
+        StringBuffer stringBuffer = new StringBuffer("123456Р±РІРіРґbvgd");
 
         if (execution == 0) {
             try {
@@ -1949,9 +1954,9 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        stringBuffer.setCharAt(9, 'в');
+        stringBuffer.setCharAt(9, '\u0432');
         if (execution == 2) {
-            if (stringBuffer.charAt(9) == 'в' && stringBuffer.length() == 10)
+            if (stringBuffer.charAt(9) == '\u0432' && stringBuffer.length() == 10)
                 return 2;
             else
                 return -1;

@@ -2,21 +2,9 @@ plugins {
     java
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    // there should be no dependencies
-}
+group = "org.usvm.approximations.java.stdlib"
+version = "0.0.0"
 
 tasks.withType<JavaCompile> {
-    sourceCompatibility = "1.8"
-}
-
-tasks.test {
-    useJUnitPlatform()
+    options.release = 8
 }
