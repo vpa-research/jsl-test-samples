@@ -119,7 +119,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        CharSequence sequence_3 = "слово";
+        CharSequence sequence_3 = "\u0441\u043B\u043E\u0432\u043E";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
@@ -209,7 +209,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        Object sequence_3 = "слово";
+        Object sequence_3 = "\u0441\u043B\u043E\u0432\u043E";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.charAt(stringBuffer.length() - 1) == sequence_3.toString().charAt(4))
@@ -256,7 +256,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        String sequence_3 = "слово";
+        String sequence_3 = "\u0441\u043B\u043E\u0432\u043E";
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
@@ -300,7 +300,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        StringBuffer sequence_3 = new StringBuffer("слово");
+        StringBuffer sequence_3 = new StringBuffer("\u0441\u043B\u043E\u0432\u043E");
         stringBuffer.append(sequence_3);
         if (execution == 2) {
             if (stringBuffer.length() == 19 && stringBuffer.charAt(17) == sequence_3.charAt(3))
