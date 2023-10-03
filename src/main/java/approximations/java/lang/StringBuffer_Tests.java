@@ -1033,9 +1033,16 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::ensureCapacity (int)
-    @Test(disabled = true)
     public static int test_ensureCapacity_0(final int execution) {
-        // FIXME: DO_NOTHING in lsl spec
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+        if (execution == 0) {
+            try {
+                stringBuffer.ensureCapacity(1);
+                return 0;
+            } catch (Exception e) {
+                return -1;
+            }
+        }
         return -1;
     }
 
@@ -2140,9 +2147,16 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::trimToSize
-    @Test(disabled = true)
     public static int test_trimToSize_0(final int execution) {
-        // FIXME: DO_NOTHING in lsl spec
+        StringBuffer stringBuffer = new StringBuffer("0123456789");
+        if (execution == 0) {
+            try {
+                stringBuffer.trimToSize();
+                return 0;
+            } catch (Exception e) {
+                return -1;
+            }
+        }
         return -1;
     }
 
