@@ -1038,7 +1038,9 @@ public final class StringBuffer_Tests {
         if (execution == 0) {
             try {
                 stringBuffer.ensureCapacity(1);
-                return 0;
+                if (stringBuffer.length() == 10)
+                    return 0;
+                else return -1;
             } catch (Exception e) {
                 return -1;
             }
@@ -2152,7 +2154,9 @@ public final class StringBuffer_Tests {
         if (execution == 0) {
             try {
                 stringBuffer.trimToSize();
-                return 0;
+                if (stringBuffer.length() == 10)
+                    return 0;
+                else return -1;
             } catch (Exception e) {
                 return -1;
             }
