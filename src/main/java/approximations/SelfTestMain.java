@@ -149,7 +149,7 @@ public final class SelfTestMain {
             final Test metadata = getTestMetadata(testMethod);
             final boolean shouldIgnore = getTestDisabled(metadata);
             if (shouldIgnore) {
-                System.out.printf("[-] (?\\?) #%s - DISABLED", testMethodName);
+                System.out.printf("[-] (?\\?) #%s - DISABLED%n", testMethodName);
                 return stats;
             }
             final int maxExecution = getTestExecutionLimit(metadata) + 1;
@@ -175,15 +175,15 @@ public final class SelfTestMain {
                     if (newTraceSize > 0)
                         exception.printStackTrace(System.out);
                     else
-                        System.out.println(exception.getMessage());
+                        System.out.println("[?] " + exception.getMessage());
 
                     if (QUIT_ON_FAIL)
                         System.exit(-1);
                 }
             }
         } catch (TestInfrastructureException e) {
-            System.out.printf("[~] (?\\?) #%s - INVALID", testMethodName);
-            System.out.printf("[x] %s%n", e.getMessage());
+            System.out.printf("[~] (?\\?) #%s - INVALID%n", testMethodName);
+            System.out.printf("[?] %s%n", e.getMessage());
             return stats;
         }
 
