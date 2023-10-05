@@ -14,4 +14,6 @@ public @interface Test {
     Class<?>[] exceptions() default {};
 
     boolean disabled() default false;
+
+    String reason() default "";
 }

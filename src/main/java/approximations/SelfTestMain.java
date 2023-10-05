@@ -5,19 +5,26 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public final class SelfTestMain {
-    private static final boolean QUIT_ON_FAIL = false;
     private static final boolean SUPPRESS_ILLEGAL_REFLECTION_ACCESS = false;
-
+    private static final String CLASS_FILE_EXT = ".class";
     private static final Class<?> TEST_METHOD_RETURN_TYPE = int.class;
     private static final Class<?>[] TEST_METHOD_PARAMETER_TYPES = new Class[]{
             int.class
     };
-    public static final String CLASS_FILE_EXT = ".class";
+
+    private static final String PROP_CLASS_NAME_PREFIX = "prefix";
+    private static final String PROP_STOP_ON_FIRST_FAIL = "stop-on-fail";
+    private static final String PROP_RETURN_NEGATIVE_ON_FAIL = "crash-on-failing";
+
+    private final boolean stopOnFirstFail;
+    private final boolean returnNegativeOnFail;
+    private final String classNamePrefix;
 
     private static class TestInfrastructureException extends Throwable {
         TestInfrastructureException(final String format, final Object... objects) {
@@ -34,11 +41,13 @@ public final class SelfTestMain {
 
     private static final class StatCounter {
         private int executed = 0;
+        private int executedClasses = 0;
         private int failed = 0;
         private int unique = 0;
 
         public void add(final StatCounter other) {
             executed += other.executed;
+            executedClasses += other.executedClasses;
             failed += other.failed;
             unique += other.unique;
         }
@@ -55,6 +64,10 @@ public final class SelfTestMain {
             return unique;
         }
 
+        public int getExecutedClasses() {
+            return executedClasses;
+        }
+
         public void countUniqueMethod() {
             ++unique;
         }
@@ -63,12 +76,20 @@ public final class SelfTestMain {
             ++executed;
         }
 
+        public void countClassExecution() {
+            ++executedClasses;
+        }
+
         public void countFailure() {
             ++failed;
         }
     }
 
-    private SelfTestMain() {
+    private SelfTestMain(final Properties props) {
+        classNamePrefix = "approximations." + props.getProperty(PROP_CLASS_NAME_PREFIX, "");
+        stopOnFirstFail = props.getProperty(PROP_STOP_ON_FIRST_FAIL, "false").equalsIgnoreCase("true");
+        returnNegativeOnFail = props.getProperty(PROP_RETURN_NEGATIVE_ON_FAIL, "true").equalsIgnoreCase("true");
+
         if (SUPPRESS_ILLEGAL_REFLECTION_ACCESS)
             suppressIllegalAccessWarning();
     }
@@ -88,23 +109,41 @@ public final class SelfTestMain {
         */
     }
 
-    private void run(final Collection<Class<?>> testClasses) {
+    private void run() {
         final StatCounter stats = new StatCounter();
 
-        for (Class<?> clazz : testClasses)
+        // look for classes
+        final Collection<Class<?>> testClasses = findTestClasses(classNamePrefix);
+        System.out.printf("[i] Found %d test classes matching prefix '%s':%n",
+                testClasses.size(),
+                classNamePrefix
+        );
+        testClasses.forEach(c -> System.out.println("- " + c.getCanonicalName()));
+        System.out.println();
+
+        // execute the tests one-by-one
+        for (Class<?> clazz : testClasses) {
             stats.add(runTestClass(clazz));
 
+            if (stopOnFirstFail && stats.failed != 0)
+                break;
+        }
+
         System.out.println("[i] Done.");
-        renderStatistics(stats, testClasses);
+        renderStatistics(stats);
+
+        if (returnNegativeOnFail && stats.failed != 0) {
+            System.out.println("[x] There are some failing tests have been detected");
+            System.exit(-1);
+        }
     }
 
-    private void renderStatistics(final StatCounter stats,
-                                  final Collection<Class<?>> testClasses) {
+    private void renderStatistics(final StatCounter stats) {
         System.out.printf("[i] Final stats: %d failed out of %d executed in %d unique methods in %d classes.%n",
                 stats.getFailed(),
                 stats.getExecuted(),
                 stats.getUniqueMethods(),
-                testClasses.size()
+                stats.getExecutedClasses()
         );
     }
 
@@ -126,9 +165,14 @@ public final class SelfTestMain {
         Arrays.sort(methods, Comparator.comparing(Method::getName));
 
         final StatCounter result = new StatCounter();
+        result.countClassExecution();
         for (Method tm : methods)
-            if (isSuitableTestMethod(tm))
+            if (isSuitableTestMethod(tm)) {
                 result.add(runTestMethod(tm));
+
+                if (stopOnFirstFail && result.failed != 0)
+                    return result;
+            }
 
         System.out.printf("[c] Results: %d/%d failing in '%s'%n%n",
                 result.getFailed(), result.getExecuted(), clazz.getCanonicalName());
@@ -148,7 +192,13 @@ public final class SelfTestMain {
             final Test metadata = getTestMetadata(testMethod);
             final boolean shouldIgnore = getTestDisabled(metadata);
             if (shouldIgnore) {
-                System.out.printf("[-] (?\\?) #%s - DISABLED%n", testMethodName);
+                final String reason = getTestDisabledReason(metadata);
+                System.out.printf("[-] (?\\?) #%s - DISABLED%s%n",
+                        testMethodName,
+                        reason != null
+                                ? ": " + reason
+                                : ""
+                );
                 return stats;
             }
             final int maxExecution = getTestExecutionLimit(metadata) + 1;
@@ -176,8 +226,10 @@ public final class SelfTestMain {
                     else
                         System.out.println("[?] " + exception.getMessage());
 
-                    if (QUIT_ON_FAIL)
-                        System.exit(-1);
+                    if (stopOnFirstFail) {
+                        System.out.println("[x] A failing test have been detected - aborting");
+                        break;
+                    }
                 }
             }
         } catch (TestInfrastructureException e) {
@@ -195,13 +247,13 @@ public final class SelfTestMain {
         final Class<?> returnType = testMethod.getReturnType();
         if (returnType != TEST_METHOD_RETURN_TYPE)
             throw new TestInfrastructureException(
-                    "Unexpected return type: expecting '%s' but got '%s'%n",
-                    int.class.getCanonicalName(),
+                    "Unexpected return type: expecting '%s' but got '%s'",
+                    TEST_METHOD_RETURN_TYPE.getCanonicalName(),
                     returnType.getCanonicalName()
             );
 
         // parameters
-        final java.lang.reflect.Parameter[] parameters = testMethod.getParameters();
+        final Parameter[] parameters = testMethod.getParameters();
         if (parameters.length != TEST_METHOD_PARAMETER_TYPES.length)
             throw new TestInfrastructureException(
                     "Invalid test parameter count: expecting %d but got %d",
@@ -214,6 +266,7 @@ public final class SelfTestMain {
             if (actual != expected)
                 throw new TestInfrastructureException(
                         "Invalid type for parameter #%d: expecting '%s' but got '%s'",
+                        i,
                         expected.getCanonicalName(),
                         actual.getCanonicalName()
                 );
@@ -234,7 +287,7 @@ public final class SelfTestMain {
             final int res = (int) testMethod.invoke(null, execution);
             if (res != execution) {
                 final String msg = "Expected " + execution + " but got " + res;
-                throw new AssertionError(msg);
+                return new AssertionError(msg);
             }
             return null;
         } catch (InvocationTargetException e) {
@@ -262,6 +315,16 @@ public final class SelfTestMain {
 
     private static boolean getTestDisabled(final Test metadata) {
         return metadata != null && metadata.disabled();
+    }
+
+    private static String getTestDisabledReason(final Test metadata) {
+        if (metadata == null)
+            return null;
+
+        final String reason = metadata.reason();
+        return reason.isEmpty()
+                ? null
+                : reason;
     }
 
     private int patchException(final Throwable exception, final Method testMethod) {
@@ -297,13 +360,13 @@ public final class SelfTestMain {
         return newTrace.length;
     }
 
-    private static Collection<Class<?>> findTestClasses() {
+    private static Collection<Class<?>> findTestClasses(final String classNamePrefix) {
         final Collection<Class<?>> result = new ArrayList<>();
 
         // collect everything
         final String packageName = SelfTestMain.class.getPackage().getName();
         try {
-            findTestClasses(packageName, result);
+            findTestClasses(classNamePrefix, packageName, result);
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -319,7 +382,8 @@ public final class SelfTestMain {
                 .collect(Collectors.toList());
     }
 
-    private static void findTestClasses(final String packageName,
+    private static void findTestClasses(final String classNamePrefix,
+                                        final String packageName,
                                         final Collection<Class<?>> out) throws IOException, ClassNotFoundException {
         final ClassLoader loader = SelfTestMain.class.getClassLoader();
 
@@ -328,11 +392,12 @@ public final class SelfTestMain {
             final File dir = new File(resources.nextElement().getFile());
 
             if (dir.exists())
-                findTestClasses(dir, packageName, out);
+                findTestClasses(dir, classNamePrefix, packageName, out);
         }
     }
 
     private static void findTestClasses(final File dir,
+                                        final String classNamePrefix,
                                         final String packageName,
                                         final Collection<Class<?>> out) throws ClassNotFoundException {
         final File[] entries = dir.listFiles();
@@ -345,15 +410,27 @@ public final class SelfTestMain {
             if (entry.isFile() && entryName.endsWith(CLASS_FILE_EXT)) {
                 final String className = entryName.substring(0, entryName.length() - CLASS_FILE_EXT.length());
                 final String canonicalName = packageName + "." + className;
-                final Class<?> clazz = Class.forName(canonicalName);
-                out.add(clazz);
+
+                if (canonicalName.startsWith(classNamePrefix)) {
+                    final Class<?> clazz = Class.forName(canonicalName);
+                    out.add(clazz);
+                }
             } else if (entry.isDirectory()) {
-                findTestClasses(entry, packageName + "." + entryName, out);
+                findTestClasses(entry, classNamePrefix, packageName + "." + entryName, out);
             }
         }
     }
 
+    private static Properties parseArguments(final String[] args) {
+        final Properties config = new Properties();
+        for (String arg : args) {
+            final String[] argPair = arg.split("=", 2);
+            config.setProperty(argPair[0], argPair[1]);
+        }
+        return config;
+    }
+
     public static void main(String[] args) {
-        new SelfTestMain().run(findTestClasses());
+        new SelfTestMain(parseArguments(args)).run();
     }
 }

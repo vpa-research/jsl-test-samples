@@ -896,7 +896,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::compareTo (StringBuffer)
-    @Test(executionMax = 4, disabled = true)
+    @Test(executionMax = 4, disabled = true, reason = "available only since Java 11")
     public static int test_compareTo_0(final int execution) {
         /*
         StringBuffer stringBuffer1 = new StringBuffer();
