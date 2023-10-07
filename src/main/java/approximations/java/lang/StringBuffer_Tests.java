@@ -3,7 +3,7 @@ package approximations.java.lang;
 import approximations.Test;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Optional;
 
 public final class StringBuffer_Tests {
 
@@ -27,7 +27,6 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::StringBuffer (CharSequence)
     @Test(executionMax = 1)
     public static int test_StringBuffer_1(final int execution) {
-
         CharSequence sequence = "12";
 
         if (execution == 0) {
@@ -199,11 +198,10 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        Date date = new Date();
-        Object sequence_2 = date;
+        Object sequence_2 = Optional.of(123456789);
         stringBuffer.append(sequence_2);
         if (execution == 1) {
-            if (stringBuffer.toString().equals("null" + date))
+            if (stringBuffer.toString().equals("null".concat(sequence_2.toString())))
                 return 1;
             else
                 return -1;
@@ -342,7 +340,6 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-
         return -1;
     }
 
@@ -447,7 +444,6 @@ public final class StringBuffer_Tests {
             } catch (IndexOutOfBoundsException e) {
                 return 2;
             }
-
         }
 
         char[] ch4 = {'1', '2', '3'};
@@ -574,7 +570,6 @@ public final class StringBuffer_Tests {
         }
 
         stringBuffer.append(-10);
-
         if (execution == 3) {
             if (stringBuffer.length() == 16 && stringBuffer.charAt(13) == '-' && stringBuffer.charAt(15) == '0')
                 return 3;
@@ -616,7 +611,6 @@ public final class StringBuffer_Tests {
         }
 
         stringBuffer.append(-10L);
-
         if (execution == 3) {
             if (stringBuffer.length() == 25 && stringBuffer.charAt(22) == '-' && stringBuffer.charAt(23) == '1')
                 return 3;
@@ -658,7 +652,6 @@ public final class StringBuffer_Tests {
         }
 
         stringBuffer.appendCodePoint(32);
-
         if (execution == 3) {
             if (stringBuffer.length() == 3 && stringBuffer.charAt(2) == ' ')
                 return 3;
@@ -687,6 +680,7 @@ public final class StringBuffer_Tests {
             else
                 return -1;
         }
+
         char[] space100 = new char[100];
         stringBuffer.append(space100);
         if (execution == 2) {
@@ -730,7 +724,6 @@ public final class StringBuffer_Tests {
                 return 1;
             }
         }
-
 
         if (execution == 2) {
             if (stringBuffer.charAt(9) == '\u0442')
@@ -783,14 +776,12 @@ public final class StringBuffer_Tests {
             }
         }
 
-
         if (execution == 2) {
             if (stringBuffer.codePointAt(2) <= 1114111 && stringBuffer.codePointAt(2) >= 0)
                 return 2;
             else
                 return -1;
         }
-
 
         return -1;
     }
@@ -809,7 +800,6 @@ public final class StringBuffer_Tests {
                 return 0;
             }
         }
-
 
         if (execution == 1) {
             try {
@@ -1145,7 +1135,6 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-
         if (execution == 3) {
             if (stringBuffer.indexOf("3", -100) == 3)
                 return 3;
@@ -1181,7 +1170,6 @@ public final class StringBuffer_Tests {
         }
 
         CharSequence sequence_2 = "anystring1";
-
         stringBuffer.insert(1, sequence_2);
         if (execution == 2) {
             if (stringBuffer.length() == 14 && stringBuffer.charAt(1) == sequence_2.charAt(0))
@@ -1272,13 +1260,12 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        Date date = new Date();
-        Object sequence_2 = date;
+        Object sequence_2 = Optional.of(123456789);
 
         stringBuffer.insert(1, sequence_2);
         if (execution == 2) {
-            if (stringBuffer.length() == 4 + date.toString().length()
-                    && stringBuffer.charAt(1) == date.toString().charAt(0))
+            if (stringBuffer.length() == 4 + sequence_2.toString().length()
+                    && stringBuffer.charAt(1) == sequence_2.toString().charAt(0))
                 return 2;
             else
                 return -1;
@@ -1290,7 +1277,7 @@ public final class StringBuffer_Tests {
         Object sequence_3 = a;
         stringBuffer.insert(10, sequence_3);
         if (execution == 3) {
-            if (stringBuffer.length() == 4 + date.toString().length() + a.toString().length()
+            if (stringBuffer.length() == 4 + sequence_2.toString().length() + a.toString().length()
                     && stringBuffer.charAt(10) == a.toString().charAt(0))
                 return 3;
             else
@@ -1324,8 +1311,7 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-        Date date = new Date();
-        String sequence_2 = date.toString();
+        String sequence_2 = Optional.of(987654321).toString();
 
         stringBuffer.insert(1, sequence_2);
         if (execution == 2) {
@@ -1340,7 +1326,7 @@ public final class StringBuffer_Tests {
         String sequence_3 = new String(new int[]{80_000}, 0, 1);
         stringBuffer.insert(10, sequence_3);
         if (execution == 3) {
-            if (stringBuffer.length() == 4 + date.toString().length() + 2
+            if (stringBuffer.length() == 4 + sequence_2.toString().length() + 2
                     && stringBuffer.charAt(10) == sequence_3.charAt(0))
                 return 3;
             else
@@ -1394,7 +1380,7 @@ public final class StringBuffer_Tests {
             try {
                 stringBuffer.insert(5, ch1);
                 return -1;
-            } catch (StringIndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 return 0;
             }
         }
@@ -1807,7 +1793,7 @@ public final class StringBuffer_Tests {
     // StringBufferAutomaton::offsetByCodePoints (int, int)
     @Test(executionMax = 3)
     public static int test_offsetByCodePoints_0(final int execution) {
-        StringBuffer stringBuffer = new StringBuffer("123456бвгдbvgd");
+        StringBuffer stringBuffer = new StringBuffer("123456\u0431\u0432\u0433\u0434bvgd");
 
         if (execution == 0) {
             try {
@@ -1872,7 +1858,6 @@ public final class StringBuffer_Tests {
                 return -1;
         }
 
-
         if (execution == 3) {
             try {
                 stringBuffer.replace(15, 5, "v");
@@ -1897,7 +1882,6 @@ public final class StringBuffer_Tests {
             if (stringBuffer.length() == 10 && stringBuffer.toString().equals(s2)) return 0;
             else return -1;
         }
-
 
         StringBuffer stringBuffer2 = new StringBuffer();
 
@@ -1961,7 +1945,6 @@ public final class StringBuffer_Tests {
             else
                 return -1;
         }
-
 
         if (execution == 3) {
             try {
