@@ -2,6 +2,9 @@ package approximations.java.util.zip;
 
 import approximations.Test;
 
+import java.nio.ByteBuffer;
+import java.util.zip.CRC32;
+
 public final class CRC32_Tests {
 
     // internal variables
@@ -10,6 +13,12 @@ public final class CRC32_Tests {
 
     // CRC32Automaton::CRC32
     public static int test_CRC32_0(final int execution) {
+        CRC32 crc32 = new CRC32();
+        if (execution == 0) {
+            long crc = crc32.getValue();
+            if (crc != 0) return -1;
+            else return execution;
+        }
         return -1;
     }
 
@@ -20,13 +29,26 @@ public final class CRC32_Tests {
 
     // CRC32Automaton::getValue
     public static int test_getValue_0(final int execution) {
+        CRC32 crc32 = new CRC32();
+        if (execution == 0) {
+            long crc = crc32.getValue();
+            if (crc != 0) return -1;
+            else return execution;
+        }
         return -1;
     }
 
 
     // CRC32Automaton::reset
-    @Test(executionMax = 2)
     public static int test_reset_0(final int execution) {
+        CRC32 crc32 = new CRC32();
+        if (execution == 0) {
+            crc32.update(123456);
+            crc32.reset();
+            long crc = crc32.getValue();
+            if (crc != 0) return -1;
+            else return execution;
+        }
         return -1;
     }
 
@@ -38,8 +60,27 @@ public final class CRC32_Tests {
 
 
     // CRC32Automaton::update (byte[])
+    @Test(executionMax = 2, disabled = true, reason = "available only since Java 9")
     public static int test_update_1(final int execution) {
-        return -1;
+        CRC32 crc32 = new CRC32();
+        switch (execution) {
+            case 0:
+                crc32.update(123456);
+                crc32.reset();
+                long crc = crc32.getValue();
+                if (crc != 0) return -1;
+                break;
+            case 1:
+                byte[] byteArray = "somearray".getBytes();
+                crc32.update(byteArray);
+                crc32.reset();
+                long crc = crc32.getValue();
+                if (crc != 0) return -1;
+                break;
+            default:
+                return -1;
+        }
+        return execution;
     }
 
 
