@@ -53,6 +53,50 @@ public final class ArrayList_Tests {
         return 0;
     }
 
+
+    @Test(executionMax = 2)
+    public static int test_indexOf_0(int execution) {
+        final Integer i1 = 11;
+        final Integer i2 = 22;
+        final Integer i3 = 33;
+
+        final ArrayList<Integer> a = new ArrayList<>();
+        a.add(i2);
+        a.add(i1);
+        a.add(i3);
+
+        switch (execution) {
+            case 0: {
+                if (a.indexOf(null) != -1)
+                    return -1;
+                break;
+            }
+
+            case 1: {
+                if (a.indexOf(i1) != 1)
+                    return -1;
+                break;
+            }
+
+            case 2: {
+                Integer i4 = 11;
+                a.add(i4);
+
+                int idx = a.indexOf(i1);
+
+                // TODO: force the index to be the first encounter
+                if (idx != 1 && idx != 3)
+                    return -1;
+                break;
+            }
+
+            default:
+                return 0;
+        }
+        return execution;
+    }
+
+
     @Test(executionMax = 1)
     public static int test_sort_0(int execution) {
         final Integer i1 = 11;
