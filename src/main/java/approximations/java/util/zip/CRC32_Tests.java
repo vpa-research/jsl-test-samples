@@ -62,24 +62,29 @@ public final class CRC32_Tests {
     // CRC32Automaton::update (byte[])
     @Test(executionMax = 2, disabled = true, reason = "available only since Java 9")
     public static int test_update_1(final int execution) {
-        CRC32 crc32 = new CRC32();
-        switch (execution) {
-            case 0:
-                crc32.update(123456);
-                crc32.reset();
-                long crc = crc32.getValue();
-                if (crc != 0) return -1;
-                break;
-            case 1:
-                byte[] byteArray = "somearray".getBytes();
-                crc32.update(byteArray);
-                crc32.reset();
-                long crc = crc32.getValue();
-                if (crc != 0) return -1;
-                break;
-            default:
-                return -1;
-        }
+//        CRC32 crc32 = new CRC32();
+//        switch (execution) {
+//            case 0:
+//                byte[] byteArray = "somearray".getBytes();
+//                crc32.update(byteArray);
+//                long crc0 = crc32.getValue();
+//                if (crc0 == 0) return -1;
+//                crc32.reset();
+//                crc0 = crc32.getValue();
+//                if (crc0 != 0) return -1;
+//                break;
+//            case 1:
+//                byte[] byteArray = "aaa".getBytes();
+//                crc32.update(byteArray);
+//                long crc1 = crc32.getValue();
+//                if (crc1 == 0) return -1;
+//                crc32.reset();
+//                crc1 = crc32.getValue();
+//                if (crc1 != 0) return -1;
+//                break;
+//            default:
+//                return -1;
+//        }
         return execution;
     }
 
