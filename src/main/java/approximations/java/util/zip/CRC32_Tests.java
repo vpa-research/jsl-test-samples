@@ -2,7 +2,6 @@ package approximations.java.util.zip;
 
 import approximations.Test;
 
-import java.nio.ByteBuffer;
 import java.util.zip.CRC32;
 
 public final class CRC32_Tests {
@@ -55,12 +54,25 @@ public final class CRC32_Tests {
 
     // CRC32Automaton::update (ByteBuffer)
     public static int test_update_0(final int execution) {
-        return -1;
+        CRC32 crc32 = new CRC32();
+        switch (execution) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                return -1;
+        }
+        return execution;
     }
 
 
     // CRC32Automaton::update (byte[])
-    @Test(executionMax = 2, disabled = true, reason = "available only since Java 9")
+    @Test(executionMax = 1, disabled = true, reason = "available only since Java 9")
     public static int test_update_1(final int execution) {
 //        CRC32 crc32 = new CRC32();
 //        switch (execution) {
@@ -74,9 +86,8 @@ public final class CRC32_Tests {
 //                if (crc0 != 0) return -1;
 //                break;
 //            case 1:
-//                byte[] byteArray1 = null;
 //                try {
-//                    crc32.update(byteArray1);
+//                    crc32.update(null);
 //                    return -1;
 //                } catch (NullPointerException e) {
 //                    break;
@@ -89,14 +100,65 @@ public final class CRC32_Tests {
 
 
     // CRC32Automaton::update (byte[], int, int)
+    @Test(executionMax = 2)
     public static int test_update_2(final int execution) {
-        return -1;
+        byte[] byteArray = "somearrayfottest".getBytes();
+        CRC32 crc32 = new CRC32();
+        switch (execution) {
+            case 0:
+                crc32.update(byteArray, 2, 5);
+                long crc0 = crc32.getValue();
+                if (crc0 == 0) return -1;
+                crc32.reset();
+                crc0 = crc32.getValue();
+                if (crc0 != 0) return -1;
+                break;
+            case 1:
+                try {
+                    crc32.update(null, 0, 1);
+                    return -1;
+                } catch (NullPointerException e) {
+                    break;
+                }
+            case 2:
+                try {
+                    crc32.update(byteArray, 100, 1);
+                    return -1;
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    break;
+                }
+            default:
+                return -1;
+        }
+        return execution;
     }
 
 
     // CRC32Automaton::update (int)
+    @Test(executionMax = 1)
     public static int test_update_3(final int execution) {
-        return -1;
+        CRC32 crc32 = new CRC32();
+        switch (execution) {
+            case 0:
+                crc32.update(1);
+                long crc = crc32.getValue();
+                if (crc == 0) return -1;
+                crc32.reset();
+                crc = crc32.getValue();
+                if (crc != 0) return -1;
+                break;
+            case 1:
+                crc32.update(-1);
+                long crc1 = crc32.getValue();
+                if (crc1 == 0) return -1;
+                crc32.reset();
+                crc1 = crc32.getValue();
+                if (crc1 != 0) return -1;
+                break;
+            default:
+                return -1;
+        }
+        return execution;
     }
 
 }
