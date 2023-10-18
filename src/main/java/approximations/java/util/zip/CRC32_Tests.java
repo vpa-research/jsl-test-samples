@@ -74,14 +74,13 @@ public final class CRC32_Tests {
 //                if (crc0 != 0) return -1;
 //                break;
 //            case 1:
-//                byte[] byteArray = "aaa".getBytes();
-//                crc32.update(byteArray);
-//                long crc1 = crc32.getValue();
-//                if (crc1 == 0) return -1;
-//                crc32.reset();
-//                crc1 = crc32.getValue();
-//                if (crc1 != 0) return -1;
-//                break;
+//                byte[] byteArray1 = null;
+//                try {
+//                    crc32.update(byteArray1);
+//                    return -1;
+//                } catch (NullPointerException e) {
+//                    break;
+//                }
 //            default:
 //                return -1;
 //        }
