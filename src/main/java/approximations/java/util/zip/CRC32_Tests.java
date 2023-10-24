@@ -56,36 +56,36 @@ public final class CRC32_Tests {
     // CRC32Automaton::update (ByteBuffer)
     @Test(executionMax = 3, disabled = true, reason = "jdk.internal.misc.Unsafe not approximated yet")
     public static int test_update_0(final int execution) {
-//        CRC32 crc32 = new CRC32();
-//        switch (execution) {
-//            case 0:
-//                ByteBuffer bytebuffer0 = ByteBuffer.wrap("aaaa".getBytes());
-//                crc32.update(bytebuffer0);
-//                long crc0 = crc32.getValue();
-//                if (crc0 == 0) return -1;
-//                break;
-//            case 1:
-//                ByteBuffer bytebuffer1 = ByteBuffer.wrap(new byte[]{});
-//                crc32.update(bytebuffer1);
-//                long crc1 = crc32.getValue();
-//                if (crc1 != 0) return -1;
-//                break;
-//            case 2:
-//                ByteBuffer bytebuffer2 = ByteBuffer.allocateDirect(10);
-//                crc32.update(bytebuffer2);
-//                long crc2 = crc32.getValue();
-//                if (crc2 == 0) return -1;
-//                break;
-//            case 3:
-//                ByteBuffer bytebuffer3 = ByteBuffer.allocateDirect(10);
-//                bytebuffer3.put((byte) 3);
-//                crc32.update(bytebuffer3);
-//                long crc3 = crc32.getValue();
-//                if (crc3 == 0) return -1;
-//                break;
-//            default:
-//                return -1;
-//        }
+        CRC32 crc32 = new CRC32();
+        switch (execution) {
+            case 0:
+                ByteBuffer bytebuffer0 = ByteBuffer.wrap("aaaa".getBytes());
+                crc32.update(bytebuffer0);
+                long crc0 = crc32.getValue();
+                if (crc0 == 0) return -1;
+                break;
+            case 1:
+                ByteBuffer bytebuffer1 = ByteBuffer.wrap(new byte[]{});
+                crc32.update(bytebuffer1);
+                long crc1 = crc32.getValue();
+                if (crc1 != 0) return -1;
+                break;
+            case 2:
+                ByteBuffer bytebuffer2 = ByteBuffer.allocateDirect(10);
+                crc32.update(bytebuffer2);
+                long crc2 = crc32.getValue();
+                if (crc2 == 0) return -1;
+                break;
+            case 3:
+                ByteBuffer bytebuffer3 = ByteBuffer.allocateDirect(10);
+                bytebuffer3.put((byte) 3);
+                crc32.update(bytebuffer3);
+                long crc3 = crc32.getValue();
+                if (crc3 == 0) return -1;
+                break;
+            default:
+                return -1;
+        }
         return execution;
     }
 
