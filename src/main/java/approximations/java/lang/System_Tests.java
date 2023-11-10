@@ -139,9 +139,12 @@ public final class System_Tests {
     /**
      * {@link java.lang.System#exit(int)}
      */
-    @Test(disabled = true, reason = "Unable to control USVM execution")
     public static int test_exit_0(final int execution) {
-        return -1;
+        try {
+            System.exit(-100);
+        } catch (Throwable ignored) {
+        }
+        return 0;
     }
 
 

@@ -2,11 +2,18 @@ package approximations;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.AccessController;
+import java.security.Permission;
+import java.security.PrivilegedAction;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,6 +32,9 @@ public final class SelfTestMain {
     private final boolean stopOnFirstFail;
     private final boolean returnNegativeOnFail;
     private final String classNamePrefix;
+    private final PrintStream oldStdOut;
+    private final PrintStream oldStdErr;
+    private final SecurityManager oldSecurityManager;
 
     private static class TestInfrastructureException extends Throwable {
         TestInfrastructureException(final String format, final Object... objects) {
@@ -85,7 +95,30 @@ public final class SelfTestMain {
         }
     }
 
+    private static final class NullOutputStream extends OutputStream {
+        @Override
+        public void write(int b) {
+            // nothing
+        }
+    }
+
+    private static final class ExitGuardSecurityManager extends SecurityManager {
+        @Override
+        public void checkExit(int status) {
+            throw new SecurityException();
+        }
+
+        @Override
+        public void checkPermission(Permission perm) {
+            // everything else is allowed
+        }
+    }
+
     private SelfTestMain(final Properties props) {
+        this.oldStdOut = System.out;
+        this.oldStdErr = System.err;
+        this.oldSecurityManager = System.getSecurityManager();
+
         classNamePrefix = "approximations." + props.getProperty(PROP_CLASS_NAME_PREFIX, "");
         stopOnFirstFail = props.getProperty(PROP_STOP_ON_FIRST_FAIL, "false").equalsIgnoreCase("true");
         returnNegativeOnFail = props.getProperty(PROP_RETURN_NEGATIVE_ON_FAIL, "true").equalsIgnoreCase("true");
@@ -283,6 +316,7 @@ public final class SelfTestMain {
     }
 
     private Throwable runTestCase(final Method testMethod, final int execution) {
+        beforeTestCase();
         try {
             final int res = (int) testMethod.invoke(null, execution);
             if (res != execution) {
@@ -294,7 +328,29 @@ public final class SelfTestMain {
             return e.getCause();
         } catch (Throwable e) {
             return e;
+        } finally {
+            afterTestCase();
         }
+    }
+
+    private void beforeTestCase() {
+        AccessController.doPrivileged((PrivilegedAction<?>) () -> {
+            System.setSecurityManager(new ExitGuardSecurityManager());
+            System.setOut(new PrintStream(new NullOutputStream()));
+            System.setErr(new PrintStream(new NullOutputStream()));
+
+            return null;
+        });
+    }
+
+    private void afterTestCase() {
+        AccessController.doPrivileged((PrivilegedAction<?>) () -> {
+            System.setOut(oldStdOut);
+            System.setErr(oldStdErr);
+            System.setSecurityManager(oldSecurityManager);
+
+            return null;
+        });
     }
 
     private static Test getTestMetadata(final Method testMethod) {
