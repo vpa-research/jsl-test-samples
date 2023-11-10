@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -22,6 +23,8 @@ public final class SelfTestMain {
     private static final Class<?>[] TEST_METHOD_PARAMETER_TYPES = new Class[]{
             int.class
     };
+    private static final Class<? extends Annotation> TEST_CLASS_ANNOTATION = Test.class;
+    private static final Class<? extends Annotation> TEST_METHOD_ANNOTATION = Test.class;
 
     private static final String PROP_CLASS_NAME_PREFIX = "prefix";
     private static final String PROP_STOP_ON_FIRST_FAIL = "stop-on-fail";
@@ -179,6 +182,9 @@ public final class SelfTestMain {
     }
 
     private static boolean isSuitableTestMethod(final Method method) {
+        if (!method.isAnnotationPresent(TEST_METHOD_ANNOTATION))
+            return false;
+
         final int mods = method.getModifiers();
 
         if (method.isSynthetic())
@@ -451,7 +457,8 @@ public final class SelfTestMain {
 
                 if (canonicalName.startsWith(classNamePrefix)) {
                     final Class<?> clazz = Class.forName(canonicalName);
-                    out.add(clazz);
+                    if (clazz.isAnnotationPresent(TEST_CLASS_ANNOTATION))
+                        out.add(clazz);
                 }
             } else if (entry.isDirectory()) {
                 findTestClasses(entry, classNamePrefix, packageName + "." + entryName, out);
