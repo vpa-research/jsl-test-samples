@@ -2,6 +2,7 @@ package approximations.java.util;
 
 import approximations.Test;
 
+@Test
 public final class OptionalInt_Tests {
 
     // internal variables

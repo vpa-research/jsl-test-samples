@@ -4,15 +4,19 @@ import approximations.Test;
 
 import java.util.ArrayList;
 
+@Test
 public final class ArrayList_Tests {
 
-    @Test(executionMax = 4, exceptions = java.lang.IndexOutOfBoundsException.class)
+    @Test(executionMax = 4)
     public static int test_get_0(int execution) {
         ArrayList<Object> list = new ArrayList<>();
         if (execution == 0) {
-            // IOB
-            if (list.get(5) == null)
-                return -1;
+            try {
+                if (list.get(5) == null)
+                    return -1;
+            } catch (IndexOutOfBoundsException e) {
+                return 0;
+            }
         }
 
         Object stub = new Object();

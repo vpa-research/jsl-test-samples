@@ -5,6 +5,7 @@ import approximations.Test;
 import java.util.ArrayList;
 import java.util.Spliterator;
 
+@Test
 public final class ArrayListSpliterator_Tests {
 
     // internal variables
@@ -16,6 +17,7 @@ public final class ArrayListSpliterator_Tests {
     // methods
 
     // ArrayListSpliteratorAutomaton::characteristics
+    @Test
     public static int test_characteristics_0(final int execution) {
         switch (execution) {
             case 0: {
@@ -146,6 +148,7 @@ public final class ArrayListSpliterator_Tests {
 
 
     // ArrayListSpliteratorAutomaton::hasCharacteristics (int)
+    @Test
     public static int test_hasCharacteristics_0(final int execution) {
         switch (execution) {
             case 0: {
@@ -166,7 +169,7 @@ public final class ArrayListSpliterator_Tests {
 
 
     // ArrayListSpliteratorAutomaton::tryAdvance (Consumer)
-    @Test(executionMax = 2, exceptions = {NullPointerException.class})
+    @Test(executionMax = 2)
     public static int test_tryAdvance_0(final int execution) {
         switch (execution) {
             case 0: {
@@ -208,9 +211,12 @@ public final class ArrayListSpliterator_Tests {
                 ArrayList<Object> a = new ArrayList<>();
                 Spliterator<Object> s = a.spliterator();
 
-                // NPE
-                if (s.tryAdvance(null) == true)
-                    return -1;
+                try {
+                    if (s.tryAdvance(null) == true)
+                        return -1;
+                } catch (NullPointerException ignored) {
+                    // as expected
+                }
             }
             break;
 

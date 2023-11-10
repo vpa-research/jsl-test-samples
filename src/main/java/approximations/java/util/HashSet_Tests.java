@@ -4,6 +4,7 @@ import approximations.Test;
 
 import java.util.HashSet;
 
+@Test
 public final class HashSet_Tests {
 
     // internal variables
@@ -11,6 +12,7 @@ public final class HashSet_Tests {
     // constructors
 
     // HashSetAutomaton::HashSet
+    @Test
     public static int test_HashSet_0(final int execution) {
         HashSet<?> hs = new HashSet<>();
         if (hs == null)

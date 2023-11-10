@@ -5,6 +5,7 @@ import approximations.Test;
 import java.util.ArrayList;
 import java.util.Optional;
 
+@Test
 public final class StringBuffer_Tests {
 
     // internal variables
@@ -12,6 +13,7 @@ public final class StringBuffer_Tests {
     // constructors
 
     // StringBufferAutomaton::StringBuffer
+    @Test
     public static int test_StringBuffer_0(final int execution) {
         if (execution == 0) {
             StringBuffer stringBuffer = new StringBuffer();
@@ -77,6 +79,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::StringBuffer (int)
+    @Test
     public static int test_StringBuffer_3(final int execution) {
         int capacity = 4;
         StringBuffer stringBuffer = new StringBuffer(capacity);
@@ -1028,6 +1031,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::ensureCapacity (int)
+    @Test
     public static int test_ensureCapacity_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 
@@ -1723,6 +1727,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::lastIndexOf (String, int)
+    @Test
     public static int test_lastIndexOf_1(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456012341356");
 
@@ -2135,6 +2140,7 @@ public final class StringBuffer_Tests {
 
 
     // StringBufferAutomaton::trimToSize
+    @Test
     public static int test_trimToSize_0(final int execution) {
         StringBuffer stringBuffer = new StringBuffer("0123456789");
 

@@ -9,8 +9,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.security.AccessController;
 import java.security.Permission;
 import java.security.PrivilegedAction;
@@ -237,7 +235,6 @@ public final class SelfTestMain {
             final int maxExecution = getTestExecutionLimit(metadata) + 1;
             if (maxExecution <= 0)
                 throw new TestInfrastructureException("Invalid max execution value: %s", maxExecution - 1);
-            final Collection<Class<?>> allowedExceptions = getTestAllowedExceptions(metadata);
 
             // running individual cases
             stats.countUniqueMethod();
@@ -247,7 +244,7 @@ public final class SelfTestMain {
                 final Throwable exception = runTestCase(testMethod, exe);
                 stats.countExecution();
 
-                if (exception == null || isExceptionAllowed(exception, allowedExceptions)) {
+                if (exception == null) {
                     System.out.println("ok");
                 } else {
                     stats.countFailure();
@@ -306,15 +303,6 @@ public final class SelfTestMain {
         }
     }
 
-    private static boolean isExceptionAllowed(final Throwable exception,
-                                              final Collection<Class<?>> allowedExceptions) {
-        final Class<?> caught = exception.getClass();
-        for (Class<?> e : allowedExceptions)
-            if (e == caught || e.isAssignableFrom(caught))
-                return true;
-        return false;
-    }
-
     private Throwable runTestCase(final Method testMethod, final int execution) {
         beforeTestCase();
         try {
@@ -361,12 +349,6 @@ public final class SelfTestMain {
         return metadata != null
                 ? metadata.executionMax()
                 : 0;
-    }
-
-    private static Collection<Class<?>> getTestAllowedExceptions(final Test metadata) {
-        return metadata != null
-                ? Arrays.asList(metadata.exceptions())
-                : Collections.emptyList();
     }
 
     private static boolean getTestDisabled(final Test metadata) {

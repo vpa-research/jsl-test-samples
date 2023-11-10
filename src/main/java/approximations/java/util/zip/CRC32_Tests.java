@@ -5,6 +5,7 @@ import approximations.Test;
 import java.nio.ByteBuffer;
 import java.util.zip.CRC32;
 
+@Test
 public final class CRC32_Tests {
 
     // internal variables
@@ -12,6 +13,7 @@ public final class CRC32_Tests {
     // constructors
 
     // CRC32Automaton::CRC32
+    @Test
     public static int test_CRC32_0(final int execution) {
         CRC32 crc32 = new CRC32();
         if (execution == 0) {
@@ -28,6 +30,7 @@ public final class CRC32_Tests {
     // methods
 
     // CRC32Automaton::getValue
+    @Test
     public static int test_getValue_0(final int execution) {
         CRC32 crc32 = new CRC32();
         if (execution == 0) {
@@ -40,6 +43,7 @@ public final class CRC32_Tests {
 
 
     // CRC32Automaton::reset
+    @Test
     public static int test_reset_0(final int execution) {
         CRC32 crc32 = new CRC32();
         if (execution == 0) {

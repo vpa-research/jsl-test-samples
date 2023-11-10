@@ -12,8 +12,10 @@ import java.util.ResourceBundle;
 
 import java.lang.System;
 
+@Test
 public final class System_Tests {
 
+    @Test
     public static int test_in(int exe) {
         if (System.in == null)
             return -1;
@@ -139,6 +141,7 @@ public final class System_Tests {
     /**
      * {@link java.lang.System#exit(int)}
      */
+    @Test
     public static int test_exit_0(final int execution) {
         try {
             System.exit(-100);
@@ -151,6 +154,7 @@ public final class System_Tests {
     /**
      * {@link java.lang.System#gc()}
      */
+    @Test
     public static int test_gc_0(final int execution) {
         System.gc();
         return 0;
@@ -280,6 +284,7 @@ public final class System_Tests {
     /**
      * {@link java.lang.System#identityHashCode(Object)}
      */
+    @Test
     public static int test_identityHashCode_0(final int execution) {
         int a = System.identityHashCode(null);
         int b = System.identityHashCode(new Integer(123456));
@@ -386,6 +391,7 @@ public final class System_Tests {
     /**
      * {@link java.lang.System#runFinalization()}
      */
+    @Test
     public static int test_runFinalization_0(final int execution) {
         System.runFinalization();
         return 0;

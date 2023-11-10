@@ -1,9 +1,13 @@
 package approximations.java.util;
 
+import approximations.Test;
+
 import java.util.OptionalDouble;
 
+@Test
 public final class OptionalDouble_Tests {
 
+    @Test
     public static int test_empty_0(final int execution) {
         final OptionalDouble o = OptionalDouble.empty();
 
@@ -13,6 +17,7 @@ public final class OptionalDouble_Tests {
         return -1;
     }
 
+    @Test
     public static int test_of_0(final int execution) {
         final OptionalDouble o = OptionalDouble.of(5.d);
 
