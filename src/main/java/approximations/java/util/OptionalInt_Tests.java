@@ -3,6 +3,7 @@ package approximations.java.util;
 import approximations.Test;
 
 @Test
+@SuppressWarnings({"unused"})
 public final class OptionalInt_Tests {
 
     // internal variables

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Spliterator;
 
 @Test
+@SuppressWarnings({"unused", "RedundantOperationOnEmptyContainer", "SwitchStatementWithTooFewBranches", "PointlessBooleanExpression"})
 public final class ArrayListSpliterator_Tests {
 
     // internal variables
@@ -27,8 +28,8 @@ public final class ArrayListSpliterator_Tests {
                 int c = s.characteristics();
                 if (c != (Spliterator.ORDERED | Spliterator.SIZED | Spliterator.SUBSIZED))
                     return -1;
+                break;
             }
-            break;
 
             default:
                 return 0;
@@ -87,7 +88,7 @@ public final class ArrayListSpliterator_Tests {
             break;
 
             case 1: {
-                ArrayList<Integer> a = new ArrayList<Integer>();
+                ArrayList<Integer> a = new ArrayList<>();
                 a.add(10);
                 a.add(20);
                 Spliterator<Integer> s = a.spliterator();

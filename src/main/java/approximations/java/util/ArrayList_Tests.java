@@ -5,6 +5,7 @@ import approximations.Test;
 import java.util.ArrayList;
 
 @Test
+@SuppressWarnings({"unused", "ConstantConditions", "ListIndexOfReplaceableByContains", "NumberEquality"})
 public final class ArrayList_Tests {
 
     @Test(executionMax = 4)

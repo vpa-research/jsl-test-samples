@@ -5,6 +5,7 @@ import approximations.Test;
 import java.util.HashSet;
 
 @Test
+@SuppressWarnings({"unused", "ConstantValue"})
 public final class HashSet_Tests {
 
     // internal variables

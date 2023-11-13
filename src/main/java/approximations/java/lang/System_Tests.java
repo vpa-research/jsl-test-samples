@@ -13,10 +13,11 @@ import java.util.ResourceBundle;
 import java.lang.System;
 
 @Test
+@SuppressWarnings({"unused", "deprecation", "CachedNumberConstructorCall", "UnnecessaryBoxing"})
 public final class System_Tests {
 
     @Test
-    public static int test_in(int exe) {
+    public static int test__field__in(int execution) {
         if (System.in == null)
             return -1;
 
@@ -26,8 +27,8 @@ public final class System_Tests {
     }
 
     @Test(executionMax = 1)
-    public static int test_out(int exe) {
-        switch (exe) {
+    public static int test__field__out(int execution) {
+        switch (execution) {
             case 0: {
                 if (System.out == null)
                     return -1;
@@ -46,12 +47,12 @@ public final class System_Tests {
             default:
                 return 0;
         }
-        return exe;
+        return execution;
     }
 
     @Test(executionMax = 1)
-    public static int test_err(int exe) {
-        switch (exe) {
+    public static int test__field__err(int execution) {
+        switch (execution) {
             case 0: {
                 if (System.err == null)
                     return -1;
@@ -70,7 +71,7 @@ public final class System_Tests {
             default:
                 return 0;
         }
-        return exe;
+        return execution;
     }
 
     // internal variables
@@ -146,6 +147,7 @@ public final class System_Tests {
         try {
             System.exit(-100);
         } catch (Throwable ignored) {
+            // expected
         }
         return 0;
     }
@@ -284,15 +286,28 @@ public final class System_Tests {
     /**
      * {@link java.lang.System#identityHashCode(Object)}
      */
-    @Test
+    @Test(executionMax = 1)
     public static int test_identityHashCode_0(final int execution) {
-        int a = System.identityHashCode(null);
-        int b = System.identityHashCode(new Integer(123456));
+        switch (execution) {
+            case 0: {
+                if (System.identityHashCode(null) != 0)
+                    return -1;
+                break;
+            }
 
-        if (a == b)
-            return -1;
+            case 1: {
+                int a = System.identityHashCode(new Integer(123456));
+                int b = System.identityHashCode(new Integer(321));
 
-        return 0;
+                if (a == b)
+                    return -1;
+                break;
+            }
+
+            default:
+                return 0;
+        }
+        return execution;
     }
 
 
@@ -335,18 +350,62 @@ public final class System_Tests {
     /**
      * {@link java.lang.System#load(String)}
      */
-    @Test(disabled = true)
+    @Test(executionMax = 1)
     public static int test_load_0(final int execution) {
-        return -1;
+        switch (execution) {
+            case 0: {
+                try {
+                    System.load(null);
+                } catch (NullPointerException ignored) {
+                    // expected
+                }
+                break;
+            }
+
+            case 1: {
+                try {
+                    System.load("*something*");
+                } catch (SecurityException | UnsatisfiedLinkError ignored) {
+                    // expected
+                }
+                break;
+            }
+
+            default:
+                return 0;
+        }
+        return execution;
     }
 
 
     /**
      * {@link java.lang.System#loadLibrary(String)}
      */
-    @Test(disabled = true)
+    @Test(executionMax = 1)
     public static int test_loadLibrary_0(final int execution) {
-        return -1;
+        switch (execution) {
+            case 0: {
+                try {
+                    System.loadLibrary(null);
+                } catch (NullPointerException ignored) {
+                    // expected
+                }
+                break;
+            }
+
+            case 1: {
+                try {
+                    System.loadLibrary("*something*");
+                } catch (SecurityException | UnsatisfiedLinkError ignored) {
+                    // expected
+                }
+                break;
+            }
+
+            default:
+                return 0;
+        }
+        return execution;
     }
 
 

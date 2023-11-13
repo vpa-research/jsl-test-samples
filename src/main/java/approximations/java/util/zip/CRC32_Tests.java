@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.util.zip.CRC32;
 
 @Test
+@SuppressWarnings({"unused"})
 public final class CRC32_Tests {
 
     // internal variables

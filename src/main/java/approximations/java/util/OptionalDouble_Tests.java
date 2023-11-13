@@ -5,6 +5,7 @@ import approximations.Test;
 import java.util.OptionalDouble;
 
 @Test
+@SuppressWarnings({"unused", "ConstantValue"})
 public final class OptionalDouble_Tests {
 
     @Test
