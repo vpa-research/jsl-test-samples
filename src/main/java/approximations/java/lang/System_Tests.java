@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 import java.lang.System;
 
 @Test
-@SuppressWarnings({"unused", "deprecation", "CachedNumberConstructorCall", "UnnecessaryBoxing"})
+@SuppressWarnings({"unused", "UnnecessaryBoxing", "JavadocReference"})
 public final class System_Tests {
 
     @Test
