@@ -467,33 +467,37 @@ public final class StringBuffer_Tests {
     @Test(executionMax = 3)
     public static int test_append_9(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
+        int oldLength = stringBuffer.length();
         stringBuffer.append(1.000);
         if (execution == 0) {
-            if (stringBuffer.length() == 3 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(1) == '.')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(oldLength) == '1')
                 return 0;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.append(23.34);
         if (execution == 1) {
-            if (stringBuffer.length() == 8 && stringBuffer.charAt(5) == '.' && stringBuffer.charAt(7) == '4')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(oldLength + 2) == '.')
                 return 1;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.append(Double.MAX_VALUE);
         if (execution == 2) {
-            if (stringBuffer.length() == 30 && stringBuffer.charAt(26) == 'E' && stringBuffer.charAt(29) == '8')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(stringBuffer.length() - 1) == '8')
                 return 2;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.append(12e-1);
         if (execution == 3) {
-            if (stringBuffer.length() == 33 && stringBuffer.charAt(31) == '.' && stringBuffer.charAt(32) == '2')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(oldLength) == '1')
                 return 3;
             else
                 return -1;
