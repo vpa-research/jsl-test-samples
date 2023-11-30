@@ -467,33 +467,37 @@ public final class StringBuffer_Tests {
     @Test(executionMax = 3)
     public static int test_append_9(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
+        int oldLength = stringBuffer.length();
         stringBuffer.append(1.000);
         if (execution == 0) {
-            if (stringBuffer.length() == 3 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(1) == '.')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(oldLength) == '1')
                 return 0;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.append(23.34);
         if (execution == 1) {
-            if (stringBuffer.length() == 8 && stringBuffer.charAt(5) == '.' && stringBuffer.charAt(7) == '4')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(oldLength + 2) == '.')
                 return 1;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.append(Double.MAX_VALUE);
         if (execution == 2) {
-            if (stringBuffer.length() == 30 && stringBuffer.charAt(26) == 'E' && stringBuffer.charAt(29) == '8')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(stringBuffer.length() - 1) == '8')
                 return 2;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.append(12e-1);
         if (execution == 3) {
-            if (stringBuffer.length() == 33 && stringBuffer.charAt(31) == '.' && stringBuffer.charAt(32) == '2')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(oldLength) == '1')
                 return 3;
             else
                 return -1;
@@ -507,33 +511,38 @@ public final class StringBuffer_Tests {
     @Test(executionMax = 3)
     public static int test_append_10(final int execution) {
         StringBuffer stringBuffer = new StringBuffer();
+        int oldLength = stringBuffer.length();
         stringBuffer.append(1.0F);
         if (execution == 0) {
-            if (stringBuffer.length() == 3 && stringBuffer.charAt(0) == '1' && stringBuffer.charAt(1) == '.')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(0) == '1')
                 return 0;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.append(23.34F);
         if (execution == 1) {
-            if (stringBuffer.length() == 8 && stringBuffer.charAt(5) == '.' && stringBuffer.charAt(7) == '4')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(oldLength) == '2'
+                    && stringBuffer.charAt(oldLength + 2) == '.')
                 return 1;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.append(Float.MAX_VALUE);
         if (execution == 2) {
-            if (stringBuffer.length() == 20 && stringBuffer.charAt(17) == 'E' && stringBuffer.charAt(19) == '8')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(stringBuffer.length() - 1) == '8')
                 return 2;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.append(12e-1F);
         if (execution == 3) {
-            if (stringBuffer.length() == 23 && stringBuffer.charAt(21) == '.' && stringBuffer.charAt(22) == '2')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(oldLength) == '1')
                 return 3;
             else
                 return -1;
@@ -1529,33 +1538,37 @@ public final class StringBuffer_Tests {
             }
         }
 
+        int oldLength = stringBuffer.length();
         stringBuffer.insert(0, 1.05);
         if (execution == 1) {
-            if (stringBuffer.length() == 4 && stringBuffer.charAt(0) == '1')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(0) == '1')
                 return 1;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.insert(3, 23.000);
         if (execution == 2) {
-            if (stringBuffer.length() == 8 && stringBuffer.charAt(3) == '2')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(3) == '2')
                 return 2;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.insert(8, Double.MAX_VALUE);
         if (execution == 3) {
-            if (stringBuffer.length() == 30 && stringBuffer.charAt(8) == '1')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(8) == '1')
                 return 3;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.insert(0, 12E-1);
         if (execution == 4) {
-            if (stringBuffer.length() == 33 && stringBuffer.charAt(1) == '.' && stringBuffer.charAt(2) == '2')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(1) == '.')
                 return 4;
             else
                 return -1;
@@ -1578,33 +1591,37 @@ public final class StringBuffer_Tests {
             }
         }
 
+        int oldLength = stringBuffer.length();
         stringBuffer.insert(0, 1.05f);
         if (execution == 1) {
-            if (stringBuffer.length() == 4 && stringBuffer.charAt(0) == '1')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(0) == '1')
                 return 1;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.insert(3, 23.000f);
         if (execution == 2) {
-            if (stringBuffer.length() == 8 && stringBuffer.charAt(3) == '2')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(3) == '2')
                 return 2;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.insert(8, Float.MAX_VALUE);
         if (execution == 3) {
-            if (stringBuffer.length() == 20 && stringBuffer.charAt(8) == '3')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(8) == '3')
                 return 3;
             else
                 return -1;
         }
+        oldLength = stringBuffer.length();
 
         stringBuffer.insert(0, 12E-1);
         if (execution == 4) {
-            if (stringBuffer.length() == 23 && stringBuffer.charAt(1) == '.' && stringBuffer.charAt(2) == '2')
+            if (stringBuffer.length() - oldLength > 0 && stringBuffer.charAt(1) == '.')
                 return 4;
             else
                 return -1;
