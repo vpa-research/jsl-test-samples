@@ -116,6 +116,8 @@ public final class SelfTestMain {
     }
 
     private SelfTestMain(final Properties props) {
+        System.out.println("[i] JDK ver: " + System.getProperty("java.runtime.version"));
+
         this.oldStdOut = System.out;
         this.oldStdErr = System.err;
         this.oldSecurityManager = System.getSecurityManager();
